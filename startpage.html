@@ -31,17 +31,21 @@
         
         .app{position:relative;z-index:2;display:flex;flex-direction:column;height:100%}
         
-        /* Loading bar */
         .loading-bar{position:fixed;top:0;left:0;height:3px;background:var(--orange-500);z-index:9999;width:0;transition:width 0.4s ease-out;border-radius:0 2px 2px 0}
         .loading-bar.active{width:70%;animation:loadingPulse 1.5s ease-in-out infinite}
         .loading-bar.done{width:100%;opacity:0;transition:width 0.3s ease-out,opacity 0.3s ease-out}
         @keyframes loadingPulse{0%{width:30%}50%{width:80%}100%{width:30%}}
         
         /* Header */
-        .header{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;z-index:10;flex-shrink:0;gap:10px}
+        .header{display:flex;flex-direction:column;padding:8px 18px 0;z-index:10;flex-shrink:0;gap:6px}
+        .header-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
         .header-left{display:flex;align-items:center;gap:8px;flex-shrink:0}
-        .header-center{flex:1;display:flex;justify-content:center;max-width:460px;margin:0 auto}
+        .header-center{flex:1;display:flex;flex-direction:column;align-items:center;max-width:500px;margin:0 auto;gap:4px}
         .header-right{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:auto}
+        
+        .page-title{font-size:18px;font-weight:800;color:var(--white-a90);letter-spacing:-0.5px;cursor:text;padding:2px 8px;border-radius:var(--radius-xs);border:1px solid transparent;outline:none;font-family:var(--font);background:transparent;text-align:center;transition:all var(--transition)}
+        .page-title:hover{border-color:var(--white-a30)}
+        .page-title:focus{border-color:var(--orange-500);background:rgba(0,0,0,0.3)}
         
         .btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;font-size:11px;font-weight:600;font-family:var(--font);border:none;border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);letter-spacing:-0.2px;white-space:nowrap}
         .btn-dark{background:rgba(0,0,0,0.5);color:var(--white);backdrop-filter:blur(8px)}
@@ -76,12 +80,11 @@
         .main::-webkit-scrollbar-track{background:transparent}
         .main::-webkit-scrollbar-thumb{background:var(--white-a20);border-radius:3px}
         
-        .widget-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+        .widget-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;padding-bottom:60px}
         .widget-grid.cols-2{grid-template-columns:repeat(2,1fr)}
         .widget-grid.cols-3{grid-template-columns:repeat(3,1fr)}
         .widget-grid.cols-4{grid-template-columns:repeat(4,1fr)}
         
-        /* Widget - compact, subtle curves */
         .widget{background:rgba(255,255,255,0.96);border-radius:var(--radius-sm);box-shadow:0 1px 6px rgba(0,0,0,0.1);overflow:hidden;display:flex;flex-direction:column;min-height:160px;transition:all var(--transition);position:relative}
         .widget:hover{box-shadow:0 2px 12px rgba(0,0,0,0.15)}
         .widget-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#fafafa;border-bottom:1px solid #eee;min-height:40px;cursor:default}
@@ -98,7 +101,6 @@
         .widget-body::-webkit-scrollbar{width:4px}
         .widget-body::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
         
-        /* Widget inner elements */
         .widget-input{width:100%;padding:8px 10px;font-size:11px;font-family:var(--font);border:1px solid #e0e0e0;border-radius:var(--radius-xs);color:#333;outline:none;transition:all var(--transition);background:#fff;margin-bottom:6px}
         .widget-input:focus{border-color:var(--orange-500);box-shadow:0 0 0 2px rgba(255,107,53,0.1)}
         .widget-input::placeholder{color:#aaa}
@@ -121,7 +123,6 @@
         .note-toolbar{display:flex;gap:2px;margin-bottom:6px;flex-wrap:wrap}
         .note-toolbar button{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);cursor:pointer;border:1px solid #e0e0e0;background:#fff;color:#555;font-size:13px;transition:all var(--transition)}
         .note-toolbar button:hover{background:#f0f0f0;border-color:#ccc}
-        .note-toolbar button.active{background:var(--orange-500);color:#fff;border-color:var(--orange-500)}
         
         .embed-preview{border-radius:var(--radius-xs);overflow:hidden;background:#000;min-height:180px;display:flex;align-items:center;justify-content:center}
         .embed-preview iframe{width:100%;height:100%;min-height:180px;border:none}
@@ -134,23 +135,18 @@
         .calc-btn.equals{background:var(--orange-500);color:#fff;border-color:var(--orange-500);font-weight:700}
         .calc-btn.equals:hover{background:var(--orange-600)}
         
-        .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-        .gallery-thumb{aspect-ratio:1;border-radius:var(--radius-xs);overflow:hidden;cursor:pointer;background:#f0f0f0;transition:all var(--transition);position:relative}
-        .gallery-thumb:hover{opacity:0.85}
-        .gallery-thumb img{width:100%;height:100%;object-fit:cover}
-        
-        .rss-item{padding:6px 8px;border-radius:var(--radius-xs);cursor:pointer;transition:all var(--transition);margin-bottom:3px;border:1px solid transparent}
-        .rss-item:hover{background:#f9f9f9;border-color:#eee}
-        .rss-item-title{font-size:12px;font-weight:600;color:#1a1a1a;line-height:1.3}
-        .rss-item-meta{font-size:10px;color:#999;margin-top:2px}
-        
         .clock-display{text-align:center;padding:12px}
         .clock-time{font-size:36px;font-weight:800;color:#1a1a1a;letter-spacing:-1px;font-variant-numeric:tabular-nums}
         .clock-date{font-size:11px;color:#888;margin-top:4px}
         
-        .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:45vh;color:var(--white-a50);text-align:center;gap:10px}
+        .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:40vh;color:var(--white-a50);text-align:center;gap:10px}
         .empty-state iconify-icon{font-size:48px;opacity:0.35}
         .empty-state h3{font-size:16px;font-weight:700;color:var(--white-a70)}
+        
+        /* Footer */
+        .footer{text-align:center;padding:16px 20px 20px;flex-shrink:0;z-index:5}
+        .footer a{color:var(--white-a70);font-size:11px;font-weight:500;text-decoration:none;transition:color var(--transition);letter-spacing:-0.2px}
+        .footer a:hover{color:var(--orange-500)}
         
         /* Pages Sidebar */
         .pages-sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:rgba(16,16,16,0.98);backdrop-filter:blur(16px);z-index:150;transform:translateX(-100%);transition:transform 220ms ease-out;display:flex;flex-direction:column;border-right:1px solid var(--white-a10)}
@@ -210,18 +206,13 @@
         .widget-type-btn:hover{background:rgba(255,255,255,0.04);border-color:var(--orange-500);color:var(--white)}
         .widget-type-btn iconify-icon{font-size:22px;color:var(--orange-500)}
         
-        .column-list{display:flex;flex-direction:column;gap:6px}
-        .column-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:var(--radius-xs)}
-        .column-item-info{font-size:12px;font-weight:600;color:var(--white)}
-        .column-item-count{font-size:10px;color:var(--white-a50)}
-        
         .toast-container{position:fixed;top:14px;right:14px;z-index:9999;display:flex;flex-direction:column;gap:5px}
         .toast{padding:9px 14px;background:#1e1e1e;color:var(--white);border-left:3px solid var(--orange-500);border-radius:var(--radius-xs);font-size:11px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,0.25);animation:slideIn 200ms ease-out;max-width:300px}
         .toast.error{border-left-color:var(--red-500)}
         .toast.success{border-left-color:var(--green-500)}
         @keyframes slideIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
         
-        @media(max-width:768px){.widget-grid{grid-template-columns:1fr!important}.header-center{display:none}.header{padding:8px 10px}.widget-type-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:768px){.widget-grid{grid-template-columns:1fr!important}.header-center{max-width:300px}.header{padding:6px 10px 0}.widget-type-grid{grid-template-columns:repeat(2,1fr)}.page-title{font-size:15px}}
     </style>
 </head>
 <body>
@@ -247,32 +238,37 @@
 </div>
 
 <div class="app">
+    <!-- Header -->
     <header class="header">
-        <div class="header-left">
-            <button class="btn btn-dark" onclick="openPagesSidebar()"><iconify-icon icon="mdi:file-document-multiple-outline" width="14" height="14"></iconify-icon> Pages</button>
-            <span style="color:var(--white-a70);font-size:11px;font-weight:500" id="usernameDisplay">@user</span>
-        </div>
-        <div class="header-center">
-            <div class="search-box">
-                <span class="search-icon"><iconify-icon icon="mdi:magnify" width="16" height="16"></iconify-icon></span>
-                <input type="text" class="search-input" placeholder="Search Google or type a URL..." onkeydown="if(event.key==='Enter')searchGoogle(this.value)">
+        <div class="header-top">
+            <div class="header-left">
+                <button class="btn btn-dark" onclick="openPagesSidebar()"><iconify-icon icon="mdi:file-document-multiple-outline" width="14" height="14"></iconify-icon> Pages</button>
+                <span style="color:var(--white-a70);font-size:11px;font-weight:500" id="usernameDisplay">@user</span>
             </div>
-        </div>
-        <div class="header-right">
-            <button class="btn btn-dark" onclick="openAddWidgetModal()"><iconify-icon icon="mdi:plus" width="14" height="14"></iconify-icon> Add</button>
-            <button class="btn btn-dark" onclick="openPageSettingsModal()"><iconify-icon icon="mdi:pencil-outline" width="14" height="14"></iconify-icon> Edit</button>
-            <div class="dropdown" id="avatarDropdown">
-                <div class="avatar" id="avatarBtn" onclick="toggleDropdown('avatarMenu')"><span id="avatarInitial">U</span></div>
-                <div class="dropdown-menu" id="avatarMenu">
-                    <div class="dropdown-item" onclick="openProfileModal()"><iconify-icon icon="mdi:camera-plus-outline" width="15" height="15"></iconify-icon> Change profile image</div>
-                    <div class="dropdown-item" onclick="openBackgroundModal()"><iconify-icon icon="mdi:image-outline" width="15" height="15"></iconify-icon> Change background</div>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-item danger" onclick="handleSignOut()"><iconify-icon icon="mdi:logout" width="15" height="15"></iconify-icon> Sign out</div>
+            <div class="header-center">
+                <span class="page-title" id="pageTitleDisplay" contenteditable="true" spellcheck="false" onblur="savePageTitle(this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">DockGrid Page</span>
+                <div class="search-box">
+                    <span class="search-icon"><iconify-icon icon="mdi:magnify" width="16" height="16"></iconify-icon></span>
+                    <input type="text" class="search-input" placeholder="Search Google or type a URL..." onkeydown="if(event.key==='Enter')searchGoogle(this.value)">
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-dark" onclick="openAddWidgetModal()"><iconify-icon icon="mdi:plus" width="14" height="14"></iconify-icon> Add</button>
+                <button class="btn btn-dark" onclick="openPageSettingsModal()"><iconify-icon icon="mdi:pencil-outline" width="14" height="14"></iconify-icon> Edit</button>
+                <div class="dropdown" id="avatarDropdown">
+                    <div class="avatar" id="avatarBtn" onclick="toggleDropdown('avatarMenu')"><span id="avatarInitial">U</span></div>
+                    <div class="dropdown-menu" id="avatarMenu">
+                        <div class="dropdown-item" onclick="openProfileModal()"><iconify-icon icon="mdi:camera-plus-outline" width="15" height="15"></iconify-icon> Change profile image</div>
+                        <div class="dropdown-item" onclick="openBackgroundModal()"><iconify-icon icon="mdi:image-outline" width="15" height="15"></iconify-icon> Change background</div>
+                        <div class="dropdown-divider"></div>
+                        <div class="dropdown-item danger" onclick="handleSignOut()"><iconify-icon icon="mdi:logout" width="15" height="15"></iconify-icon> Sign out</div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Main -->
     <main class="main" id="mainContent">
         <div class="widget-grid cols-3" id="widgetGrid"></div>
         <div class="empty-state" id="emptyState">
@@ -281,6 +277,11 @@
             <p style="color:var(--white-a50);font-size:12px">Click <strong style="color:var(--orange-500)">Add</strong> to start building your dashboard</p>
         </div>
     </main>
+
+    <!-- Footer -->
+    <div class="footer">
+        <a href="https://pireactive.vercel.app/" target="_blank" rel="noopener">DockGrid © 2026 By PIReactive</a>
+    </div>
 </div>
 
 <!-- Add Widget Modal -->
@@ -303,7 +304,7 @@
         </div>
         <div class="modal-body">
             <div class="tab-content active" id="tab-general">
-                <div class="form-group"><label class="form-label">Page Title <small id="titleCount">0/50</small></label><input type="text" class="form-input" id="pageTitle" placeholder="Enter title (e.g. Work, Hobby, News)" maxlength="50" oninput="$('titleCount').textContent=this.value.length+'/50'"></div>
+                <div class="form-group"><label class="form-label">Page Title <small id="titleCount">0/50</small></label><input type="text" class="form-input" id="pageTitle" placeholder="Enter title (e.g. Work, Hobby, News)" maxlength="50" oninput="document.getElementById('titleCount').textContent=this.value.length+'/50'"></div>
                 <div class="form-group"><label class="form-label">Description</label><textarea class="form-input form-textarea" id="pageDescription" placeholder="Auto-generate"></textarea></div>
                 <div class="form-group"><label class="form-label">Belongs to</label><select class="form-select"><option>Personal pages</option></select></div>
                 <div class="form-group" style="display:flex;align-items:center;gap:8px;padding:8px 0"><input type="checkbox" id="archivePage" style="accent-color:var(--orange-500)"><label for="archivePage" style="color:var(--white-a70);font-size:11px;cursor:pointer">Archive page<br><span style="color:var(--white-a50);font-size:10px">Hide from main list. Restore anytime.</span></label></div>
@@ -375,7 +376,9 @@ window.IMGBB_KEY=IMGBB_KEY;window.DEFAULT_BGS=DEFAULT_BGS;
 
 window.currentBg=DEFAULT_BGS[0];window.colCount=3;window.widgetOpacity=96;
 window.widgetsData=[];window.currentUser=null;window.currentPageId='default';
+window.currentPageTitle='DockGrid Page';
 
+// Auth check
 onAuthStateChanged(auth, async (user) => {
     if (!user) { window.location.href = 'sign.html'; return; }
     window.currentUser = user;
@@ -384,9 +387,9 @@ onAuthStateChanged(auth, async (user) => {
 
 async function initApp(user) {
     const name = user.displayName || user.email?.split('@')[0] || 'user';
-    $('avatarInitial').textContent = name[0].toUpperCase();
-    $('profileInitial').textContent = name[0].toUpperCase();
-    $('usernameDisplay').textContent = '@' + name.toLowerCase().replace(/\s/g,'_');
+    document.getElementById('avatarInitial').textContent = name[0].toUpperCase();
+    document.getElementById('profileInitial').textContent = name[0].toUpperCase();
+    document.getElementById('usernameDisplay').textContent = '@' + name.toLowerCase().replace(/\s/g,'_');
     setupBgGrid();
     setupWidgetTypeGrid();
     await loadSettings(user.uid);
@@ -395,7 +398,7 @@ async function initApp(user) {
 }
 
 function setupBgGrid() {
-    $('bgImageGrid').innerHTML = window.DEFAULT_BGS.map(url => `<div class="image-option" style="background-image:url('${url}')" onclick="setBg('${url}')" data-bg="${url}"></div>`).join('');
+    document.getElementById('bgImageGrid').innerHTML = window.DEFAULT_BGS.map(url => `<div class="image-option" style="background-image:url('${url}')" onclick="setBg('${url}')" data-bg="${url}"></div>`).join('');
 }
 
 function setupWidgetTypeGrid() {
@@ -410,7 +413,7 @@ function setupWidgetTypeGrid() {
         {id:'gallery',icon:'mdi:image-multiple-outline',name:'Gallery'},
         {id:'calculator',icon:'mdi:calculator',name:'Calculator'}
     ];
-    $('widgetTypeGrid').innerHTML = types.map(t => `<button class="widget-type-btn" onclick="addWidget('${t.id}')"><iconify-icon icon="${t.icon}"></iconify-icon>${t.name}</button>`).join('');
+    document.getElementById('widgetTypeGrid').innerHTML = types.map(t => `<button class="widget-type-btn" onclick="addWidget('${t.id}')"><iconify-icon icon="${t.icon}"></iconify-icon>${t.name}</button>`).join('');
 }
 
 async function loadSettings(uid) {
@@ -421,7 +424,7 @@ async function loadSettings(uid) {
             if (d.bg) { window.currentBg = d.bg; updateBgDisplay(d.bg); }
             if (d.cols) { window.colCount = d.cols; updateColDisplay(d.cols); }
             if (d.opacity != null) { window.widgetOpacity = d.opacity; updateOpacityUI(d.opacity); }
-            if (d.pageTitle) $('pageTitle').value = d.pageTitle;
+            if (d.pageTitle) { window.currentPageTitle = d.pageTitle; document.getElementById('pageTitleDisplay').textContent = d.pageTitle; document.getElementById('pageTitle').value = d.pageTitle; }
             if (d.profileImg) updateProfileImages(d.profileImg);
         }
     } catch(e) {}
@@ -446,210 +449,388 @@ async function loadPages(uid) {
 }
 
 function renderPagesList(pages) {
-    const list = $('pagesList');
+    const list = document.getElementById('pagesList');
     if (pages.length === 0) { list.innerHTML = '<div style="color:var(--white-a50);text-align:center;padding:16px;font-size:11px">No pages yet</div>'; return; }
     list.innerHTML = pages.map(p => `<div class="page-item${p.id===window.currentPageId?' active':''}" onclick="switchPage('${p.id}')"><iconify-icon icon="mdi:file-document-outline" width="15" height="15"></iconify-icon>${p.title||'Untitled'}</div>`).join('');
 }
-
-function $(id){return document.getElementById(id)}
 </script>
 
 <script>
-// ===== GLOBAL HELPERS =====
-function toggleDropdown(id){$(id).classList.toggle('show')}
-function openModal(id){$(id).classList.add('show');$('avatarMenu').classList.remove('show')}
-function closeModal(id){$(id).classList.remove('show')}
-function openAddWidgetModal(){openModal('addWidgetModal')}
-function openProfileModal(){openModal('profileModal')}
-function openBackgroundModal(){openModal('pageSettingsModal');setTimeout(()=>switchSettingsTab('tab-background',document.querySelector('[data-tab="tab-background"]')),80)}
-function openPageSettingsModal(){openModal('pageSettingsModal')}
-function showToast(msg,type='info'){const c=$('toastContainer');const t=document.createElement('div');t.className=`toast ${type}`;t.textContent=msg;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(60px)';t.style.transition='all 200ms';setTimeout(()=>t.remove(),200)},2800)}
-function searchGoogle(q){if(!q.trim())return;window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`,'_blank')}
-function showLoading(){const bar=$('loadingBar');bar.classList.add('active');bar.classList.remove('done')}
-function hideLoading(){const bar=$('loadingBar');bar.classList.remove('active');bar.classList.add('done');setTimeout(()=>bar.classList.remove('done'),400)}
+// ===== GLOBAL HELPERS (No $ conflicts) =====
+var D = function(id){ return document.getElementById(id); };
 
-// ===== PAGES =====
-function openPagesSidebar(){$('pagesSidebar').classList.add('open');$('pagesOverlay').classList.add('show');$('avatarMenu').classList.remove('show')}
-function closePagesSidebar(){$('pagesSidebar').classList.remove('open');$('pagesOverlay').classList.remove('show')}
-async function createNewPage(){
-    const{db,COL,docFn,setDocFn,serverTimestampFn}=window;
-    const pageId='page_'+Date.now();
-    await setDocFn(docFn(db,COL.PAGES,pageId),{id:pageId,userId:window.currentUser.uid,title:'New Page',icon:'📄',order:0,isPublic:false,createdAt:serverTimestampFn(),updatedAt:serverTimestampFn()});
-    showToast('Page created!','success');
+function toggleDropdown(id){ D(id).classList.toggle('show'); }
+function openModal(id){ D(id).classList.add('show'); D('avatarMenu').classList.remove('show'); }
+function closeModal(id){ D(id).classList.remove('show'); }
+function openAddWidgetModal(){ openModal('addWidgetModal'); }
+function openProfileModal(){ openModal('profileModal'); }
+function openBackgroundModal(){ openModal('pageSettingsModal'); setTimeout(function(){ switchSettingsTab('tab-background', document.querySelector('[data-tab="tab-background"]')); }, 80); }
+function openPageSettingsModal(){ openModal('pageSettingsModal'); }
+
+function showToast(msg, type){
+    type = type || 'info';
+    var c = D('toastContainer');
+    var t = document.createElement('div');
+    t.className = 'toast ' + type;
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(function(){ t.style.opacity = '0'; t.style.transform = 'translateX(60px)'; t.style.transition = 'all 200ms'; setTimeout(function(){ t.remove(); }, 200); }, 2800);
 }
-function switchPage(pageId){window.currentPageId=pageId;closePagesSidebar();showToast('Switched page','success')}
+
+function searchGoogle(q){ if(!q.trim()) return; window.open('https://www.google.com/search?q=' + encodeURIComponent(q), '_blank'); }
+function showLoading(){ var bar = D('loadingBar'); bar.classList.add('active'); bar.classList.remove('done'); }
+function hideLoading(){ var bar = D('loadingBar'); bar.classList.remove('active'); bar.classList.add('done'); setTimeout(function(){ bar.classList.remove('done'); }, 400); }
+
+// ===== PAGE TITLE =====
+function savePageTitle(title) {
+    title = title.trim() || 'DockGrid Page';
+    window.currentPageTitle = title;
+    D('pageTitleDisplay').textContent = title;
+    D('pageTitle').value = title;
+    saveSetting('pageTitle', title);
+}
+
+// ===== PAGES SIDEBAR =====
+function openPagesSidebar(){ D('pagesSidebar').classList.add('open'); D('pagesOverlay').classList.add('show'); D('avatarMenu').classList.remove('show'); }
+function closePagesSidebar(){ D('pagesSidebar').classList.remove('open'); D('pagesOverlay').classList.remove('show'); }
+
+async function createNewPage(){
+    var db = window.db, COL = window.COL, docFn = window.docFn, setDocFn = window.setDocFn, sts = window.serverTimestampFn;
+    var pageId = 'page_' + Date.now();
+    await setDocFn(docFn(db, COL.PAGES, pageId), { id: pageId, userId: window.currentUser.uid, title: 'New Page', icon: '📄', order: 0, isPublic: false, createdAt: sts(), updatedAt: sts() });
+    showToast('Page created!', 'success');
+}
+
+function switchPage(pageId){ window.currentPageId = pageId; closePagesSidebar(); showToast('Switched page', 'success'); }
 
 // ===== SETTINGS TABS =====
-function switchSettingsTab(tabId,btn){
-    document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-    btn.classList.add('active');$(tabId).classList.add('active');
+function switchSettingsTab(tabId, btn){
+    document.querySelectorAll('.modal-tab').forEach(function(t){ t.classList.remove('active'); });
+    document.querySelectorAll('.tab-content').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+    D(tabId).classList.add('active');
 }
 
 // ===== BACKGROUND =====
-function setBg(url){window.currentBg=url;updateBgDisplay(url);saveSetting('bg',url)}
-function updateBgDisplay(url){$('bgLayer').style.backgroundImage=`url(${url})`;document.querySelectorAll('.image-option').forEach(e=>{e.classList.remove('selected');if(e.dataset.bg===url)e.classList.add('selected')})}
-function resetBg(){setBg(window.DEFAULT_BGS[0]);showToast('Background reset','success')}
+function setBg(url){ window.currentBg = url; updateBgDisplay(url); saveSetting('bg', url); }
+function updateBgDisplay(url){ D('bgLayer').style.backgroundImage = 'url(' + url + ')'; document.querySelectorAll('.image-option').forEach(function(e){ e.classList.remove('selected'); if(e.dataset.bg === url) e.classList.add('selected'); }); }
+function resetBg(){ setBg(window.DEFAULT_BGS[0]); showToast('Background reset', 'success'); }
+
 async function uploadBg(event){
-    const file=event.target.files[0];if(!file)return;showLoading();showToast('Uploading...');
-    const fd=new FormData();fd.append('image',file);
-    try{const res=await fetch(`https://api.imgbb.com/1/upload?key=${window.IMGBB_KEY}`,{method:'POST',body:fd});const d=await res.json();if(d.success){setBg(d.data.url);showToast('Background updated!','success')}}catch(e){showToast('Upload failed','error')}
+    var file = event.target.files[0]; if(!file) return;
+    showLoading(); showToast('Uploading...');
+    var fd = new FormData(); fd.append('image', file);
+    try {
+        var res = await fetch('https://api.imgbb.com/1/upload?key=' + window.IMGBB_KEY, { method: 'POST', body: fd });
+        var d = await res.json();
+        if(d.success){ setBg(d.data.url); showToast('Background updated!', 'success'); }
+    } catch(e){ showToast('Upload failed', 'error'); }
     hideLoading();
 }
+
 async function uploadProfile(event){
-    const file=event.target.files[0];if(!file)return;showLoading();showToast('Uploading...');
-    const fd=new FormData();fd.append('image',file);
-    try{const res=await fetch(`https://api.imgbb.com/1/upload?key=${window.IMGBB_KEY}`,{method:'POST',body:fd});const d=await res.json();if(d.success){updateProfileImages(d.data.url);saveSetting('profileImg',d.data.url);closeModal('profileModal');showToast('Profile updated!','success')}}catch(e){showToast('Upload failed','error')}
+    var file = event.target.files[0]; if(!file) return;
+    showLoading(); showToast('Uploading...');
+    var fd = new FormData(); fd.append('image', file);
+    try {
+        var res = await fetch('https://api.imgbb.com/1/upload?key=' + window.IMGBB_KEY, { method: 'POST', body: fd });
+        var d = await res.json();
+        if(d.success){ updateProfileImages(d.data.url); saveSetting('profileImg', d.data.url); closeModal('profileModal'); showToast('Profile updated!', 'success'); }
+    } catch(e){ showToast('Upload failed', 'error'); }
     hideLoading();
 }
-function updateProfileImages(url){$('avatarBtn').innerHTML=`<img src="${url}" alt="P">`;$('profileAvatar').innerHTML=`<img src="${url}" alt="P" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`}
+
+function updateProfileImages(url){
+    D('avatarBtn').innerHTML = '<img src="' + url + '" alt="P">';
+    D('profileAvatar').innerHTML = '<img src="' + url + '" alt="P" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+}
 
 // ===== SETTINGS =====
-async function saveSetting(key,value){
-    if(!window.currentUser)return;const{db,COL,docFn,setDocFn}=window;
-    await setDocFn(docFn(db,COL.SETTINGS,window.currentUser.uid),{[key]:value},{merge:true});
+async function saveSetting(key, value){
+    if(!window.currentUser) return;
+    var db = window.db, COL = window.COL, docFn = window.docFn, setDocFn = window.setDocFn;
+    await setDocFn(docFn(db, COL.SETTINGS, window.currentUser.uid), { [key]: value }, { merge: true });
 }
-function updateOpacity(val){window.widgetOpacity=parseInt(val);$('opLabel').textContent=val+'%';updateOpacityUI(val);saveSetting('opacity',parseInt(val))}
-function updateOpacityUI(val){const o=val/100;document.querySelectorAll('.widget').forEach(w=>{w.style.background=`rgba(255,255,255,${o})`;const h=w.querySelector('.widget-header');if(h)h.style.background=`rgba(250,250,250,${o})`})}
-function updateCols(val){window.colCount=parseInt(val);updateColDisplay(val);saveSetting('cols',parseInt(val))}
+
+function updateOpacity(val){
+    window.widgetOpacity = parseInt(val);
+    D('opLabel').textContent = val + '%';
+    updateOpacityUI(val);
+    saveSetting('opacity', parseInt(val));
+}
+
+function updateOpacityUI(val){
+    var o = val / 100;
+    document.querySelectorAll('.widget').forEach(function(w){
+        w.style.background = 'rgba(255,255,255,' + o + ')';
+        var h = w.querySelector('.widget-header');
+        if(h) h.style.background = 'rgba(250,250,250,' + o + ')';
+    });
+}
+
+function updateCols(val){
+    window.colCount = parseInt(val);
+    updateColDisplay(val);
+    saveSetting('cols', parseInt(val));
+}
+
 function updateColDisplay(val){
-    const grid=$('widgetGrid');
-    if(!grid)return;
-    grid.className='widget-grid';
-    if(val>=1&&val<=4)grid.classList.add(`cols-${val}`);
-    const select=$('columnCountSelect');
-    if(select)select.value=val;
-    $('opLabel').textContent=(window.widgetOpacity||96)+'%';
+    var grid = D('widgetGrid');
+    if(!grid) return;
+    grid.className = 'widget-grid';
+    if(val >= 1 && val <= 4) grid.classList.add('cols-' + val);
+    var select = D('columnCountSelect');
+    if(select) select.value = val;
 }
 
 // ===== WIDGET OPERATIONS =====
 async function addWidget(type){
-    const names={bookmarks:'Bookmarks',rss:'RSS News',notes:'Notes',tasks:'Tasks',embed:'Embed',project:'Project',clock:'Clock',gallery:'Gallery',calculator:'Calculator'};
-    const{db,COL,docFn,setDocFn,serverTimestampFn}=window;
-    const id=type+'_'+Date.now();
+    var names = {bookmarks:'Bookmarks',rss:'RSS News',notes:'Notes',tasks:'Tasks',embed:'Embed',project:'Project',clock:'Clock',gallery:'Gallery',calculator:'Calculator'};
+    var db = window.db, COL = window.COL, docFn = window.docFn, setDocFn = window.setDocFn, sts = window.serverTimestampFn;
+    var id = type + '_' + Date.now();
     showLoading();
-    await setDocFn(docFn(db,COL.WIDGETS,id),{id,type,title:names[type]||'Widget',userId:window.currentUser.uid,pageId:window.currentPageId||'default',data:{bookmarks:[],tasks:[],content:'',items:[]},createdAt:serverTimestampFn(),updatedAt:serverTimestampFn()});
-    closeModal('addWidgetModal');showToast(`Added ${names[type]}`,'success');
+    await setDocFn(docFn(db, COL.WIDGETS, id), { id: id, type: type, title: names[type] || 'Widget', userId: window.currentUser.uid, pageId: window.currentPageId || 'default', data: { bookmarks: [], tasks: [], content: '', items: [] }, createdAt: sts(), updatedAt: sts() });
+    closeModal('addWidgetModal');
+    showToast('Added ' + (names[type] || 'Widget'), 'success');
     hideLoading();
 }
-async function removeWidget(id){if(!confirm('Remove this widget?'))return;const{db,COL,docFn,deleteDocFn}=window;await deleteDocFn(docFn(db,COL.WIDGETS,id));showToast('Widget removed','success')}
-async function renameWidget(id,newTitle){if(!newTitle.trim())return;const{db,COL,docFn,setDocFn}=window;await setDocFn(docFn(db,COL.WIDGETS,id),{title:newTitle.trim()},{merge:true})}
+
+async function removeWidget(id){
+    if(!confirm('Remove this widget?')) return;
+    var db = window.db, COL = window.COL, docFn = window.docFn, deleteDocFn = window.deleteDocFn;
+    await deleteDocFn(docFn(db, COL.WIDGETS, id));
+    showToast('Widget removed', 'success');
+}
+
+async function renameWidget(id, newTitle){
+    if(!newTitle.trim()) return;
+    var db = window.db, COL = window.COL, docFn = window.docFn, setDocFn = window.setDocFn;
+    await setDocFn(docFn(db, COL.WIDGETS, id), { title: newTitle.trim() }, { merge: true });
+}
 
 // ===== WIDGET MENUS =====
-function toggleWidgetMenu(widgetId,event){
+function toggleWidgetMenu(widgetId, event){
     event.stopPropagation();
-    const menu=document.getElementById(`widgetMenu_${widgetId}`);
-    document.querySelectorAll('.dropdown-menu.show').forEach(m=>{if(m!==menu)m.classList.remove('show')});
-    if(menu)menu.classList.toggle('show');
+    var menu = document.getElementById('widgetMenu_' + widgetId);
+    document.querySelectorAll('.dropdown-menu.show').forEach(function(m){ if(m !== menu) m.classList.remove('show'); });
+    if(menu) menu.classList.toggle('show');
 }
 
 function getWidgetMenuItems(widget){
-    const common=[{label:'Rename widget',icon:'mdi:pencil-outline',action:`editWidgetTitle('${widget.id}')`},{label:'Display settings',icon:'mdi:palette-outline',action:`showToast('Display settings coming soon')`},{label:'Copy / Move',icon:'mdi:content-copy',action:`showToast('Copy/Move coming soon')`},{label:'Share',icon:'mdi:share-outline',action:`showToast('Share coming soon')`},{label:'divider'},{label:'Delete widget',icon:'mdi:delete-outline',action:`removeWidget('${widget.id}')`,danger:true}];
-    const byType={
-        bookmarks:[{label:'Open all links in tabs',icon:'mdi:open-in-new',action:`openAllBookmarks('${widget.id}')`},{label:'Add bookmark',icon:'mdi:bookmark-plus-outline',action:`focusBookmarkInput('${widget.id}')`},{label:'Sort bookmarks',icon:'mdi:sort-variant',action:`showToast('Sort coming soon')`},{label:'divider'},...common],
-        rss:[{label:'Refresh feed',icon:'mdi:refresh',action:`refreshRSS('${widget.id}')`},{label:'Add feed',icon:'mdi:rss-plus',action:`focusRSSInput('${widget.id}')`},{label:'Edit feeds',icon:'mdi:rss-box',action:`showToast('Edit feeds coming soon')`},{label:'divider'},...common],
-        notes:[{label:'Add another note',icon:'mdi:note-plus-outline',action:`addNote('${widget.id}')`},{label:'divider'},...common],
-        tasks:[{label:'Add new list',icon:'mdi:playlist-plus',action:`addTaskList('${widget.id}')`},{label:'divider'},...common],
-        embed:[{label:'Edit embed code',icon:'mdi:code-tags',action:`focusEmbedInput('${widget.id}')`},{label:'divider'},...common],
-        project:[{label:'Edit project',icon:'mdi:folder-edit-outline',action:`showToast('Edit project coming soon')`},{label:'divider'},...common],
-        clock:[{label:'Add/edit locations',icon:'mdi:map-marker-plus',action:`showToast('World clock coming soon')`},{label:'divider'},...common],
-        gallery:[{label:'Add images',icon:'mdi:image-plus',action:`showToast('Add images coming soon')`},{label:'divider'},...common],
-        calculator:[{label:'Switch mode',icon:'mdi:swap-horizontal',action:`showToast('Calculator modes coming soon')`},{label:'divider'},...common]
+    var id = widget.id;
+    var common = [
+        {label:'Rename widget',icon:'mdi:pencil-outline',action:'editWidgetTitle(\''+id+'\')'},
+        {label:'Display settings',icon:'mdi:palette-outline',action:'showToast(\'Display settings coming soon\')'},
+        {label:'Copy / Move',icon:'mdi:content-copy',action:'showToast(\'Copy/Move coming soon\')'},
+        {label:'Share',icon:'mdi:share-outline',action:'showToast(\'Share coming soon\')'},
+        {label:'divider'},
+        {label:'Delete widget',icon:'mdi:delete-outline',action:'removeWidget(\''+id+'\')',danger:true}
+    ];
+    var byType = {
+        bookmarks: [{label:'Open all links in tabs',icon:'mdi:open-in-new',action:'openAllBookmarks(\''+id+'\')'},{label:'Add bookmark',icon:'mdi:bookmark-plus-outline',action:'focusBookmarkInput(\''+id+'\')'},{label:'Sort bookmarks',icon:'mdi:sort-variant',action:'showToast(\'Sort coming soon\')'},{label:'divider'}].concat(common),
+        rss: [{label:'Refresh feed',icon:'mdi:refresh',action:'refreshRSS(\''+id+'\')'},{label:'Add feed',icon:'mdi:rss-plus',action:'focusRSSInput(\''+id+'\')'},{label:'Edit feeds',icon:'mdi:rss-box',action:'showToast(\'Edit feeds coming soon\')'},{label:'divider'}].concat(common),
+        notes: [{label:'Add another note',icon:'mdi:note-plus-outline',action:'addNote(\''+id+'\')'},{label:'divider'}].concat(common),
+        tasks: [{label:'Add new list',icon:'mdi:playlist-plus',action:'addTaskList(\''+id+'\')'},{label:'divider'}].concat(common),
+        embed: [{label:'Edit embed code',icon:'mdi:code-tags',action:'focusEmbedInput(\''+id+'\')'},{label:'divider'}].concat(common),
+        project: [{label:'Edit project',icon:'mdi:folder-edit-outline',action:'showToast(\'Edit project coming soon\')'},{label:'divider'}].concat(common),
+        clock: [{label:'Add/edit locations',icon:'mdi:map-marker-plus',action:'showToast(\'World clock coming soon\')'},{label:'divider'}].concat(common),
+        gallery: [{label:'Add images',icon:'mdi:image-plus',action:'showToast(\'Add images coming soon\')'},{label:'divider'}].concat(common),
+        calculator: [{label:'Switch mode',icon:'mdi:swap-horizontal',action:'showToast(\'Calculator modes coming soon\')'},{label:'divider'}].concat(common)
     };
-    return byType[widget.type]||common;
+    return byType[widget.type] || common;
 }
 
 function editWidgetTitle(id){
-    const titleEl=document.querySelector(`.widget-title[data-id="${id}"]`);
-    if(titleEl){titleEl.focus();document.execCommand('selectAll',false,null)}
+    var titleEl = document.querySelector('.widget-title[data-id="' + id + '"]');
+    if(titleEl){ titleEl.focus(); document.execCommand('selectAll', false, null); }
 }
-
-function focusBookmarkInput(id){const input=document.getElementById(`bmInput_${id}`);if(input)input.focus()}
-function focusRSSInput(id){const input=document.getElementById(`rssInput_${id}`);if(input)input.focus()}
-function focusEmbedInput(id){const input=document.getElementById(`embedInput_${id}`);if(input)input.focus()}
+function focusBookmarkInput(id){ var inp = document.getElementById('bmInput_' + id); if(inp) inp.focus(); }
+function focusRSSInput(id){ var inp = document.getElementById('rssInput_' + id); if(inp) inp.focus(); }
+function focusEmbedInput(id){ var inp = document.getElementById('embedInput_' + id); if(inp) inp.focus(); }
 function openAllBookmarks(id){
-    const widget=window.widgetsData.find(w=>w.id===id);
-    if(widget&&widget.data?.bookmarks){widget.data.bookmarks.forEach(b=>window.open(b.url,'_blank'));showToast(`Opened ${widget.data.bookmarks.length} links`,'success')}
+    var widget = window.widgetsData.find(function(w){ return w.id === id; });
+    if(widget && widget.data && widget.data.bookmarks){ widget.data.bookmarks.forEach(function(b){ window.open(b.url, '_blank'); }); showToast('Opened ' + widget.data.bookmarks.length + ' links', 'success'); }
 }
-function refreshRSS(id){showToast('Refreshing RSS feed...','success')}
-function addNote(id){showToast('Note added','success')}
-function addTaskList(id){showToast('Task list added','success')}
+function refreshRSS(id){ showToast('Refreshing RSS feed...', 'success'); }
+function addNote(id){ showToast('Note added', 'success'); }
+function addTaskList(id){ showToast('Task list added', 'success'); }
 
 // ===== BOOKMARK FUNCTIONS =====
-async function addBookmark(widgetId,input){
-    const url=input.value.trim();if(!url)return;if(!url.startsWith('http')){showToast('Enter a valid URL','error');return}
-    input.value='';input.placeholder='Fetching...';input.disabled=true;showLoading();
-    try{
-        const hostname=new URL(url).hostname;
-        const favicon=`https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
-        let title=hostname;let description='';
-        try{const res=await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);const d=await res.json();if(d.status==='success'){if(d.data.title)title=d.data.title;if(d.data.description)description=d.data.description}}catch(e){}
-        const{db,COL,docFn,getDocFn,setDocFn,serverTimestampFn}=window;
-        const ref=docFn(db,COL.WIDGETS,widgetId);const snap=await getDocFn(ref);
-        if(snap.exists()){const w=snap.data();const bm=w.data?.bookmarks||[];bm.push({url,title,description,favicon,hostname});await setDocFn(ref,{data:{...w.data,bookmarks:bm},updatedAt:serverTimestampFn()},{merge:true});showToast('Bookmark added!','success')}
-    }catch(e){showToast('Failed to add bookmark','error')}
-    input.disabled=false;input.placeholder='Paste URL and press Enter';hideLoading();
+async function addBookmark(widgetId, input){
+    var url = input.value.trim(); if(!url) return; if(!url.startsWith('http')){ showToast('Enter a valid URL', 'error'); return; }
+    input.value = ''; input.placeholder = 'Fetching...'; input.disabled = true; showLoading();
+    try {
+        var hostname = new URL(url).hostname;
+        var favicon = 'https://www.google.com/s2/favicons?domain=' + hostname + '&sz=64';
+        var title = hostname; var description = '';
+        try { var res = await fetch('https://api.microlink.io/?url=' + encodeURIComponent(url)); var d = await res.json(); if(d.status === 'success'){ if(d.data.title) title = d.data.title; if(d.data.description) description = d.data.description; } } catch(e){}
+        var db = window.db, COL = window.COL, docFn = window.docFn, getDocFn = window.getDocFn, setDocFn = window.setDocFn, sts = window.serverTimestampFn;
+        var ref = docFn(db, COL.WIDGETS, widgetId); var snap = await getDocFn(ref);
+        if(snap.exists()){ var w = snap.data(); var bm = w.data && w.data.bookmarks ? w.data.bookmarks : []; bm.push({url:url,title:title,description:description,favicon:favicon,hostname:hostname}); await setDocFn(ref, {data: Object.assign({}, w.data, {bookmarks:bm}), updatedAt:sts()}, {merge:true}); showToast('Bookmark added!', 'success'); }
+    } catch(e){ showToast('Failed to add bookmark', 'error'); }
+    input.disabled = false; input.placeholder = 'Paste URL and press Enter'; hideLoading();
 }
 
 // ===== TASK FUNCTIONS =====
-async function addTask(widgetId,input){const text=input.value.trim();if(!text)return;input.value='';const{db,COL,docFn,getDocFn,setDocFn,serverTimestampFn}=window;const ref=docFn(db,COL.WIDGETS,widgetId);const snap=await getDocFn(ref);if(snap.exists()){const w=snap.data();const tasks=w.data?.tasks||[];tasks.push({text,done:false});await setDocFn(ref,{data:{...w.data,tasks},updatedAt:serverTimestampFn()},{merge:true})}}
-async function toggleTask(widgetId,index){const{db,COL,docFn,getDocFn,setDocFn,serverTimestampFn}=window;const ref=docFn(db,COL.WIDGETS,widgetId);const snap=await getDocFn(ref);if(snap.exists()){const w=snap.data();const tasks=w.data?.tasks||[];if(tasks[index]){tasks[index].done=!tasks[index].done;await setDocFn(ref,{data:{...w.data,tasks},updatedAt:serverTimestampFn()},{merge:true})}}}
-async function saveNotes(widgetId,content){const{db,COL,docFn,setDocFn,serverTimestampFn}=window;await setDocFn(docFn(db,COL.WIDGETS,widgetId),{data:{content},updatedAt:serverTimestampFn()},{merge:true})}
+async function addTask(widgetId, input){
+    var text = input.value.trim(); if(!text) return; input.value = '';
+    var db = window.db, COL = window.COL, docFn = window.docFn, getDocFn = window.getDocFn, setDocFn = window.setDocFn, sts = window.serverTimestampFn;
+    var ref = docFn(db, COL.WIDGETS, widgetId); var snap = await getDocFn(ref);
+    if(snap.exists()){ var w = snap.data(); var tasks = w.data && w.data.tasks ? w.data.tasks : []; tasks.push({text:text,done:false}); await setDocFn(ref, {data: Object.assign({}, w.data, {tasks:tasks}), updatedAt:sts()}, {merge:true}); }
+}
+
+async function toggleTask(widgetId, index){
+    var db = window.db, COL = window.COL, docFn = window.docFn, getDocFn = window.getDocFn, setDocFn = window.setDocFn, sts = window.serverTimestampFn;
+    var ref = docFn(db, COL.WIDGETS, widgetId); var snap = await getDocFn(ref);
+    if(snap.exists()){ var w = snap.data(); var tasks = w.data && w.data.tasks ? w.data.tasks : []; if(tasks[index]){ tasks[index].done = !tasks[index].done; await setDocFn(ref, {data: Object.assign({}, w.data, {tasks:tasks}), updatedAt:sts()}, {merge:true}); } }
+}
+
+async function saveNotes(widgetId, content){
+    var db = window.db, COL = window.COL, docFn = window.docFn, setDocFn = window.setDocFn, sts = window.serverTimestampFn;
+    await setDocFn(docFn(db, COL.WIDGETS, widgetId), {data: {content: content}, updatedAt:sts()}, {merge:true});
+}
 
 // ===== EMBED =====
-function detectEmbedType(url){try{const h=new URL(url).hostname;if(h.includes('youtube.com')||h.includes('youtu.be'))return'youtube';if(h.includes('vimeo.com'))return'vimeo';if(h.includes('figma.com'))return'figma';if(h.includes('docs.google.com'))return'gdocs';return'website'}catch(e){return'invalid'}}
-async function embedContent(widgetId,url){
-    if(!url)return;const container=document.getElementById(`embedContainer_${widgetId}`);
-    const type=detectEmbedType(url);
-    if(type==='youtube'){const vid=url.match(/(?:v=|\/)([\w-]{11})/)?.[1];if(vid)container.innerHTML=`<div class="embed-preview"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe></div>`}
-    else if(type==='vimeo'){const vid=url.match(/vimeo\.com\/(\d+)/)?.[1];if(vid)container.innerHTML=`<div class="embed-preview"><iframe src="https://player.vimeo.com/video/${vid}" allowfullscreen></iframe></div>`}
-    else if(type==='gdocs'){container.innerHTML=`<div class="embed-preview"><iframe src="${url}" allowfullscreen></iframe></div>`}
-    else if(type==='figma'){container.innerHTML=`<div class="embed-preview"><iframe src="https://www.figma.com/embed?embed_host=astra&url=${encodeURIComponent(url)}" allowfullscreen></iframe></div>`}
-    else{container.innerHTML=`<div style="text-align:center;padding:16px"><p style="color:#999;font-size:11px;margin-bottom:6px">Preview not available</p><a href="${url}" target="_blank" style="color:var(--orange-500);font-size:11px;font-weight:600">Open in new tab →</a></div>`}
+function detectEmbedType(url){
+    try { var h = new URL(url).hostname; if(h.includes('youtube.com')||h.includes('youtu.be')) return 'youtube'; if(h.includes('vimeo.com')) return 'vimeo'; if(h.includes('figma.com')) return 'figma'; if(h.includes('docs.google.com')) return 'gdocs'; return 'website'; } catch(e){ return 'invalid'; }
+}
+
+async function embedContent(widgetId, url){
+    if(!url) return;
+    var container = document.getElementById('embedContainer_' + widgetId);
+    var type = detectEmbedType(url);
+    if(type === 'youtube'){ var vid = url.match(/(?:v=|\/)([\w-]{11})/); vid = vid ? vid[1] : null; if(vid) container.innerHTML = '<div class="embed-preview"><iframe src="https://www.youtube.com/embed/' + vid + '" allowfullscreen></iframe></div>'; }
+    else if(type === 'vimeo'){ var vid = url.match(/vimeo\.com\/(\d+)/); vid = vid ? vid[1] : null; if(vid) container.innerHTML = '<div class="embed-preview"><iframe src="https://player.vimeo.com/video/' + vid + '" allowfullscreen></iframe></div>'; }
+    else if(type === 'gdocs'){ container.innerHTML = '<div class="embed-preview"><iframe src="' + url + '" allowfullscreen></iframe></div>'; }
+    else if(type === 'figma'){ container.innerHTML = '<div class="embed-preview"><iframe src="https://www.figma.com/embed?embed_host=astra&url=' + encodeURIComponent(url) + '" allowfullscreen></iframe></div>'; }
+    else { container.innerHTML = '<div style="text-align:center;padding:16px"><p style="color:#999;font-size:11px;margin-bottom:6px">Preview not available</p><a href="' + url + '" target="_blank" style="color:var(--orange-500);font-size:11px;font-weight:600">Open in new tab →</a></div>'; }
 }
 
 // ===== CLOCK =====
-function startClock(widgetId){const update=()=>{const el=document.getElementById(`clock_${widgetId}`);if(!el)return;const now=new Date();el.textContent=now.toLocaleTimeString();const dateEl=document.getElementById(`clockDate_${widgetId}`);if(dateEl)dateEl.textContent=now.toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})};update();setInterval(update,1000)}
+function startClock(widgetId){
+    var update = function(){
+        var el = document.getElementById('clock_' + widgetId);
+        if(!el) return;
+        var now = new Date();
+        el.textContent = now.toLocaleTimeString();
+        var dateEl = document.getElementById('clockDate_' + widgetId);
+        if(dateEl) dateEl.textContent = now.toLocaleDateString(undefined, {weekday:'short', month:'short', day:'numeric'});
+    };
+    update();
+    setInterval(update, 1000);
+}
 
 // ===== CALCULATOR =====
-function calcInput(widgetId,key){const input=document.getElementById(`calcInput_${widgetId}`);if(input)input.value+=key}
-function calcResult(widgetId){const input=document.getElementById(`calcInput_${widgetId}`);if(!input)return;try{input.value=Function('"use strict";return ('+input.value+')')()}catch(e){input.value='Error'}}
-function calcClear(widgetId){const input=document.getElementById(`calcInput_${widgetId}`);if(input)input.value=''}
+function calcInput(widgetId, key){ var input = document.getElementById('calcInput_' + widgetId); if(input) input.value += key; }
+function calcResult(widgetId){ var input = document.getElementById('calcInput_' + widgetId); if(!input) return; try { input.value = Function('"use strict";return (' + input.value + ')')(); } catch(e){ input.value = 'Error'; } }
+function calcClear(widgetId){ var input = document.getElementById('calcInput_' + widgetId); if(input) input.value = ''; }
 
 // ===== RENDER WIDGETS =====
 function renderWidgets(){
-    const grid=$('widgetGrid');const empty=$('emptyState');const wData=window.widgetsData||[];
-    if(wData.length===0){grid.innerHTML='';empty.style.display='flex';return}
-    empty.style.display='none';
-    grid.innerHTML=wData.map(w=>{
-        const menuItems=getWidgetMenuItems(w);
-        let body='';
+    var grid = D('widgetGrid');
+    var empty = D('emptyState');
+    var wData = window.widgetsData || [];
+    
+    if(wData.length === 0){ grid.innerHTML = ''; empty.style.display = 'flex'; return; }
+    empty.style.display = 'none';
+    
+    grid.innerHTML = wData.map(function(w){
+        var menuItems = getWidgetMenuItems(w);
+        var body = '';
+        
         switch(w.type){
-            case'bookmarks':{const bm=w.data?.bookmarks||[];body=`<input type="url" class="widget-input" id="bmInput_${w.id}" placeholder="Paste URL and press Enter" onkeydown="if(event.key==='Enter')addBookmark('${w.id}',this)">`;body+=bm.map(b=>`<a href="${b.url}" target="_blank" class="bookmark-item" rel="noopener"><img src="${b.favicon}" class="bookmark-favicon" onerror="this.style.display='none'"><div class="bookmark-info"><div class="bookmark-btitle">${b.title}</div>${b.description?`<div class="bookmark-desc">${b.description}</div>`:''}<div class="bookmark-burl">${b.hostname||''}</div></div></a>`).join('');break}
-            case'notes':body=`<div class="note-toolbar"><button title="Bold" onclick="document.execCommand('bold')"><b>B</b></button><button title="Italic" onclick="document.execCommand('italic')"><i>I</i></button><button title="Underline" onclick="document.execCommand('underline')"><u>U</u></button><button title="List" onclick="document.execCommand('insertUnorderedList')">≡</button><button title="Link" onclick="const u=prompt('URL:');if(u)document.execCommand('createLink',false,u)">🔗</button></div><textarea class="widget-textarea" placeholder="Write your notes here..." oninput="saveNotes('${w.id}',this.value)">${w.data?.content||''}</textarea>`;break;
-            case'tasks':{const tasks=w.data?.tasks||[];const done=tasks.filter(t=>t.done).length;const pct=tasks.length?Math.round(done/tasks.length*100):0;body=`${tasks.length>0?`<div class="task-progress"><div class="task-progress-bar" style="width:${pct}%"></div></div><div style="font-size:10px;color:#999;margin-bottom:6px">${done}/${tasks.length} done (${pct}%)</div>`:''}<input type="text" class="widget-input" placeholder="New task + Enter" onkeydown="if(event.key==='Enter')addTask('${w.id}',this)">`;body+=tasks.map((t,i)=>`<div class="task-item" onclick="toggleTask('${w.id}',${i})"><iconify-icon icon="${t.done?'mdi:checkbox-marked':'mdi:checkbox-blank-outline'}" width="15" height="15" style="color:${t.done?'var(--green-500)':'#ccc'};flex-shrink:0"></iconify-icon><span style="text-decoration:${t.done?'line-through':'none'};opacity:${t.done?'0.5':'1'};font-size:12px">${t.text}</span></div>`).join('');break}
-            case'embed':body=`<input type="url" class="widget-input" id="embedInput_${w.id}" placeholder="Paste URL (YouTube, Figma, Docs...)" onkeydown="if(event.key==='Enter')embedContent('${w.id}',this.value)"><div id="embedContainer_${w.id}"><div style="text-align:center;padding:24px;color:#bbb"><iconify-icon icon="mdi:code-tags" width="28" height="28"></iconify-icon><p style="margin-top:6px;font-size:11px">Paste a URL to embed</p></div></div>`;break;
-            case'project':body=`<input type="text" class="widget-input" placeholder="Project name"><input type="url" class="widget-input" placeholder="GitHub repo URL (optional)"><div style="text-align:center;padding:16px;color:#bbb;font-size:11px">Add a project to get started</div>`;break;
-            case'clock':body=`<div class="clock-display"><div class="clock-time" id="clock_${w.id}">--:--:--</div><div class="clock-date" id="clockDate_${w.id}"></div></div>`;setTimeout(()=>startClock(w.id),100);break;
-            case'calculator':body=`<div class="calc-display" id="calcDisplay_${w.id}">0</div><div class="calc-grid">${['C','÷','×','−','7','8','9','+','4','5','6','=','1','2','3','.','0','00',''].map(k=>{const acts={'C':'C','÷':'/','×':'*','−':'-'};const v=acts[k]||k;if(k==='C')return`<button class="calc-btn" onclick="calcClear('${w.id}')" style="color:var(--red-500)">C</button>`;if(k==='=')return`<button class="calc-btn equals" onclick="calcResult('${w.id}')">=</button>`;if('÷×−+'.includes(k))return`<button class="calc-btn operator" onclick="calcInput('${w.id}','${v}')">${k}</button>`;if(!k)return'<div></div>';return`<button class="calc-btn" onclick="calcInput('${w.id}','${v}')">${k}</button>`}).join('')}</div><input type="hidden" id="calcInput_${w.id}" value="">`;break;
-            case'gallery':body=`<div class="gallery-grid" id="galleryGrid_${w.id}"><div style="text-align:center;padding:20px;color:#bbb;grid-column:1/-1"><iconify-icon icon="mdi:image-multiple-outline" width="28" height="28"></iconify-icon><p style="margin-top:6px;font-size:11px">Upload images</p></div></div><input type="file" class="widget-input" accept="image/*" multiple style="margin-top:6px">`;break;
-            case'rss':body=`<input type="url" class="widget-input" id="rssInput_${w.id}" placeholder="Enter RSS feed URL"><div id="rssContent_${w.id}"><div style="text-align:center;padding:20px;color:#bbb"><iconify-icon icon="mdi:rss" width="28" height="28"></iconify-icon><p style="margin-top:6px;font-size:11px">Enter an RSS feed URL</p></div></div>`;break;
-            default:body='<p style="color:#999;text-align:center;padding:16px">Widget ready</p>';
+            case 'bookmarks':
+                var bm = w.data && w.data.bookmarks ? w.data.bookmarks : [];
+                body = '<input type="url" class="widget-input" id="bmInput_' + w.id + '" placeholder="Paste URL and press Enter" onkeydown="if(event.key===\'Enter\')addBookmark(\'' + w.id + '\',this)">';
+                body += bm.map(function(b){
+                    return '<a href="' + b.url + '" target="_blank" class="bookmark-item" rel="noopener"><img src="' + b.favicon + '" class="bookmark-favicon" onerror="this.style.display=\'none\'"><div class="bookmark-info"><div class="bookmark-btitle">' + (b.title || '') + '</div>' + (b.description ? '<div class="bookmark-desc">' + b.description + '</div>' : '') + '<div class="bookmark-burl">' + (b.hostname || '') + '</div></div></a>';
+                }).join('');
+                break;
+            case 'notes':
+                body = '<div class="note-toolbar"><button title="Bold" onclick="document.execCommand(\'bold\')"><b>B</b></button><button title="Italic" onclick="document.execCommand(\'italic\')"><i>I</i></button><button title="Underline" onclick="document.execCommand(\'underline\')"><u>U</u></button><button title="List" onclick="document.execCommand(\'insertUnorderedList\')">≡</button><button title="Link" onclick="var u=prompt(\'URL:\');if(u)document.execCommand(\'createLink\',false,u)">🔗</button></div><textarea class="widget-textarea" placeholder="Write your notes here..." oninput="saveNotes(\'' + w.id + '\',this.value)">' + (w.data && w.data.content ? w.data.content : '') + '</textarea>';
+                break;
+            case 'tasks':
+                var tasks = w.data && w.data.tasks ? w.data.tasks : [];
+                var done = tasks.filter(function(t){ return t.done; }).length;
+                var pct = tasks.length ? Math.round(done / tasks.length * 100) : 0;
+                body = (tasks.length > 0 ? '<div class="task-progress"><div class="task-progress-bar" style="width:' + pct + '%"></div></div><div style="font-size:10px;color:#999;margin-bottom:6px">' + done + '/' + tasks.length + ' done (' + pct + '%)</div>' : '');
+                body += '<input type="text" class="widget-input" placeholder="New task + Enter" onkeydown="if(event.key===\'Enter\')addTask(\'' + w.id + '\',this)">';
+                body += tasks.map(function(t, i){
+                    return '<div class="task-item" onclick="toggleTask(\'' + w.id + '\',' + i + ')"><iconify-icon icon="' + (t.done ? 'mdi:checkbox-marked' : 'mdi:checkbox-blank-outline') + '" width="15" height="15" style="color:' + (t.done ? 'var(--green-500)' : '#ccc') + ';flex-shrink:0"></iconify-icon><span style="text-decoration:' + (t.done ? 'line-through' : 'none') + ';opacity:' + (t.done ? '0.5' : '1') + ';font-size:12px">' + t.text + '</span></div>';
+                }).join('');
+                break;
+            case 'embed':
+                body = '<input type="url" class="widget-input" id="embedInput_' + w.id + '" placeholder="Paste URL (YouTube, Figma, Docs...)" onkeydown="if(event.key===\'Enter\')embedContent(\'' + w.id + '\',this.value)"><div id="embedContainer_' + w.id + '"><div style="text-align:center;padding:24px;color:#bbb"><iconify-icon icon="mdi:code-tags" width="28" height="28"></iconify-icon><p style="margin-top:6px;font-size:11px">Paste a URL to embed</p></div></div>';
+                break;
+            case 'project':
+                body = '<input type="text" class="widget-input" placeholder="Project name"><input type="url" class="widget-input" placeholder="GitHub repo URL (optional)"><div style="text-align:center;padding:16px;color:#bbb;font-size:11px">Add a project to get started</div>';
+                break;
+            case 'clock':
+                body = '<div class="clock-display"><div class="clock-time" id="clock_' + w.id + '">--:--:--</div><div class="clock-date" id="clockDate_' + w.id + '"></div></div>';
+                setTimeout(function(){ startClock(w.id); }, 100);
+                break;
+            case 'calculator':
+                var keys = ['C','÷','×','−','7','8','9','+','4','5','6','=','1','2','3','.','0','00',''];
+                body = '<div class="calc-display" id="calcDisplay_' + w.id + '">0</div><div class="calc-grid">';
+                body += keys.map(function(k){
+                    var acts = {'C':'C','÷':'/','×':'*','−':'-'};
+                    var v = acts[k] || k;
+                    if(k === 'C') return '<button class="calc-btn" onclick="calcClear(\'' + w.id + '\')" style="color:var(--red-500)">C</button>';
+                    if(k === '=') return '<button class="calc-btn equals" onclick="calcResult(\'' + w.id + '\')">=</button>';
+                    if('÷×−+'.indexOf(k) >= 0) return '<button class="calc-btn operator" onclick="calcInput(\'' + w.id + '\',\'' + v + '\')">' + k + '</button>';
+                    if(!k) return '<div></div>';
+                    return '<button class="calc-btn" onclick="calcInput(\'' + w.id + '\',\'' + v + '\')">' + k + '</button>';
+                }).join('');
+                body += '</div><input type="hidden" id="calcInput_' + w.id + '" value="">';
+                break;
+            case 'gallery':
+                body = '<div class="gallery-grid" id="galleryGrid_' + w.id + '"><div style="text-align:center;padding:20px;color:#bbb;grid-column:1/-1"><iconify-icon icon="mdi:image-multiple-outline" width="28" height="28"></iconify-icon><p style="margin-top:6px;font-size:11px">Upload images</p></div></div><input type="file" class="widget-input" accept="image/*" multiple style="margin-top:6px">';
+                break;
+            case 'rss':
+                body = '<input type="url" class="widget-input" id="rssInput_' + w.id + '" placeholder="Enter RSS feed URL"><div id="rssContent_' + w.id + '"><div style="text-align:center;padding:20px;color:#bbb"><iconify-icon icon="mdi:rss" width="28" height="28"></iconify-icon><p style="margin-top:6px;font-size:11px">Enter an RSS feed URL</p></div></div>';
+                break;
+            default:
+                body = '<p style="color:#999;text-align:center;padding:16px">Widget ready</p>';
         }
-        return`<div class="widget" data-id="${w.id}"><div class="widget-header"><span class="widget-title" contenteditable="true" data-id="${w.id}" spellcheck="false" onblur="renameWidget('${w.id}',this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${w.title||'Untitled'}</span><div class="widget-hover-actions"><button class="widget-action-btn" title="Edit title" onclick="editWidgetTitle('${w.id}')"><iconify-icon icon="mdi:pencil-outline" width="14" height="14"></iconify-icon></button><div style="position:relative"><button class="widget-menu-btn" title="Menu" onclick="toggleWidgetMenu('${w.id}',event)"><iconify-icon icon="mdi:dots-horizontal" width="16" height="16"></iconify-icon></button><div class="dropdown-menu left" id="widgetMenu_${w.id}" style="min-width:180px">${menuItems.map(m=>m.label==='divider'?'<div class="dropdown-divider"></div>':`<button class="dropdown-item${m.danger?' danger':''}" onclick="${m.action};$('widgetMenu_${w.id}').classList.remove('show')"><iconify-icon icon="${m.icon}" width="14" height="14"></iconify-icon>${m.label}</button>`).join('')}</div></div></div></div><div class="widget-body">${body}</div></div>`;
+        
+        var menuHTML = menuItems.map(function(m){
+            if(m.label === 'divider') return '<div class="dropdown-divider"></div>';
+            return '<button class="dropdown-item' + (m.danger ? ' danger' : '') + '" onclick="' + m.action + ';document.getElementById(\'widgetMenu_' + w.id + '\').classList.remove(\'show\')"><iconify-icon icon="' + m.icon + '" width="14" height="14"></iconify-icon>' + m.label + '</button>';
+        }).join('');
+        
+        return '<div class="widget" data-id="' + w.id + '"><div class="widget-header"><span class="widget-title" contenteditable="true" data-id="' + w.id + '" spellcheck="false" onblur="renameWidget(\'' + w.id + '\',this.textContent)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();this.blur()}">' + (w.title || 'Untitled') + '</span><div class="widget-hover-actions"><button class="widget-action-btn" title="Edit title" onclick="editWidgetTitle(\'' + w.id + '\')"><iconify-icon icon="mdi:pencil-outline" width="14" height="14"></iconify-icon></button><div style="position:relative"><button class="widget-menu-btn" title="Menu" onclick="toggleWidgetMenu(\'' + w.id + '\',event)"><iconify-icon icon="mdi:dots-horizontal" width="16" height="16"></iconify-icon></button><div class="dropdown-menu left" id="widgetMenu_' + w.id + '" style="min-width:180px">' + menuHTML + '</div></div></div></div><div class="widget-body">' + body + '</div></div>';
     }).join('');
 }
 
 // ===== CLICK OUTSIDE =====
-document.addEventListener('click',(e)=>{
-    if(!e.target.closest('.dropdown')){$('avatarMenu').classList.remove('show');document.querySelectorAll('.dropdown-menu.show').forEach(m=>{if(!m.id.startsWith('widgetMenu'))m.classList.remove('show')})}
-    if(e.target.classList.contains('modal-overlay'))e.target.classList.remove('show');
-    if(!e.target.closest('.widget-menu-btn')&&!e.target.closest('.dropdown-menu')){document.querySelectorAll('[id^="widgetMenu_"]').forEach(m=>m.classList.remove('show'))}
+document.addEventListener('click', function(e){
+    if(!e.target.closest('.dropdown')){
+        D('avatarMenu').classList.remove('show');
+    }
+    if(e.target.classList.contains('modal-overlay')){
+        e.target.classList.remove('show');
+    }
+    if(!e.target.closest('.widget-menu-btn') && !e.target.closest('.dropdown-menu')){
+        document.querySelectorAll('[id^="widgetMenu_"]').forEach(function(m){ m.classList.remove('show'); });
+    }
 });
-document.addEventListener('keydown',(e)=>{if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));$('avatarMenu').classList.remove('show');closePagesSidebar();document.querySelectorAll('[id^="widgetMenu_"]').forEach(m=>m.classList.remove('show'))}});
+
+document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+        document.querySelectorAll('.modal-overlay.show').forEach(function(m){ m.classList.remove('show'); });
+        D('avatarMenu').classList.remove('show');
+        closePagesSidebar();
+        document.querySelectorAll('[id^="widgetMenu_"]').forEach(function(m){ m.classList.remove('show'); });
+    }
+});
 
 // ===== SIGN OUT =====
-async function handleSignOut(){const{auth}=window;const{signOut}=await import("https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js");await signOut(auth);window.location.href='sign.html'}
+async function handleSignOut(){
+    var auth = window.auth;
+    var mod = await import("https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js");
+    await mod.signOut(auth);
+    window.location.href = 'sign.html';
+}
 </script>
 
 </body>
