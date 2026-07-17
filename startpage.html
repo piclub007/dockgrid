@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DockGrid - Your Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <title>DockGrid - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js">
     </script>
     <style>
         /* ============================================================
-               CSS VARIABLES & RESET
-               ============================================================ */
+           RESET & BASE
+           ============================================================ */
         *,
         *::before,
         *::after {
@@ -21,12 +21,10 @@
 
         :root {
             --orange-500: #ff6b35;
-            --orange-600: #e85d2c;
             --orange-400: #ff8c5a;
             --orange-300: #ffb088;
             --orange-100: #fff0e8;
             --orange-50: #fff8f4;
-
             --black-100: #000000;
             --black-90: #0a0a0a;
             --black-80: #1a1a1a;
@@ -38,7 +36,6 @@
             --black-20: #bbbbbb;
             --black-10: #dddddd;
             --black-5: #f0f0f0;
-
             --white: #ffffff;
             --white-alpha-10: rgba(255, 255, 255, 0.1);
             --white-alpha-20: rgba(255, 255, 255, 0.2);
@@ -47,29 +44,20 @@
             --white-alpha-70: rgba(255, 255, 255, 0.7);
             --white-alpha-80: rgba(255, 255, 255, 0.8);
             --white-alpha-90: rgba(255, 255, 255, 0.9);
-
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
             --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
             --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
             --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
-
-            --radius-xs: 4px;
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
             --radius-xl: 20px;
-            --radius-2xl: 24px;
             --radius-full: 9999px;
-
             --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-
             --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
-
-            --header-height: 64px;
-            --sidebar-width: 280px;
+            --header-height: 56px;
             --widget-gap: 16px;
             --widget-min-width: 200px;
             --widget-min-height: 140px;
@@ -81,36 +69,31 @@
             font-family: var(--font-sans);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            background: var(--black-5);
-            color: var(--black-90);
             overflow: hidden;
+            background: var(--black-90);
         }
 
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 4px;
         }
         ::-webkit-scrollbar-track {
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--black-20);
+            background: var(--white-alpha-30);
             border-radius: var(--radius-full);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--black-30);
         }
 
         /* ============================================================
-               LOADING SCREEN
-               ============================================================ */
+           LOADING SCREEN
+           ============================================================ */
         .loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--white);
+            background: var(--black-90);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -119,342 +102,161 @@
             gap: 20px;
             transition: opacity 0.5s ease;
         }
-
         .loading-screen.hidden {
             opacity: 0;
             pointer-events: none;
         }
-
         .loading-screen__spinner {
-            width: 48px;
-            height: 48px;
-            border: 4px solid var(--black-10);
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--white-alpha-20);
             border-top-color: var(--orange-500);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
-
-        .loading-screen__text {
-            font-size: 16px;
-            color: var(--black-50);
-            font-weight: 500;
-        }
-
         .loading-screen__logo {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 900;
-            font-family: var(--font-mono);
-            color: var(--black-100);
+            font-family: var(--font-sans);
+            color: var(--white);
+            letter-spacing: -1px;
         }
-
         .loading-screen__logo span {
             color: var(--orange-500);
         }
 
         /* ============================================================
-               APP SHELL
-               ============================================================ */
+           APP
+           ============================================================ */
         .app {
-            display: flex;
+            width: 100%;
             height: 100vh;
             height: 100dvh;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.5s ease;
+            position: relative;
+            overflow: hidden;
         }
-
         .app.visible {
             opacity: 1;
         }
 
         /* ============================================================
-               SIDEBAR
-               ============================================================ */
-        .sidebar {
-            position: fixed;
+           BACKGROUND
+           ============================================================ */
+        .app__bg {
+            position: absolute;
             top: 0;
             left: 0;
-            width: var(--sidebar-width);
+            width: 100%;
             height: 100%;
-            background: var(--white);
-            border-right: 1px solid var(--black-10);
-            transform: translateX(-100%);
-            transition: transform var(--transition-slow);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            padding: 20px 16px;
-            box-shadow: var(--shadow-xl);
-            overflow-y: auto;
+            background: var(--black-90);
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.6s ease;
+            z-index: 0;
+        }
+        .app__bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            /* 10% dark overlay = 90% visibility */
+            z-index: 1;
         }
 
-        .sidebar.open {
-            transform: translateX(0);
-        }
-
-        .sidebar__header {
+        /* ============================================================
+           HEADER (No background, transparent)
+           ============================================================ */
+        .header {
+            position: relative;
+            z-index: 10;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--black-10);
-        }
-
-        .sidebar__logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 800;
-            font-size: 18px;
-            font-family: var(--font-mono);
-            color: var(--black-100);
-        }
-
-        .sidebar__logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--black-100);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--orange-500);
-            font-size: 16px;
-            font-weight: 900;
-        }
-
-        .sidebar__close {
-            background: none;
-            border: none;
-            font-size: 22px;
-            color: var(--black-40);
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            transition: all var(--transition-fast);
-        }
-        .sidebar__close:hover {
-            background: var(--black-5);
-            color: var(--black-100);
-        }
-
-        .sidebar__title {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--black-40);
-            margin-bottom: 12px;
-        }
-
-        .sidebar__pages {
-            flex: 1;
-            overflow-y: auto;
-        }
-
-        .sidebar__page-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--black-60);
-            margin-bottom: 2px;
-        }
-
-        .sidebar__page-item:hover {
-            background: var(--black-5);
-            color: var(--black-100);
-        }
-
-        .sidebar__page-item.active {
-            background: var(--orange-50);
-            color: var(--orange-500);
-            font-weight: 600;
-        }
-
-        .sidebar__page-item .icon {
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-        }
-
-        .sidebar__page-item .badge {
-            margin-left: auto;
-            font-size: 11px;
-            background: var(--black-5);
-            padding: 2px 10px;
-            border-radius: var(--radius-full);
-            color: var(--black-40);
-        }
-
-        .sidebar__add-page {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            margin-top: 8px;
-            border: 2px dashed var(--black-10);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            color: var(--black-40);
-            font-weight: 600;
-            font-size: 13px;
-            background: transparent;
-            width: 100%;
-        }
-
-        .sidebar__add-page:hover {
-            border-color: var(--orange-500);
-            color: var(--orange-500);
-            background: var(--orange-50);
-        }
-
-        .sidebar__footer {
-            margin-top: auto;
-            padding-top: 16px;
-            border-top: 1px solid var(--black-10);
-        }
-
-        .sidebar__footer-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            font-size: 13px;
-            color: var(--black-50);
-        }
-
-        .sidebar__footer-item:hover {
-            background: var(--black-5);
-            color: var(--black-100);
-        }
-
-        /* ============================================================
-               MAIN CONTENT
-               ============================================================ */
-        .main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            overflow: hidden;
-            margin-left: 0;
-            transition: margin-left var(--transition-slow);
-        }
-
-        .main.sidebar-open {
-            margin-left: var(--sidebar-width);
-        }
-
-        /* ============================================================
-               TOP NAV
-               ============================================================ */
-        .topnav {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0 24px;
+            padding: 12px 24px;
             height: var(--header-height);
-            background: var(--white);
-            border-bottom: 1px solid var(--black-10);
             flex-shrink: 0;
-            z-index: 100;
-            position: sticky;
-            top: 0;
         }
 
-        .topnav__hamburger {
-            background: none;
-            border: none;
-            font-size: 22px;
-            cursor: pointer;
-            padding: 6px;
-            border-radius: var(--radius-sm);
-            transition: all var(--transition-fast);
-            color: var(--black-60);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .topnav__hamburger:hover {
-            background: var(--black-5);
-            color: var(--black-100);
-        }
-
-        .topnav__page-name {
-            font-weight: 700;
-            font-size: 16px;
-            color: var(--black-100);
-            letter-spacing: -0.3px;
-            margin-right: auto;
-        }
-
-        .topnav__page-name .sub {
-            font-weight: 400;
-            color: var(--black-40);
-            font-size: 12px;
-        }
-
-        .topnav__actions {
+        .header__left {
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
-        .topnav__btn {
+        .header__logo {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.5px;
+            font-family: var(--font-sans);
+        }
+        .header__logo span {
+            color: var(--orange-500);
+        }
+
+        .header__right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ============================================================
+           HEADER BUTTONS (Transparent, glass)
+           ============================================================ */
+        .header__btn {
             display: flex;
             align-items: center;
             gap: 6px;
             padding: 8px 14px;
             border: none;
-            background: transparent;
-            border-radius: var(--radius-sm);
+            border-radius: var(--radius-full);
             font-size: 13px;
             font-weight: 600;
-            color: var(--black-50);
+            font-family: var(--font-sans);
             cursor: pointer;
             transition: all var(--transition-fast);
-            font-family: var(--font-sans);
-            white-space: nowrap;
-        }
-
-        .topnav__btn:hover {
-            background: var(--black-5);
-            color: var(--black-100);
-        }
-
-        .topnav__btn--primary {
-            background: var(--black-100);
+            background: var(--white-alpha-10);
             color: var(--white);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--white-alpha-10);
         }
-        .topnav__btn--primary:hover {
-            background: var(--orange-500);
-            color: var(--white);
+        .header__btn:hover {
+            background: var(--white-alpha-20);
+            transform: scale(1.02);
         }
-
-        .topnav__btn .icon {
+        .header__btn iconify-icon {
             font-size: 18px;
         }
 
-        .topnav__profile {
-            width: 36px;
-            height: 36px;
+        .header__btn--primary {
+            background: var(--orange-500);
+            color: var(--white);
+            border-color: var(--orange-500);
+        }
+        .header__btn--primary:hover {
+            background: var(--orange-400);
+            transform: scale(1.02);
+        }
+
+        /* ============================================================
+           PROFILE AVATAR (Circle frame)
+           ============================================================ */
+        .header__avatar {
+            width: 38px;
+            height: 38px;
             border-radius: var(--radius-full);
             background: var(--orange-500);
             color: var(--white);
@@ -462,104 +264,100 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 16px;
             cursor: pointer;
-            border: 2px solid transparent;
+            border: 2px solid var(--white-alpha-30);
             transition: all var(--transition-fast);
             flex-shrink: 0;
+            overflow: hidden;
+            position: relative;
         }
-        .topnav__profile:hover {
-            border-color: var(--black-100);
+        .header__avatar:hover {
+            border-color: var(--white);
             transform: scale(1.05);
         }
+        .header__avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
         /* ============================================================
-               SEARCH BAR
-               ============================================================ */
-        .search-section {
-            padding: 20px 24px 16px;
-            flex-shrink: 0;
+           DROPDOWN MENU (Profile click)
+           ============================================================ */
+        .dropdown {
+            position: absolute;
+            top: calc(var(--header-height) + 8px);
+            right: 24px;
             background: var(--white);
-            border-bottom: 1px solid var(--black-5);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-xl);
+            padding: 8px;
+            min-width: 200px;
+            z-index: 100;
+            display: none;
+            animation: fadeDown 200ms ease-out;
+        }
+        .dropdown.open {
+            display: block;
         }
 
-        .search-bar {
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-8px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .dropdown__item {
             display: flex;
             align-items: center;
-            gap: 0;
-            max-width: 720px;
-            margin: 0 auto;
-            background: var(--black-5);
-            border-radius: var(--radius-xl);
-            border: 2px solid transparent;
-            transition: all var(--transition-base);
-            overflow: hidden;
-        }
-
-        .search-bar:focus-within {
-            border-color: var(--orange-500);
-            background: var(--white);
-            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
-        }
-
-        .search-bar__engine {
-            padding: 10px 12px 10px 16px;
-            border: none;
-            background: transparent;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--black-50);
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            font-family: var(--font-sans);
-            outline: none;
-            border-right: 1px solid var(--black-10);
-            min-width: 110px;
-        }
-
-        .search-bar__engine:hover {
-            color: var(--black-100);
-        }
-
-        .search-bar__input {
-            flex: 1;
-            padding: 12px 16px;
-            border: none;
-            background: transparent;
-            font-size: 15px;
-            font-family: var(--font-sans);
-            color: var(--black-100);
-            outline: none;
-            min-width: 0;
-        }
-
-        .search-bar__input::placeholder {
-            color: var(--black-30);
-        }
-
-        .search-bar__btn {
-            padding: 10px 18px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            color: var(--black-30);
             transition: all var(--transition-fast);
-            font-size: 18px;
-            display: flex;
-            align-items: center;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--black-70);
+            border: none;
+            background: none;
+            width: 100%;
+            font-family: var(--font-sans);
         }
-        .search-bar__btn:hover {
-            color: var(--orange-500);
+        .dropdown__item:hover {
+            background: var(--black-5);
+            color: var(--black-100);
+        }
+        .dropdown__item iconify-icon {
+            font-size: 18px;
+            color: var(--black-40);
+        }
+        .dropdown__divider {
+            height: 1px;
+            background: var(--black-10);
+            margin: 4px 8px;
+        }
+        .dropdown__item--danger {
+            color: #ef4444;
+        }
+        .dropdown__item--danger:hover {
+            background: #fef2f2;
         }
 
         /* ============================================================
-               DASHBOARD GRID
-               ============================================================ */
+           DASHBOARD CONTENT
+           ============================================================ */
         .dashboard {
+            position: relative;
+            z-index: 5;
             flex: 1;
             overflow-y: auto;
-            padding: 16px 24px 32px;
-            background: var(--bg-dashboard, var(--black-5));
-            transition: background var(--transition-slow);
+            padding: 8px 24px 32px;
         }
 
         .dashboard__grid {
@@ -572,61 +370,44 @@
         .dashboard__empty {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 80px 20px;
-            color: var(--black-30);
+            padding: 60px 20px;
+            color: var(--white-alpha-50);
         }
-
         .dashboard__empty .icon {
-            font-size: 64px;
-            margin-bottom: 16px;
+            font-size: 56px;
+            margin-bottom: 12px;
+            opacity: 0.6;
         }
-
         .dashboard__empty h3 {
             font-weight: 700;
-            color: var(--black-60);
-            font-size: 20px;
+            color: var(--white-alpha-80);
+            font-size: 18px;
         }
-
         .dashboard__empty p {
-            margin-top: 8px;
-            font-size: 15px;
+            margin-top: 6px;
+            font-size: 14px;
+            color: var(--white-alpha-40);
         }
 
         /* ============================================================
-               WIDGET
-               ============================================================ */
+           WIDGETS (Glassmorphism)
+           ============================================================ */
         .widget {
-            background: var(--white);
+            background: var(--white-alpha-10);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--white-alpha-10);
             border-radius: var(--radius-md);
-            border: 1px solid var(--black-10);
-            box-shadow: var(--shadow-sm);
             overflow: hidden;
             transition: all var(--transition-base);
-            cursor: grab;
             min-height: var(--widget-min-height);
             display: flex;
             flex-direction: column;
             position: relative;
         }
-
         .widget:hover {
-            box-shadow: var(--shadow-md);
-            border-color: var(--black-20);
-        }
-
-        .widget.dragging {
-            opacity: 0.5;
-            transform: scale(0.97);
-        }
-
-        .widget.drag-over {
-            border-color: var(--orange-500);
-            border-style: dashed;
-            background: var(--orange-50);
-        }
-
-        .widget.resizing {
-            user-select: none;
+            background: var(--white-alpha-15);
+            border-color: var(--white-alpha-20);
         }
 
         .widget--small {
@@ -659,162 +440,123 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 16px;
-            border-bottom: 1px solid var(--black-5);
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--white-alpha-10);
             flex-shrink: 0;
-            min-height: 48px;
+            min-height: 42px;
         }
-
         .widget__header-icon {
             font-size: 16px;
+            color: var(--white-alpha-70);
         }
-
         .widget__header-title {
-            font-weight: 700;
+            font-weight: 600;
             font-size: 13px;
-            color: var(--black-80);
+            color: var(--white);
             flex: 1;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .widget__header-actions {
             display: flex;
             gap: 2px;
-            opacity: 0;
+            opacity: 0.4;
             transition: opacity var(--transition-fast);
         }
-
-        .widget:hover .widget__header-actions,
-        .widget.editing .widget__header-actions {
+        .widget:hover .widget__header-actions {
             opacity: 1;
         }
-
         .widget__header-btn {
             background: none;
             border: none;
             padding: 4px 6px;
             border-radius: var(--radius-xs);
             cursor: pointer;
-            color: var(--black-30);
+            color: var(--white-alpha-50);
             font-size: 14px;
             transition: all var(--transition-fast);
             display: flex;
             align-items: center;
         }
-
         .widget__header-btn:hover {
-            background: var(--black-5);
-            color: var(--black-80);
+            background: var(--white-alpha-10);
+            color: var(--white);
         }
-
         .widget__header-btn.danger:hover {
-            background: #fef2f2;
+            background: rgba(239, 68, 68, 0.3);
             color: #ef4444;
         }
 
         .widget__body {
-            padding: 16px;
+            padding: 14px;
             flex: 1;
             overflow-y: auto;
             min-height: 60px;
+            color: var(--white);
         }
-
         .widget__body--empty {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--black-30);
+            color: var(--white-alpha-40);
             font-size: 13px;
             font-weight: 500;
             min-height: 80px;
         }
 
         .widget__footer {
-            padding: 8px 16px;
-            border-top: 1px solid var(--black-5);
+            padding: 6px 14px;
+            border-top: 1px solid var(--white-alpha-10);
             font-size: 11px;
-            color: var(--black-30);
+            color: var(--white-alpha-30);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-shrink: 0;
         }
 
-        .widget__resize-handle {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 16px;
-            height: 16px;
-            cursor: nwse-resize;
-            opacity: 0;
-            transition: opacity var(--transition-fast);
-        }
-
-        .widget:hover .widget__resize-handle {
-            opacity: 0.5;
-        }
-
-        .widget__resize-handle::after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            width: 8px;
-            height: 8px;
-            border-right: 2px solid var(--black-20);
-            border-bottom: 2px solid var(--black-20);
-            border-radius: 0 0 2px 0;
-        }
-
         /* ============================================================
-               WIDGET TYPES - SPECIFIC STYLES
-               ============================================================ */
-
+           WIDGET TYPES
+           ============================================================ */
         .bookmark-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+            gap: 10px;
         }
-
         .bookmark-item {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 4px;
-            padding: 8px 4px;
+            padding: 6px 4px;
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: all var(--transition-fast);
             text-decoration: none;
-            color: var(--black-80);
+            color: var(--white-alpha-80);
             text-align: center;
         }
-
         .bookmark-item:hover {
-            background: var(--black-5);
+            background: var(--white-alpha-10);
             transform: translateY(-2px);
         }
-
         .bookmark-item__icon {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            background: var(--black-5);
+            font-size: 18px;
+            background: var(--white-alpha-10);
             flex-shrink: 0;
         }
-
         .bookmark-item__name {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
             line-height: 1.2;
-            max-width: 60px;
+            max-width: 56px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -823,111 +565,98 @@
         .project-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
-
         .project-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
+            gap: 10px;
+            padding: 8px 12px;
             border-radius: var(--radius-sm);
-            background: var(--black-5);
+            background: var(--white-alpha-5);
             cursor: pointer;
             transition: all var(--transition-fast);
         }
-
         .project-item:hover {
-            background: var(--orange-50);
-            transform: translateX(4px);
+            background: var(--white-alpha-10);
         }
-
         .project-item__info {
             flex: 1;
             min-width: 0;
         }
-
         .project-item__name {
             font-weight: 600;
-            font-size: 14px;
-            color: var(--black-80);
+            font-size: 13px;
+            color: var(--white);
         }
-
         .project-item__meta {
-            font-size: 12px;
-            color: var(--black-40);
+            font-size: 11px;
+            color: var(--white-alpha-50);
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
-
         .project-item__progress {
-            width: 80px;
+            width: 60px;
             height: 4px;
-            background: var(--black-10);
+            background: var(--white-alpha-20);
             border-radius: var(--radius-full);
             overflow: hidden;
             flex-shrink: 0;
         }
-
         .project-item__progress-bar {
             height: 100%;
             background: var(--orange-500);
             border-radius: var(--radius-full);
             transition: width 0.6s ease;
         }
-
         .project-item__status {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding: 2px 10px;
+            padding: 2px 8px;
             border-radius: var(--radius-full);
             flex-shrink: 0;
         }
-
         .project-item__status--planning {
-            background: #fef3c7;
-            color: #d97706;
+            background: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
         }
         .project-item__status--progress {
-            background: #dbeafe;
-            color: #2563eb;
+            background: rgba(96, 165, 250, 0.3);
+            color: #60a5fa;
         }
         .project-item__status--completed {
-            background: #d1fae5;
-            color: #059669;
+            background: rgba(52, 211, 153, 0.3);
+            color: #34d399;
         }
         .project-item__status--archived {
-            background: var(--black-5);
-            color: var(--black-40);
+            background: var(--white-alpha-10);
+            color: var(--white-alpha-50);
         }
 
         .task-list {
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 4px;
         }
-
         .task-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 8px 10px;
+            gap: 8px;
+            padding: 6px 8px;
             border-radius: var(--radius-sm);
             transition: all var(--transition-fast);
             cursor: default;
         }
-
         .task-item:hover {
-            background: var(--black-5);
+            background: var(--white-alpha-5);
         }
-
         .task-item__checkbox {
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--black-20);
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--white-alpha-30);
             border-radius: var(--radius-xs);
             cursor: pointer;
             display: flex;
@@ -935,43 +664,37 @@
             justify-content: center;
             transition: all var(--transition-fast);
             flex-shrink: 0;
-            background: var(--white);
+            background: transparent;
+            color: var(--white);
+            font-size: 10px;
         }
-
         .task-item__checkbox:hover {
             border-color: var(--orange-500);
         }
-
         .task-item__checkbox.checked {
             background: var(--orange-500);
             border-color: var(--orange-500);
-            color: var(--white);
         }
-
         .task-item__text {
-            font-size: 14px;
-            color: var(--black-80);
+            font-size: 13px;
+            color: var(--white-alpha-80);
             flex: 1;
         }
-
         .task-item__text.done {
             text-decoration: line-through;
-            color: var(--black-30);
+            color: var(--white-alpha-30);
         }
-
         .task-item__due {
-            font-size: 11px;
-            color: var(--black-40);
+            font-size: 10px;
+            color: var(--white-alpha-40);
             flex-shrink: 0;
         }
-
         .task-item__priority {
-            width: 6px;
-            height: 6px;
+            width: 4px;
+            height: 4px;
             border-radius: var(--radius-full);
             flex-shrink: 0;
         }
-
         .task-item__priority--high {
             background: #ef4444;
         }
@@ -984,40 +707,41 @@
 
         .task-add {
             display: flex;
-            gap: 8px;
-            margin-top: 10px;
+            gap: 6px;
+            margin-top: 8px;
         }
-
         .task-add__input {
             flex: 1;
-            padding: 8px 12px;
-            border: 2px solid var(--black-10);
+            padding: 6px 10px;
+            border: 1px solid var(--white-alpha-20);
             border-radius: var(--radius-sm);
-            font-size: 13px;
+            font-size: 12px;
             font-family: var(--font-sans);
             outline: none;
             transition: all var(--transition-fast);
+            background: var(--white-alpha-5);
+            color: var(--white);
         }
-
         .task-add__input:focus {
             border-color: var(--orange-500);
         }
-
+        .task-add__input::placeholder {
+            color: var(--white-alpha-30);
+        }
         .task-add__btn {
-            padding: 8px 16px;
+            padding: 6px 12px;
             border: none;
-            background: var(--black-100);
+            background: var(--orange-500);
             color: var(--white);
             border-radius: var(--radius-sm);
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             transition: all var(--transition-fast);
             font-family: var(--font-sans);
         }
-
         .task-add__btn:hover {
-            background: var(--orange-500);
+            background: var(--orange-400);
         }
 
         .note-editor {
@@ -1026,119 +750,105 @@
             border: none;
             outline: none;
             font-family: var(--font-sans);
-            font-size: 14px;
-            color: var(--black-80);
+            font-size: 13px;
+            color: var(--white);
             resize: vertical;
             background: transparent;
             line-height: 1.6;
         }
-
         .note-editor::placeholder {
-            color: var(--black-30);
+            color: var(--white-alpha-30);
         }
 
         .weather-display {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
-
         .weather-display__temp {
-            font-size: 42px;
+            font-size: 36px;
             font-weight: 900;
             letter-spacing: -2px;
-            color: var(--black-100);
+            color: var(--white);
         }
-
         .weather-display__temp span {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 400;
-            color: var(--black-40);
+            color: var(--white-alpha-50);
         }
-
         .weather-display__details {
-            font-size: 14px;
-            color: var(--black-50);
+            font-size: 13px;
+            color: var(--white-alpha-60);
         }
-
         .weather-display__details .label {
-            color: var(--black-30);
-            font-size: 12px;
+            color: var(--white-alpha-30);
+            font-size: 11px;
         }
 
         .rss-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
-
         .rss-item {
             display: flex;
-            gap: 12px;
-            padding: 8px 0;
-            border-bottom: 1px solid var(--black-5);
+            gap: 10px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--white-alpha-5);
             cursor: pointer;
             transition: all var(--transition-fast);
             text-decoration: none;
-            color: var(--black-80);
+            color: var(--white-alpha-80);
         }
-
         .rss-item:hover {
-            color: var(--orange-500);
+            color: var(--orange-400);
         }
-
         .rss-item:last-child {
             border-bottom: none;
         }
-
         .rss-item__icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: var(--radius-sm);
-            background: var(--black-5);
+            background: var(--white-alpha-10);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
             flex-shrink: 0;
         }
-
         .rss-item__content {
             flex: 1;
             min-width: 0;
         }
-
         .rss-item__title {
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
         .rss-item__meta {
-            font-size: 11px;
-            color: var(--black-40);
+            font-size: 10px;
+            color: var(--white-alpha-40);
             margin-top: 2px;
         }
 
         .clock-display {
             text-align: center;
-            padding: 12px 0;
+            padding: 8px 0;
         }
-
         .clock-display__time {
-            font-size: 48px;
+            font-size: 40px;
             font-weight: 900;
-            font-family: var(--font-mono);
-            color: var(--black-100);
+            font-family: var(--font-sans);
+            color: var(--white);
             letter-spacing: -2px;
         }
-
         .clock-display__date {
-            font-size: 16px;
-            color: var(--black-40);
+            font-size: 14px;
+            color: var(--white-alpha-50);
             margin-top: 4px;
             font-weight: 500;
         }
@@ -1148,44 +858,38 @@
             grid-template-columns: repeat(7, 1fr);
             gap: 2px;
             text-align: center;
-            font-size: 13px;
+            font-size: 12px;
         }
-
         .calendar-grid__header {
             font-weight: 700;
-            color: var(--black-40);
-            font-size: 11px;
-            padding: 6px 0;
+            color: var(--white-alpha-40);
+            font-size: 10px;
+            padding: 4px 0;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-
         .calendar-grid__day {
-            padding: 6px 0;
+            padding: 4px 0;
             border-radius: var(--radius-xs);
             cursor: default;
             transition: all var(--transition-fast);
-            color: var(--black-60);
+            color: var(--white-alpha-60);
         }
-
         .calendar-grid__day.today {
             background: var(--orange-500);
             color: var(--white);
             font-weight: 700;
         }
-
         .calendar-grid__day.other-month {
-            color: var(--black-20);
+            color: var(--white-alpha-20);
         }
-
         .calendar-grid__day.has-event {
             position: relative;
         }
-
         .calendar-grid__day.has-event::after {
             content: '';
             position: absolute;
-            bottom: 2px;
+            bottom: 1px;
             left: 50%;
             transform: translateX(-50%);
             width: 4px;
@@ -1197,40 +901,37 @@
         .embed-container {
             width: 100%;
             height: 100%;
-            min-height: 200px;
+            min-height: 180px;
             position: relative;
         }
-
         .embed-container iframe {
             width: 100%;
             height: 100%;
-            min-height: 200px;
+            min-height: 180px;
             border: none;
             border-radius: var(--radius-sm);
         }
 
         /* ============================================================
-               MODALS
-               ============================================================ */
+           MODAL
+           ============================================================ */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             z-index: 2000;
             display: none;
             align-items: center;
             justify-content: center;
             animation: fadeIn 200ms ease-out;
         }
-
         .modal-overlay.open {
             display: flex;
         }
-
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -1243,138 +944,155 @@
         }
 
         .modal {
-            background: var(--white);
+            background: var(--black-80);
             border-radius: var(--radius-xl);
-            padding: 32px;
-            max-width: 640px;
+            padding: 28px;
+            max-width: 560px;
             width: 92%;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
             box-shadow: var(--shadow-xl);
+            border: 1px solid var(--white-alpha-10);
         }
-
         .modal__header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
-
         .modal__title {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
-            color: var(--black-100);
+            color: var(--white);
             letter-spacing: -0.5px;
         }
-
         .modal__close {
             background: none;
             border: none;
-            font-size: 24px;
-            color: var(--black-30);
+            font-size: 22px;
+            color: var(--white-alpha-40);
             cursor: pointer;
             padding: 4px;
             border-radius: var(--radius-sm);
             transition: all var(--transition-fast);
         }
-
         .modal__close:hover {
-            background: var(--black-5);
-            color: var(--black-100);
+            background: var(--white-alpha-10);
+            color: var(--white);
         }
-
         .modal__body {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
-
         .modal__footer {
             display: flex;
             gap: 10px;
             justify-content: flex-end;
-            border-top: 1px solid var(--black-10);
-            padding-top: 20px;
+            border-top: 1px solid var(--white-alpha-10);
+            padding-top: 16px;
         }
 
+        /* Widget Picker */
         .widget-picker {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 8px;
         }
-
         .widget-picker__item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 16px 12px;
-            border: 2px solid var(--black-10);
+            gap: 6px;
+            padding: 14px 10px;
+            border: 1px solid var(--white-alpha-10);
             border-radius: var(--radius-md);
             cursor: pointer;
             transition: all var(--transition-fast);
-            background: var(--white);
+            background: var(--white-alpha-5);
             text-align: center;
+            color: var(--white);
         }
-
         .widget-picker__item:hover {
             border-color: var(--orange-500);
-            background: var(--orange-50);
+            background: var(--white-alpha-10);
             transform: translateY(-2px);
         }
-
         .widget-picker__item .icon {
-            font-size: 28px;
+            font-size: 24px;
         }
-
         .widget-picker__item .name {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
+            color: var(--white-alpha-70);
         }
 
-        .bg-controls {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            padding: 12px 16px;
-            background: var(--black-5);
-            border-radius: var(--radius-md);
-            margin-bottom: 12px;
-            align-items: center;
+        /* Background Picker */
+        .bg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 12px;
         }
-
-        .bg-controls__label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--black-40);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .bg-controls__input {
-            padding: 6px 12px;
-            border: 2px solid var(--black-10);
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            font-family: var(--font-sans);
-            outline: none;
-            transition: all var(--transition-fast);
-        }
-
-        .bg-controls__input:focus {
-            border-color: var(--orange-500);
-        }
-
-        .bg-controls__color {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--black-10);
+        .bg-grid__item {
+            aspect-ratio: 16/10;
             border-radius: var(--radius-sm);
             cursor: pointer;
-            padding: 0;
+            border: 2px solid transparent;
+            transition: all var(--transition-fast);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .bg-grid__item:hover {
+            border-color: var(--orange-500);
+            transform: scale(1.03);
+        }
+        .bg-grid__item.active {
+            border-color: var(--orange-500);
+            box-shadow: 0 0 0 3px var(--orange-500);
+        }
+        .bg-grid__item .check {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: var(--orange-500);
+            color: var(--white);
+            border-radius: var(--radius-full);
+            width: 20px;
+            height: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .bg-grid__item.active .check {
+            display: flex;
+        }
+
+        .bg-upload {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border: 2px dashed var(--white-alpha-20);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--white-alpha-50);
+            margin-top: 10px;
+        }
+        .bg-upload:hover {
+            border-color: var(--orange-500);
+            color: var(--orange-500);
+            background: var(--white-alpha-5);
+        }
+        .bg-upload input {
+            display: none;
         }
 
         /* ============================================================
-               TOAST
-               ============================================================ */
+           TOAST
+           ============================================================ */
         .toast-container {
             position: fixed;
             bottom: 24px;
@@ -1382,30 +1100,27 @@
             z-index: 9999;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
-
         .toast {
-            padding: 14px 20px;
-            background: var(--black-100);
+            padding: 12px 18px;
+            background: var(--black-90);
             color: var(--white);
             border-left: 4px solid var(--orange-500);
             border-radius: var(--radius-md);
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
             box-shadow: var(--shadow-lg);
             animation: toastIn 400ms ease-out;
-            max-width: 400px;
+            max-width: 360px;
+            border: 1px solid var(--white-alpha-10);
         }
-
         .toast.success {
             border-left-color: #22c55e;
         }
-
         .toast.error {
             border-left-color: #ef4444;
         }
-
         @keyframes toastIn {
             from {
                 opacity: 0;
@@ -1416,7 +1131,6 @@
                 transform: translateX(0);
             }
         }
-
         @keyframes toastOut {
             from {
                 opacity: 1;
@@ -1429,39 +1143,23 @@
         }
 
         /* ============================================================
-               RESPONSIVE
-               ============================================================ */
+           RESPONSIVE
+           ============================================================ */
         @media (max-width: 768px) {
-            .sidebar {
-                width: 280px;
+            .header {
+                padding: 10px 16px;
             }
-            .main.sidebar-open {
-                margin-left: 0;
-            }
-            .topnav {
-                padding: 0 16px;
-                gap: 8px;
-            }
-            .topnav__btn span {
+            .header__btn span {
                 display: none;
             }
-            .dashboard {
-                padding: 12px 16px 24px;
-            }
-            .search-section {
-                padding: 12px 16px;
-            }
-            .search-bar__engine {
-                min-width: 80px;
-                font-size: 12px;
+            .header__btn {
                 padding: 8px 10px;
             }
-            .widget--medium {
-                grid-column: span 1;
+            .dashboard {
+                padding: 8px 16px 24px;
             }
-            .widget--large {
-                grid-column: span 1;
-            }
+            .widget--medium,
+            .widget--large,
             .widget--full {
                 grid-column: span 1;
             }
@@ -1470,27 +1168,42 @@
                 max-width: 96%;
             }
             .widget-picker {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
+            .bg-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             }
             .weather-display {
                 flex-direction: column;
                 text-align: center;
             }
+            .dropdown {
+                right: 16px;
+                min-width: 170px;
+            }
         }
 
         @media (max-width: 480px) {
-            .topnav__page-name {
-                font-size: 14px;
+            .header__logo {
+                font-size: 15px;
             }
-            .topnav__btn {
-                padding: 6px 10px;
+            .header__btn {
                 font-size: 12px;
+                padding: 6px 8px;
+            }
+            .header__avatar {
+                width: 32px;
+                height: 32px;
+                font-size: 13px;
             }
             .bookmark-grid {
-                grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(48px, 1fr));
             }
             .calendar-grid {
-                font-size: 11px;
+                font-size: 10px;
+            }
+            .clock-display__time {
+                font-size: 30px;
             }
         }
     </style>
@@ -1503,11 +1216,10 @@
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-screen__logo">Dock<span>Grid</span></div>
         <div class="loading-screen__spinner"></div>
-        <div class="loading-screen__text">Loading your dashboard...</div>
     </div>
 
     <!-- ============================================================
-    TOAST CONTAINER
+    TOAST
     ============================================================ -->
     <div class="toast-container" id="toastContainer"></div>
 
@@ -1516,91 +1228,58 @@
     ============================================================ -->
     <div class="app" id="app">
 
-        <!-- ============================================================
-        SIDEBAR
-        ============================================================ -->
-        <aside class="sidebar" id="sidebar" role="navigation" aria-label="Pages">
-            <div class="sidebar__header">
-                <div class="sidebar__logo">
-                    <div class="sidebar__logo-icon">D</div>
-                    DockGrid
-                </div>
-                <button class="sidebar__close" onclick="closeSidebar()" aria-label="Close sidebar">✕</button>
-            </div>
-
-            <div class="sidebar__title">Pages</div>
-            <nav class="sidebar__pages" id="pageList">
-                <!-- Rendered by JS -->
-            </nav>
-
-            <button class="sidebar__add-page" onclick="addPage()">
-                <span>＋</span> New Page
-            </button>
-
-            <div class="sidebar__footer">
-                <div class="sidebar__footer-item" onclick="openBackgroundModal()">
-                    <span>🎨</span> Background & Theme
-                </div>
-                <div class="sidebar__footer-item" onclick="logout()">
-                    <span>🚪</span> Logout
-                </div>
-            </div>
-        </aside>
+        <!-- Background -->
+        <div class="app__bg" id="appBg"></div>
 
         <!-- ============================================================
-        MAIN
+        HEADER
         ============================================================ -->
-        <main class="main" id="main">
+        <header class="header" id="header">
+            <div class="header__left">
+                <span class="header__logo">Dock<span>Grid</span></span>
+            </div>
 
-            <!-- TOP NAV -->
-            <nav class="topnav">
-                <button class="topnav__hamburger" onclick="toggleSidebar()" aria-label="Toggle sidebar">
-                    ☰
+            <div class="header__right">
+                <!-- Add Widget Button -->
+                <button class="header__btn" onclick="openAddWidget()">
+                    <iconify-icon icon="mdi:plus"></iconify-icon>
+                    <span>Add</span>
                 </button>
 
-                <span class="topnav__page-name" id="pageName">
-                    Home <span class="sub">· Dashboard</span>
-                </span>
-
-                <div class="topnav__actions">
-                    <button class="topnav__btn" onclick="openAddWidget()">
-                        <span class="icon">＋</span> <span>Add Widget</span>
-                    </button>
-                    <button class="topnav__btn" onclick="toggleEditMode()" id="editToggle">
-                        <span class="icon">✎</span> <span>Edit</span>
-                    </button>
-                    <button class="topnav__btn" onclick="openSearchModal()">
-                        <span class="icon">🔍</span> <span>Search</span>
-                    </button>
-                    <div class="topnav__profile" onclick="toggleProfileMenu()" title="Profile" id="profileAvatar">U</div>
+                <!-- Profile Avatar -->
+                <div class="header__avatar" id="profileAvatar" onclick="toggleDropdown()">
+                    <span id="avatarText">U</span>
+                    <img id="avatarImage" style="display:none;" alt="Profile" />
                 </div>
-            </nav>
 
-            <!-- SEARCH BAR -->
-            <section class="search-section">
-                <div class="search-bar">
-                    <select class="search-bar__engine" id="searchEngine">
-                        <option value="https://www.google.com/search?q=">Google</option>
-                        <option value="https://duckduckgo.com/?q=">DuckDuckGo</option>
-                        <option value="https://www.bing.com/search?q=">Bing</option>
-                        <option value="https://search.brave.com/search?q=">Brave</option>
-                        <option value="https://www.youtube.com/results?search_query=">YouTube</option>
-                        <option value="https://github.com/search?q=">GitHub</option>
-                        <option value="https://stackoverflow.com/search?q=">Stack Overflow</option>
-                    </select>
-                    <input class="search-bar__input" id="searchInput" type="text" placeholder="Search the web..." />
-                    <button class="search-bar__btn" onclick="doSearch()">→</button>
+                <!-- Dropdown -->
+                <div class="dropdown" id="dropdown">
+                    <button class="dropdown__item" onclick="changeProfileImage()">
+                        <iconify-icon icon="mdi:account-edit"></iconify-icon>
+                        Change Profile Image
+                    </button>
+                    <button class="dropdown__item" onclick="openBackgroundModal()">
+                        <iconify-icon icon="mdi:image"></iconify-icon>
+                        Change Desktop Background
+                    </button>
+                    <div class="dropdown__divider"></div>
+                    <button class="dropdown__item dropdown__item--danger" onclick="logout()">
+                        <iconify-icon icon="mdi:logout"></iconify-icon>
+                        Logout
+                    </button>
                 </div>
-            </section>
+            </div>
+        </header>
 
-            <!-- DASHBOARD -->
-            <section class="dashboard" id="dashboard">
-                <div class="dashboard__grid" id="widgetGrid">
-                    <!-- Rendered by JS -->
-                </div>
-            </section>
-
+        <!-- ============================================================
+        DASHBOARD
+        ============================================================ -->
+        <main class="dashboard" id="dashboard">
+            <div class="dashboard__grid" id="widgetGrid">
+                <!-- Rendered by JS -->
+            </div>
         </main>
+
     </div>
 
     <!-- ============================================================
@@ -1609,7 +1288,7 @@
     <div class="modal-overlay" id="addWidgetModal">
         <div class="modal">
             <div class="modal__header">
-                <h2 class="modal__title">➕ Add Widget</h2>
+                <h2 class="modal__title">Add Widget</h2>
                 <button class="modal__close" onclick="closeModal('addWidgetModal')">✕</button>
             </div>
             <div class="modal__body">
@@ -1618,7 +1297,7 @@
                 </div>
             </div>
             <div class="modal__footer">
-                <button class="topnav__btn" onclick="closeModal('addWidgetModal')">Cancel</button>
+                <button class="header__btn" onclick="closeModal('addWidgetModal')" style="background:var(--white-alpha-5);color:var(--white);">Cancel</button>
             </div>
         </div>
     </div>
@@ -1629,64 +1308,36 @@
     <div class="modal-overlay" id="bgModal">
         <div class="modal">
             <div class="modal__header">
-                <h2 class="modal__title">🎨 Background & Theme</h2>
+                <h2 class="modal__title">Choose Background</h2>
                 <button class="modal__close" onclick="closeModal('bgModal')">✕</button>
             </div>
             <div class="modal__body">
-                <div class="bg-controls">
-                    <span class="bg-controls__label">Color</span>
-                    <input class="bg-controls__color" id="bgColor" type="color" value="#f0f0f0" />
-                    <input class="bg-controls__input" id="bgColorHex" type="text" placeholder="#f0f0f0" />
+                <p style="color:var(--white-alpha-60);font-size:13px;margin-bottom:12px;">Select an image or upload your own</p>
+                <div class="bg-grid" id="bgGrid">
+                    <!-- Rendered by JS -->
                 </div>
-                <div class="bg-controls">
-                    <span class="bg-controls__label">Blur (px)</span>
-                    <input class="bg-controls__input" id="bgBlur" type="range" min="0" max="20" value="0" />
-                    <span id="bgBlurValue">0px</span>
-                </div>
-                <div class="bg-controls">
-                    <span class="bg-controls__label">Brightness</span>
-                    <input class="bg-controls__input" id="bgBrightness" type="range" min="50" max="150" value="100" />
-                    <span id="bgBrightnessValue">100%</span>
-                </div>
-                <div class="bg-controls">
-                    <span class="bg-controls__label">Wallpaper URL</span>
-                    <input class="bg-controls__input" id="bgWallpaper" type="text" placeholder="https://example.com/image.jpg" style="flex:1;" />
-                    <button class="topnav__btn topnav__btn--primary" onclick="applyBackground()">Apply</button>
+                <div class="bg-upload" onclick="document.getElementById('bgUploadInput').click()">
+                    <iconify-icon icon="mdi:cloud-upload" style="font-size:24px;"></iconify-icon>
+                    <span>Upload your own image</span>
+                    <input type="file" id="bgUploadInput" accept="image/*" />
                 </div>
             </div>
             <div class="modal__footer">
-                <button class="topnav__btn" onclick="resetBackground()">Reset</button>
-                <button class="topnav__btn topnav__btn--primary" onclick="closeModal('bgModal')">Done</button>
+                <button class="header__btn" onclick="resetBackground()" style="background:var(--white-alpha-5);color:var(--white);">Reset</button>
+                <button class="header__btn header__btn--primary" onclick="closeModal('bgModal')">Done</button>
             </div>
         </div>
     </div>
 
     <!-- ============================================================
-    SEARCH MODAL
-    ============================================================ -->
-    <div class="modal-overlay" id="searchModal">
-        <div class="modal">
-            <div class="modal__header">
-                <h2 class="modal__title">🔍 Search Dashboard</h2>
-                <button class="modal__close" onclick="closeModal('searchModal')">✕</button>
-            </div>
-            <div class="modal__body">
-                <input class="task-add__input" id="dashboardSearch" type="text" placeholder="Search bookmarks, notes, projects..." style="width:100%;padding:12px;font-size:15px;" />
-                <div id="searchResults" style="margin-top:16px;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    FIREBASE SDK
+    FIREBASE SDK (ES Modules)
     ============================================================ -->
     <script type="importmap">
         {
             "imports": {
                 "firebase/app": "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js",
                 "firebase/auth": "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js",
-                "firebase/firestore": "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js",
-                "firebase/analytics": "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js"
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js"
             }
         }
     </script>
@@ -1715,11 +1366,8 @@
             getDocs,
             onSnapshot,
             serverTimestamp,
-            writeBatch,
-            arrayUnion,
-            arrayRemove
+            writeBatch
         } from "firebase/firestore";
-        import { getAnalytics } from "firebase/analytics";
 
         // ============================================================
         // FIREBASE CONFIG
@@ -1731,17 +1379,15 @@
             projectId: "joefootball-15e7a",
             storageBucket: "joefootball-15e7a.firebasestorage.app",
             messagingSenderId: "976347287101",
-            appId: "1:976347287101:web:6cbbb96d496d8221986454",
-            measurementId: "G-121M4Y3653"
+            appId: "1:976347287101:web:6cbbb96d496d8221986454"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const analytics = getAnalytics(app);
 
         // ============================================================
-        // COLLECTIONS
+        // CONSTANTS
         // ============================================================
         const COLLECTIONS = {
             USERS: 'DockGrid_Users',
@@ -1749,6 +1395,29 @@
             WIDGETS: 'DockGrid_Widgets',
             SETTINGS: 'DockGrid_Settings',
         };
+
+        const IMGBB_API_KEY = 'ba8023ca74166460c442e8e703d2a1b0';
+
+        const WIDGET_TYPES = [
+            { id: 'bookmarks', icon: '📑', name: 'Bookmarks' },
+            { id: 'rss', icon: '📰', name: 'News (RSS)' },
+            { id: 'notes', icon: '📝', name: 'Notes' },
+            { id: 'tasks', icon: '✅', name: 'Tasks' },
+            { id: 'embed', icon: '🌍', name: 'Embed' },
+            { id: 'projects', icon: '📁', name: 'Projects' },
+        ];
+
+        const DEFAULT_BG = 'https://cdn.pixabay.com/photo/2020/07/25/14/23/cliff-5436923_1280.jpg';
+
+        const BG_IMAGES = [
+            'https://cdn.pixabay.com/photo/2020/07/25/14/23/cliff-5436923_1280.jpg',
+            'https://cdn.pixabay.com/photo/2021/03/23/06/27/cliff-6116449_1280.jpg',
+            'https://cdn.pixabay.com/photo/2022/09/16/00/39/city-7457513_1280.jpg',
+            'https://cdn.pixabay.com/photo/2017/12/26/02/54/ho-chi-minh-3039579_1280.jpg',
+            'https://cdn.pixabay.com/photo/2018/08/19/00/33/camara-de-lobos-city-3615829_1280.jpg',
+            'https://cdn.pixabay.com/photo/2024/11/03/12/57/lion-tamarin-9171365_1280.jpg',
+            'https://cdn.pixabay.com/photo/2020/06/20/11/09/cat-5320572_1280.jpg',
+        ];
 
         // ============================================================
         // STATE
@@ -1762,55 +1431,53 @@
         let isInitialized = false;
 
         // ============================================================
-        // WIDGET TYPES
+        // DOM REFS
         // ============================================================
-        const WIDGET_TYPES = [
-            { id: 'bookmarks', icon: '📑', name: 'Bookmarks' },
-            { id: 'rss', icon: '📰', name: 'RSS News' },
-            { id: 'notes', icon: '📝', name: 'Notes' },
-            { id: 'tasks', icon: '✅', name: 'Tasks' },
-            { id: 'projects', icon: '📁', name: 'Projects' },
-            { id: 'weather', icon: '🌤️', name: 'Weather' },
-            { id: 'calendar', icon: '📅', name: 'Calendar' },
-            { id: 'clock', icon: '🕒', name: 'Clock' },
-            { id: 'embed', icon: '🌍', name: 'Embed' },
-            { id: 'github', icon: '🐙', name: 'GitHub' },
-            { id: 'ai', icon: '🧠', name: 'AI Assistant' },
-        ];
+        const appEl = document.getElementById('app');
+        const appBg = document.getElementById('appBg');
+        const loadingScreen = document.getElementById('loadingScreen');
+        const widgetGrid = document.getElementById('widgetGrid');
+        const profileAvatar = document.getElementById('profileAvatar');
+        const avatarText = document.getElementById('avatarText');
+        const avatarImage = document.getElementById('avatarImage');
+        const dropdown = document.getElementById('dropdown');
 
         // ============================================================
         // AUTH - REDIRECT IF NOT LOGGED IN
         // ============================================================
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
-                // Not logged in - redirect to sign.html
                 window.location.href = 'sign.html?q=sign-in';
                 return;
             }
 
-            // User is logged in
             currentUser = user;
+            updateAvatar();
 
-            // Update profile avatar
-            const avatar = document.getElementById('profileAvatar');
-            if (user.displayName) {
-                avatar.textContent = user.displayName.charAt(0).toUpperCase();
-            } else if (user.email) {
-                avatar.textContent = user.email.charAt(0).toUpperCase();
-            }
-
-            // Load user data
             await loadUserData();
-
-            // Hide loading screen, show app
-            document.getElementById('loadingScreen').classList.add('hidden');
-            document.getElementById('app').classList.add('visible');
-
-            // Set up real-time listeners
-            setupRealtimeListeners();
-
+            loadingScreen.classList.add('hidden');
+            appEl.classList.add('visible');
             isInitialized = true;
+            setupRealtimeListeners();
         });
+
+        // ============================================================
+        // AVATAR
+        // ============================================================
+        function updateAvatar() {
+            if (!currentUser) return;
+            const photoURL = currentUser.photoURL;
+            if (photoURL) {
+                avatarText.style.display = 'none';
+                avatarImage.style.display = 'block';
+                avatarImage.src = photoURL;
+            } else {
+                avatarText.style.display = 'flex';
+                avatarImage.style.display = 'none';
+                const name = currentUser.displayName || currentUser.email || 'U';
+                avatarText.textContent = name.charAt(0).toUpperCase();
+            }
+        }
 
         // ============================================================
         // LOAD USER DATA
@@ -1819,39 +1486,34 @@
             if (!currentUser) return;
 
             try {
-                // 1. Load or create user settings
+                // Settings
                 const settingsRef = doc(db, COLLECTIONS.SETTINGS, currentUser.uid);
                 const settingsSnap = await getDoc(settingsRef);
-
                 if (settingsSnap.exists()) {
                     settings = settingsSnap.data();
                 } else {
-                    // Create default settings
                     settings = {
                         userId: currentUser.uid,
-                        theme: 'light',
-                        defaultPage: null,
-                        background: '#f0f0f0',
-                        blur: 0,
-                        brightness: 100,
-                        wallpaper: '',
+                        background: DEFAULT_BG,
+                        profileImage: null,
                         createdAt: serverTimestamp(),
                         updatedAt: serverTimestamp()
                     };
                     await setDoc(settingsRef, settings);
                 }
 
-                // 2. Load pages
+                // Apply background
+                applyBackground(settings.background || DEFAULT_BG);
+
+                // Pages
                 const pagesRef = collection(db, COLLECTIONS.PAGES);
                 const pagesQuery = query(pagesRef, where('userId', '==', currentUser.uid));
                 const pagesSnap = await getDocs(pagesQuery);
-
                 pages = [];
                 pagesSnap.forEach(doc => {
                     pages.push({ id: doc.id, ...doc.data() });
                 });
 
-                // If no pages, create default
                 if (pages.length === 0) {
                     const defaultPage = {
                         userId: currentUser.uid,
@@ -1866,34 +1528,21 @@
                     pages.push({ id: newPageRef.id, ...defaultPage });
                 }
 
-                // Sort pages by order
                 pages.sort((a, b) => (a.order || 0) - (b.order || 0));
+                currentPageId = pages[0].id;
 
-                // Set current page
-                if (settings.defaultPage && pages.find(p => p.id === settings.defaultPage)) {
-                    currentPageId = settings.defaultPage;
-                } else {
-                    currentPageId = pages[0].id;
-                }
-
-                // 3. Load widgets for current page
+                // Widgets
                 await loadWidgets();
-
-                // 4. Render everything
                 renderAll();
 
             } catch (error) {
-                console.error('Error loading user data:', error);
-                showToast('Error loading data. Please refresh.', 'error');
+                console.error('Error loading data:', error);
+                showToast('Error loading data', 'error');
             }
         }
 
-        // ============================================================
-        // LOAD WIDGETS
-        // ============================================================
         async function loadWidgets() {
             if (!currentPageId) return;
-
             try {
                 const widgetsRef = collection(db, COLLECTIONS.WIDGETS);
                 const widgetsQuery = query(
@@ -1902,15 +1551,11 @@
                     where('pageId', '==', currentPageId)
                 );
                 const widgetsSnap = await getDocs(widgetsQuery);
-
                 widgets = [];
                 widgetsSnap.forEach(doc => {
                     widgets.push({ id: doc.id, ...doc.data() });
                 });
-
-                // Sort by order
                 widgets.sort((a, b) => (a.order || 0) - (b.order || 0));
-
             } catch (error) {
                 console.error('Error loading widgets:', error);
                 widgets = [];
@@ -1923,18 +1568,16 @@
         function setupRealtimeListeners() {
             if (!currentUser) return;
 
-            // Listen for settings changes
+            // Settings
             const settingsRef = doc(db, COLLECTIONS.SETTINGS, currentUser.uid);
             onSnapshot(settingsRef, (doc) => {
                 if (doc.exists()) {
                     settings = doc.data();
-                    applyBackground();
+                    if (settings.background) applyBackground(settings.background);
                 }
-            }, (error) => {
-                console.error('Settings listener error:', error);
             });
 
-            // Listen for pages changes
+            // Pages
             const pagesRef = collection(db, COLLECTIONS.PAGES);
             const pagesQuery = query(pagesRef, where('userId', '==', currentUser.uid));
             onSnapshot(pagesQuery, (snapshot) => {
@@ -1943,161 +1586,113 @@
                     pages.push({ id: doc.id, ...doc.data() });
                 });
                 pages.sort((a, b) => (a.order || 0) - (b.order || 0));
-
-                // If current page was deleted, switch to first available
                 if (currentPageId && !pages.find(p => p.id === currentPageId)) {
                     currentPageId = pages.length > 0 ? pages[0].id : null;
                 }
                 if (!currentPageId && pages.length > 0) {
                     currentPageId = pages[0].id;
                 }
-
                 renderSidebar();
                 updatePageName();
-
-                // If page changed, reload widgets
                 if (currentPageId) {
-                    loadWidgets().then(() => {
-                        renderWidgets();
-                    });
+                    loadWidgets().then(renderWidgets);
                 }
-            }, (error) => {
-                console.error('Pages listener error:', error);
             });
 
-            // Listen for widgets changes on current page
-            // We'll set up a listener that re-runs when page changes
+            // Widgets
             setupWidgetsListener();
         }
 
         function setupWidgetsListener() {
             if (!currentUser || !currentPageId) return;
-
             const widgetsRef = collection(db, COLLECTIONS.WIDGETS);
             const widgetsQuery = query(
                 widgetsRef,
                 where('userId', '==', currentUser.uid),
                 where('pageId', '==', currentPageId)
             );
-
             onSnapshot(widgetsQuery, (snapshot) => {
                 if (!isInitialized) return;
-
                 widgets = [];
                 snapshot.forEach(doc => {
                     widgets.push({ id: doc.id, ...doc.data() });
                 });
                 widgets.sort((a, b) => (a.order || 0) - (b.order || 0));
-
                 renderWidgets();
-            }, (error) => {
-                console.error('Widgets listener error:', error);
             });
         }
 
         // ============================================================
-        // RENDER FUNCTIONS
+        // RENDER
         // ============================================================
         function renderAll() {
             renderSidebar();
             renderWidgets();
             updatePageName();
             renderWidgetPicker();
-            applyBackground();
+            renderBgGrid();
         }
 
         function renderSidebar() {
-            const container = document.getElementById('pageList');
-            if (!pages || pages.length === 0) {
-                container.innerHTML = `
-                            <div style="text-align:center;padding:20px;color:var(--black-30);font-size:13px;">
-                                No pages yet.<br>Click "New Page" to start.
-                            </div>
-                        `;
-                return;
-            }
+            // Simple sidebar - just show page count
+            // We'll keep it minimal since you wanted a clean header-only design
+        }
 
-            container.innerHTML = pages.map(p => `
-                        <div class="sidebar__page-item ${p.id === currentPageId ? 'active' : ''}"
-                             onclick="switchPage('${p.id}')">
-                            <span class="icon">${p.icon || '📄'}</span>
-                            ${p.name}
-                            <span class="badge">${p.id === currentPageId ? widgets.length : 0}</span>
-                        </div>
-                    `).join('');
+        function updatePageName() {
+            // Not needed with minimal header
         }
 
         function renderWidgets() {
-            const grid = document.getElementById('widgetGrid');
-
             if (!widgets || widgets.length === 0) {
-                grid.innerHTML = `
+                widgetGrid.innerHTML = `
                             <div class="dashboard__empty">
                                 <div class="icon">📭</div>
                                 <h3>No widgets yet</h3>
-                                <p>Click <strong>Add Widget</strong> to start building your dashboard</p>
+                                <p>Click <strong>Add</strong> to start building your dashboard</p>
                             </div>
                         `;
                 return;
             }
 
-            grid.innerHTML = widgets.map(w => renderWidget(w)).join('');
+            widgetGrid.innerHTML = widgets.map(w => renderWidget(w)).join('');
 
-            // Re-attach event listeners
-            document.querySelectorAll('.widget').forEach(el => {
-                el.addEventListener('dragstart', onDragStart);
-                el.addEventListener('dragend', onDragEnd);
-                el.addEventListener('dragover', onDragOver);
-                el.addEventListener('dragenter', onDragEnter);
-                el.addEventListener('dragleave', onDragLeave);
-                el.addEventListener('drop', onDrop);
-            });
-
-            // Resize handles
-            document.querySelectorAll('.widget__resize-handle').forEach(el => {
-                el.addEventListener('mousedown', onResizeStart);
-            });
-
-            // Note auto-save
-            document.querySelectorAll('.note-editor').forEach(el => {
-                el.addEventListener('input', (e) => {
-                    const widgetId = e.target.dataset.widgetId;
-                    saveNoteContent(widgetId, e.target.value);
-                });
-            });
-
-            // Task add
+            // Event listeners for tasks
             document.querySelectorAll('.task-add__btn').forEach(el => {
-                el.addEventListener('click', (e) => {
-                    const widgetId = e.target.dataset.widgetId;
+                el.addEventListener('click', () => {
+                    const widgetId = el.dataset.widgetId;
                     const input = document.getElementById('taskInput_' + widgetId);
                     if (input) addTask(widgetId, input.value);
                 });
             });
-
             document.querySelectorAll('.task-add__input').forEach(el => {
                 el.addEventListener('keydown', (e) => {
                     if (e.key === 'Enter') {
-                        const widgetId = e.target.id.replace('taskInput_', '');
-                        addTask(widgetId, e.target.value);
+                        const widgetId = el.id.replace('taskInput_', '');
+                        addTask(widgetId, el.value);
                     }
                 });
             });
 
-            // AI ask
-            document.querySelectorAll('.task-add__btn[data-ai]').forEach(el => {
-                el.addEventListener('click', (e) => {
-                    const widgetId = e.target.dataset.widgetId;
-                    askAI(widgetId);
+            // Note auto-save
+            document.querySelectorAll('.note-editor').forEach(el => {
+                el.addEventListener('input', () => {
+                    saveNoteContent(el.dataset.widgetId, el.value);
                 });
             });
 
-            document.querySelectorAll('#aiInput_').forEach(el => {
-                el.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        const widgetId = e.target.id.replace('aiInput_', '');
-                        askAI(widgetId);
-                    }
+            // Task checkbox
+            document.querySelectorAll('.task-item__checkbox').forEach(el => {
+                el.addEventListener('click', () => {
+                    const widgetId = el.dataset.widgetId;
+                    const index = parseInt(el.dataset.index);
+                    toggleTask(widgetId, index);
+                });
+            });
+
+            // Delete widget
+            document.querySelectorAll('.widget__header-btn.danger').forEach(el => {
+                el.addEventListener('click', () => {
+                    deleteWidget(el.dataset.widgetId);
                 });
             });
         }
@@ -2108,32 +1703,22 @@
             const bodyHtml = renderWidgetBody(w);
 
             return `
-                        <div class="widget ${sizeClass} ${heightClass}" 
-                             data-widget-id="${w.id}"
-                             draggable="${editMode ? 'true' : 'false'}"
-                             style="--widget-color: ${w.color || 'transparent'};">
+                        <div class="widget ${sizeClass} ${heightClass}" data-widget-id="${w.id}">
                             <div class="widget__header">
                                 <span class="widget__header-icon">${getWidgetIcon(w.type)}</span>
                                 <span class="widget__header-title">${w.title || 'Widget'}</span>
                                 <div class="widget__header-actions">
-                                    ${editMode ? `
-                                        <button class="widget__header-btn" onclick="duplicateWidget('${w.id}')" title="Duplicate">⧉</button>
-                                        <button class="widget__header-btn" onclick="openWidgetSettings('${w.id}')" title="Settings">⚙</button>
-                                        <button class="widget__header-btn danger" onclick="deleteWidget('${w.id}')" title="Delete">✕</button>
-                                    ` : ''}
-                                    <button class="widget__header-btn" onclick="refreshWidget('${w.id}')" title="Refresh">⟳</button>
+                                    <button class="widget__header-btn" onclick="duplicateWidget('${w.id}')" title="Duplicate">⧉</button>
+                                    <button class="widget__header-btn" onclick="openWidgetSettings('${w.id}')" title="Settings">⚙</button>
+                                    <button class="widget__header-btn danger" data-widget-id="${w.id}" title="Delete">✕</button>
                                 </div>
                             </div>
                             <div class="widget__body">
                                 ${bodyHtml}
                             </div>
-                            ${w.footer !== false ? `
-                                <div class="widget__footer">
-                                    <span>${w.footerText || 'Updated just now'}</span>
-                                    <button class="widget__header-btn" onclick="refreshWidget('${w.id}')">⟳</button>
-                                </div>
-                            ` : ''}
-                            ${editMode ? `<div class="widget__resize-handle"></div>` : ''}
+                            <div class="widget__footer">
+                                <span>${w.footerText || 'Updated just now'}</span>
+                            </div>
                         </div>
                     `;
         }
@@ -2160,204 +1745,11 @@
                     return renderCalendar(data);
                 case 'embed':
                     return renderEmbed(data);
-                case 'github':
-                    return renderGitHub(data);
-                case 'ai':
-                    return renderAI(data, w.id);
                 default:
-                    return `<div class="widget__body--empty">Unknown widget type</div>`;
+                    return `<div class="widget__body--empty">Unknown widget</div>`;
             }
         }
 
-        // --- Widget renderers ---
-
-        function renderBookmarks(data) {
-            const items = data?.items || [];
-            if (items.length === 0) return `<div class="widget__body--empty">No bookmarks yet</div>`;
-            return `
-                        <div class="bookmark-grid">
-                            ${items.map(b => `
-                                <a class="bookmark-item" href="${b.url}" target="_blank" rel="noopener">
-                                    <div class="bookmark-item__icon">${b.icon || '🌐'}</div>
-                                    <span class="bookmark-item__name">${b.name}</span>
-                                </a>
-                            `).join('')}
-                        </div>
-                    `;
-        }
-
-        function renderProjects(data) {
-            const items = data?.items || [];
-            if (items.length === 0) return `<div class="widget__body--empty">No projects yet</div>`;
-            return `
-                        <div class="project-list">
-                            ${items.map(p => `
-                                <div class="project-item">
-                                    <div class="project-item__info">
-                                        <div class="project-item__name">${p.name}</div>
-                                        <div class="project-item__meta">
-                                            <span>${p.deadline || 'No deadline'}</span>
-                                            <span class="project-item__status project-item__status--${p.status || 'planning'}">${p.status || 'Planning'}</span>
-                                        </div>
-                                    </div>
-                                    <div class="project-item__progress">
-                                        <div class="project-item__progress-bar" style="width:${p.progress || 0}%"></div>
-                                    </div>
-                                    <span style="font-size:12px;font-weight:700;color:var(--black-50);">${p.progress || 0}%</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `;
-        }
-
-        function renderTasks(data, widgetId) {
-            const items = data?.items || [];
-            return `
-                        <div class="task-list">
-                            ${items.map((t, i) => `
-                                <div class="task-item" data-task-index="${i}">
-                                    <div class="task-item__checkbox ${t.done ? 'checked' : ''}" onclick="toggleTask('${widgetId}', ${i})">
-                                        ${t.done ? '✓' : ''}
-                                    </div>
-                                    <span class="task-item__text ${t.done ? 'done' : ''}">${t.text}</span>
-                                    ${t.priority ? `<span class="task-item__priority task-item__priority--${t.priority}"></span>` : ''}
-                                    ${t.due ? `<span class="task-item__due">${t.due}</span>` : ''}
-                                </div>
-                            `).join('')}
-                        </div>
-                        <div class="task-add">
-                            <input class="task-add__input" id="taskInput_${widgetId}" placeholder="Add a task..." />
-                            <button class="task-add__btn" data-widget-id="${widgetId}">Add</button>
-                        </div>
-                    `;
-        }
-
-        function renderNotes(data, widgetId) {
-            return `<textarea class="note-editor" data-widget-id="${widgetId}" placeholder="Write your note here...">${data?.content || ''}</textarea>`;
-        }
-
-        function renderWeather(data) {
-            const d = data || { city: 'San Francisco', temp: 72, condition: 'Sunny', humidity: 45, wind: 12 };
-            return `
-                        <div class="weather-display">
-                            <div>
-                                <div class="weather-display__temp">${d.temp || '--'}°<span>F</span></div>
-                                <div style="font-size:16px;font-weight:600;color:var(--black-60);">${d.condition || '--'}</div>
-                            </div>
-                            <div class="weather-display__details">
-                                <div><span class="label">📍</span> ${d.city || 'Unknown'}</div>
-                                <div><span class="label">💧</span> ${d.humidity || '--'}%</div>
-                                <div><span class="label">💨</span> ${d.wind || '--'} mph</div>
-                            </div>
-                        </div>
-                    `;
-        }
-
-        function renderRSS(data) {
-            const items = data?.items || [];
-            if (items.length === 0) return `<div class="widget__body--empty">No feed items</div>`;
-            return `
-                        <div class="rss-list">
-                            ${items.map(item => `
-                                <a class="rss-item" href="#" onclick="return false;">
-                                    <div class="rss-item__icon">📰</div>
-                                    <div class="rss-item__content">
-                                        <div class="rss-item__title">${item.title}</div>
-                                        <div class="rss-item__meta">${item.source || ''} · ${item.time || ''}</div>
-                                    </div>
-                                </a>
-                            `).join('')}
-                        </div>
-                    `;
-        }
-
-        function renderClock(data) {
-            return `
-                        <div class="clock-display" id="clockDisplay">
-                            <div class="clock-display__time" id="clockTime">--:--:--</div>
-                            <div class="clock-display__date" id="clockDate">Loading...</div>
-                        </div>
-                    `;
-        }
-
-        function renderCalendar(data) {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const today = now.getDate();
-
-            const events = data?.events || [];
-            const eventDates = events.map(e => e.date);
-
-            let days = '';
-            for (let i = 0; i < firstDay; i++) {
-                days += `<div class="calendar-grid__day other-month"></div>`;
-            }
-            for (let d = 1; d <= daysInMonth; d++) {
-                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-                const isToday = d === today ? 'today' : '';
-                const hasEvent = eventDates.includes(dateStr) ? 'has-event' : '';
-                days += `<div class="calendar-grid__day ${isToday} ${hasEvent}">${d}</div>`;
-            }
-
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-                'October', 'November', 'December'
-            ];
-
-            return `
-                        <div style="text-align:center;font-weight:700;margin-bottom:10px;">${monthNames[month]} ${year}</div>
-                        <div class="calendar-grid">
-                            ${['S','M','T','W','T','F','S'].map(d => `<div class="calendar-grid__header">${d}</div>`).join('')}
-                            ${days}
-                        </div>
-                    `;
-        }
-
-        function renderEmbed(data) {
-            const url = data?.url || '';
-            return `
-                        <div class="embed-container">
-                            ${url ? `<iframe src="${url}" allowfullscreen loading="lazy"></iframe>` : 
-                                `<div class="widget__body--empty">Enter a URL in settings</div>`}
-                        </div>
-                    `;
-        }
-
-        function renderGitHub(data) {
-            const events = data?.events || [];
-            if (events.length === 0) return `<div class="widget__body--empty">No GitHub activity</div>`;
-            return `
-                        <div style="display:flex;flex-direction:column;gap:8px;">
-                            ${events.map(e => `
-                                <div style="display:flex;gap:10px;align-items:center;padding:6px 0;border-bottom:1px solid var(--black-5);font-size:13px;">
-                                    <span>${e.icon || '📦'}</span>
-                                    <span style="flex:1;">${e.text || 'Activity'}</span>
-                                    <span style="font-size:11px;color:var(--black-40);">${e.time || ''}</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `;
-        }
-
-        function renderAI(data, widgetId) {
-            return `
-                        <div style="display:flex;flex-direction:column;gap:12px;">
-                            <div style="display:flex;gap:8px;">
-                                <input class="task-add__input" id="aiInput_${widgetId}" placeholder="Ask AI anything..." style="flex:1;" />
-                                <button class="task-add__btn" data-ai="true" data-widget-id="${widgetId}">Ask</button>
-                            </div>
-                            <div id="aiResponse_${widgetId}" style="font-size:14px;color:var(--black-60);min-height:60px;padding:8px;background:var(--black-5);border-radius:var(--radius-sm);">
-                                ${data?.response || 'Ask me something! 🧠'}
-                            </div>
-                        </div>
-                    `;
-        }
-
-        // ============================================================
-        // WIDGET HELPERS
-        // ============================================================
         function getWidgetIcon(type) {
             const found = WIDGET_TYPES.find(w => w.id === type);
             return found ? found.icon : '📦';
@@ -2389,64 +1781,163 @@
                     return { events: [{ date: new Date().toISOString().slice(0, 10), title: 'Event' }] };
                 case 'embed':
                     return { url: '' };
-                case 'github':
-                    return { events: [{ icon: '📦', text: 'Pushed to main', time: '2h ago' }] };
-                case 'ai':
-                    return { response: 'Ask me something! 🧠' };
                 default:
                     return {};
             }
         }
 
-        // ============================================================
-        // PAGE FUNCTIONS
-        // ============================================================
-        function updatePageName() {
-            const el = document.getElementById('pageName');
-            const page = pages.find(p => p.id === currentPageId);
-            if (page) {
-                el.innerHTML = `${page.icon || '📄'} ${page.name} <span class="sub">· ${widgets.length} widgets</span>`;
-            }
+        // --- Widget Renderers ---
+        function renderBookmarks(data) {
+            const items = data?.items || [];
+            if (items.length === 0) return `<div class="widget__body--empty">No bookmarks</div>`;
+            return `
+                        <div class="bookmark-grid">
+                            ${items.map(b => `
+                                <a class="bookmark-item" href="${b.url}" target="_blank" rel="noopener">
+                                    <div class="bookmark-item__icon">${b.icon || '🌐'}</div>
+                                    <span class="bookmark-item__name">${b.name}</span>
+                                </a>
+                            `).join('')}
+                        </div>
+                    `;
         }
 
-        function switchPage(pageId) {
-            if (!currentUser || pageId === currentPageId) return;
-            currentPageId = pageId;
-            // Update default page in settings
-            updateDoc(doc(db, COLLECTIONS.SETTINGS, currentUser.uid), {
-                defaultPage: pageId,
-                updatedAt: serverTimestamp()
-            }).catch(console.error);
-
-            // Reload widgets for new page
-            loadWidgets().then(() => {
-                renderAll();
-                setupWidgetsListener();
-            });
-            closeSidebar();
+        function renderProjects(data) {
+            const items = data?.items || [];
+            if (items.length === 0) return `<div class="widget__body--empty">No projects</div>`;
+            return `
+                        <div class="project-list">
+                            ${items.map(p => `
+                                <div class="project-item">
+                                    <div class="project-item__info">
+                                        <div class="project-item__name">${p.name}</div>
+                                        <div class="project-item__meta">
+                                            <span>${p.deadline || 'No deadline'}</span>
+                                            <span class="project-item__status project-item__status--${p.status || 'planning'}">${p.status || 'Planning'}</span>
+                                        </div>
+                                    </div>
+                                    <div class="project-item__progress">
+                                        <div class="project-item__progress-bar" style="width:${p.progress || 0}%"></div>
+                                    </div>
+                                    <span style="font-size:11px;font-weight:700;color:var(--white-alpha-50);">${p.progress || 0}%</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
         }
 
-        async function addPage() {
-            if (!currentUser) return;
-            const name = prompt('Enter page name:');
-            if (!name) return;
+        function renderTasks(data, widgetId) {
+            const items = data?.items || [];
+            return `
+                        <div class="task-list">
+                            ${items.map((t, i) => `
+                                <div class="task-item">
+                                    <div class="task-item__checkbox ${t.done ? 'checked' : ''}" data-widget-id="${widgetId}" data-index="${i}">
+                                        ${t.done ? '✓' : ''}
+                                    </div>
+                                    <span class="task-item__text ${t.done ? 'done' : ''}">${t.text}</span>
+                                    ${t.priority ? `<span class="task-item__priority task-item__priority--${t.priority}"></span>` : ''}
+                                    ${t.due ? `<span class="task-item__due">${t.due}</span>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="task-add">
+                            <input class="task-add__input" id="taskInput_${widgetId}" placeholder="Add a task..." />
+                            <button class="task-add__btn" data-widget-id="${widgetId}">Add</button>
+                        </div>
+                    `;
+        }
 
-            try {
-                const newPage = {
-                    userId: currentUser.uid,
-                    name: name,
-                    icon: '📄',
-                    order: pages.length,
-                    createdAt: serverTimestamp(),
-                    updatedAt: serverTimestamp()
-                };
-                const docRef = doc(collection(db, COLLECTIONS.PAGES));
-                await setDoc(docRef, newPage);
-                showToast(`Page "${name}" created!`, 'success');
-            } catch (error) {
-                console.error('Error creating page:', error);
-                showToast('Error creating page', 'error');
+        function renderNotes(data, widgetId) {
+            return `<textarea class="note-editor" data-widget-id="${widgetId}" placeholder="Write your note...">${data?.content || ''}</textarea>`;
+        }
+
+        function renderWeather(data) {
+            const d = data || { city: 'San Francisco', temp: 72, condition: 'Sunny', humidity: 45, wind: 12 };
+            return `
+                        <div class="weather-display">
+                            <div>
+                                <div class="weather-display__temp">${d.temp || '--'}°<span>F</span></div>
+                                <div style="font-size:14px;font-weight:600;color:var(--white-alpha-60);">${d.condition || '--'}</div>
+                            </div>
+                            <div class="weather-display__details">
+                                <div><span class="label">📍</span> ${d.city || 'Unknown'}</div>
+                                <div><span class="label">💧</span> ${d.humidity || '--'}%</div>
+                                <div><span class="label">💨</span> ${d.wind || '--'} mph</div>
+                            </div>
+                        </div>
+                    `;
+        }
+
+        function renderRSS(data) {
+            const items = data?.items || [];
+            if (items.length === 0) return `<div class="widget__body--empty">No feed items</div>`;
+            return `
+                        <div class="rss-list">
+                            ${items.map(item => `
+                                <a class="rss-item" href="#">
+                                    <div class="rss-item__icon">📰</div>
+                                    <div class="rss-item__content">
+                                        <div class="rss-item__title">${item.title}</div>
+                                        <div class="rss-item__meta">${item.source || ''} · ${item.time || ''}</div>
+                                    </div>
+                                </a>
+                            `).join('')}
+                        </div>
+                    `;
+        }
+
+        function renderClock(data) {
+            return `
+                        <div class="clock-display">
+                            <div class="clock-display__time" id="clockTime">--:--:--</div>
+                            <div class="clock-display__date" id="clockDate">Loading...</div>
+                        </div>
+                    `;
+        }
+
+        function renderCalendar(data) {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = now.getDate();
+            const events = data?.events || [];
+            const eventDates = events.map(e => e.date);
+
+            let days = '';
+            for (let i = 0; i < firstDay; i++) {
+                days += `<div class="calendar-grid__day other-month"></div>`;
             }
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const isToday = d === today ? 'today' : '';
+                const hasEvent = eventDates.includes(dateStr) ? 'has-event' : '';
+                days += `<div class="calendar-grid__day ${isToday} ${hasEvent}">${d}</div>`;
+            }
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                'October', 'November', 'December'
+            ];
+
+            return `
+                        <div style="text-align:center;font-weight:700;color:var(--white);margin-bottom:8px;">${monthNames[month]} ${year}</div>
+                        <div class="calendar-grid">
+                            ${['S','M','T','W','T','F','S'].map(d => `<div class="calendar-grid__header">${d}</div>`).join('')}
+                            ${days}
+                        </div>
+                    `;
+        }
+
+        function renderEmbed(data) {
+            const url = data?.url || '';
+            return `
+                        <div class="embed-container">
+                            ${url ? `<iframe src="${url}" allowfullscreen loading="lazy"></iframe>` :
+                                `<div class="widget__body--empty">Enter a URL in settings</div>`}
+                        </div>
+                    `;
         }
 
         // ============================================================
@@ -2454,7 +1945,6 @@
         // ============================================================
         async function addWidget(type) {
             if (!currentUser || !currentPageId) return;
-
             try {
                 const newWidget = {
                     userId: currentUser.uid,
@@ -2471,13 +1961,10 @@
                     createdAt: serverTimestamp(),
                     updatedAt: serverTimestamp()
                 };
-
                 const docRef = doc(collection(db, COLLECTIONS.WIDGETS));
                 await setDoc(docRef, newWidget);
-
                 closeModal('addWidgetModal');
                 showToast(`Added ${getWidgetTypeName(type)} widget!`, 'success');
-
             } catch (error) {
                 console.error('Error adding widget:', error);
                 showToast('Error adding widget', 'error');
@@ -2486,7 +1973,6 @@
 
         async function deleteWidget(widgetId) {
             if (!confirm('Delete this widget?')) return;
-
             try {
                 await deleteDoc(doc(db, COLLECTIONS.WIDGETS, widgetId));
                 showToast('Widget deleted', 'success');
@@ -2498,11 +1984,9 @@
 
         async function duplicateWidget(widgetId) {
             if (!currentUser || !currentPageId) return;
-
             try {
                 const original = widgets.find(w => w.id === widgetId);
                 if (!original) return;
-
                 const copy = {
                     userId: currentUser.uid,
                     pageId: currentPageId,
@@ -2518,32 +2002,15 @@
                     createdAt: serverTimestamp(),
                     updatedAt: serverTimestamp()
                 };
-
                 const docRef = doc(collection(db, COLLECTIONS.WIDGETS));
                 await setDoc(docRef, copy);
                 showToast('Widget duplicated!', 'success');
-
             } catch (error) {
                 console.error('Error duplicating widget:', error);
                 showToast('Error duplicating widget', 'error');
             }
         }
 
-        async function refreshWidget(widgetId) {
-            try {
-                const now = new Date().toLocaleTimeString();
-                await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
-                    footerText: `Updated ${now}`,
-                    updatedAt: serverTimestamp()
-                });
-            } catch (error) {
-                console.error('Error refreshing widget:', error);
-            }
-        }
-
-        // ============================================================
-        // WIDGET SETTINGS
-        // ============================================================
         async function openWidgetSettings(widgetId) {
             const widget = widgets.find(w => w.id === widgetId);
             if (!widget) return;
@@ -2551,16 +2018,12 @@
             const title = prompt('Widget title:', widget.title);
             if (title !== null) widget.title = title || 'Widget';
 
-            const color = prompt('Widget color (hex, e.g. #ff6b35):', widget.color || 'transparent');
-            if (color !== null) widget.color = color || null;
-
             const size = prompt('Size (small, medium, large, full):', widget.size || 'small');
             if (size !== null && ['small', 'medium', 'large', 'full'].includes(size)) widget.size = size;
 
             const height = prompt('Height (sm, md, lg, xl):', widget.height || 'md');
             if (height !== null && ['sm', 'md', 'lg', 'xl'].includes(height)) widget.height = height;
 
-            // Type-specific settings
             if (widget.type === 'embed') {
                 const url = prompt('Embed URL:', widget.data?.url || '');
                 if (url !== null) widget.data.url = url;
@@ -2577,13 +2040,12 @@
             try {
                 await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
                     title: widget.title,
-                    color: widget.color,
                     size: widget.size,
                     height: widget.height,
                     data: widget.data,
                     updatedAt: serverTimestamp()
                 });
-                showToast('Widget settings updated!', 'success');
+                showToast('Widget updated!', 'success');
             } catch (error) {
                 console.error('Error updating widget:', error);
                 showToast('Error updating widget', 'error');
@@ -2595,19 +2057,15 @@
         // ============================================================
         async function addTask(widgetId, text) {
             if (!text || !text.trim()) return;
-
             const widget = widgets.find(w => w.id === widgetId);
             if (!widget) return;
-
             if (!widget.data.items) widget.data.items = [];
             widget.data.items.push({ text: text.trim(), done: false, priority: 'medium', due: '' });
-
             try {
                 await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
                     data: widget.data,
                     updatedAt: serverTimestamp()
                 });
-                // Clear input
                 const input = document.getElementById('taskInput_' + widgetId);
                 if (input) input.value = '';
             } catch (error) {
@@ -2619,9 +2077,7 @@
         async function toggleTask(widgetId, index) {
             const widget = widgets.find(w => w.id === widgetId);
             if (!widget || !widget.data.items || index >= widget.data.items.length) return;
-
             widget.data.items[index].done = !widget.data.items[index].done;
-
             try {
                 await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
                     data: widget.data,
@@ -2638,14 +2094,11 @@
         let noteTimeout = {};
 
         async function saveNoteContent(widgetId, content) {
-            // Debounce saves
             clearTimeout(noteTimeout[widgetId]);
             noteTimeout[widgetId] = setTimeout(async () => {
                 const widget = widgets.find(w => w.id === widgetId);
                 if (!widget) return;
-
                 widget.data.content = content;
-
                 try {
                     await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
                         data: widget.data,
@@ -2658,400 +2111,118 @@
         }
 
         // ============================================================
-        // AI ASSISTANT (Firebase - simulated)
+        // BACKGROUND
         // ============================================================
-        async function askAI(widgetId) {
-            const input = document.getElementById('aiInput_' + widgetId);
-            const response = document.getElementById('aiResponse_' + widgetId);
-            if (!input || !response) return;
-
-            const question = input.value.trim();
-            if (!question) return;
-
-            response.textContent = '🤔 Thinking...';
-
-            // Simulate AI response
-            setTimeout(async () => {
-                const answers = [
-                    'That\'s a great question! Let me think about that... 🤔',
-                    'I\'d suggest breaking it down into smaller steps. Start with the most important part first!',
-                    'Based on what you\'ve told me, I think you should focus on the UI/UX first, then add the backend logic.',
-                    'Have you considered using DockGrid to organize your thoughts? 😄',
-                    'That sounds like a fun project! I\'d love to help you build it.',
-                    'Interesting! Tell me more about what you\'re trying to achieve.',
-                    'I think you\'re on the right track. Keep going! 💪',
-                    'Great question! Here\'s what I\'d recommend...'
-                ];
-                const random = answers[Math.floor(Math.random() * answers.length)];
-                response.textContent = random;
-
-                // Save to Firebase
-                const widget = widgets.find(w => w.id === widgetId);
-                if (widget) {
-                    widget.data.response = random;
-                    try {
-                        await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
-                            data: widget.data,
-                            updatedAt: serverTimestamp()
-                        });
-                    } catch (error) {
-                        console.error('Error saving AI response:', error);
-                    }
-                }
-            }, 800 + Math.random() * 600);
+        function applyBackground(url) {
+            if (!url) return;
+            appBg.style.backgroundImage = `url(${url})`;
+            appBg.style.backgroundSize = 'cover';
+            appBg.style.backgroundPosition = 'center';
         }
 
-        // ============================================================
-        // BACKGROUND (Firebase)
-        // ============================================================
-        function openBackgroundModal() {
-            document.getElementById('bgModal').classList.add('open');
-            const bg = settings.background || '#f0f0f0';
-            document.getElementById('bgColor').value = bg;
-            document.getElementById('bgColorHex').value = bg;
-            document.getElementById('bgBlur').value = settings.blur || 0;
-            document.getElementById('bgBlurValue').textContent = (settings.blur || 0) + 'px';
-            document.getElementById('bgBrightness').value = settings.brightness || 100;
-            document.getElementById('bgBrightnessValue').textContent = (settings.brightness || 100) + '%';
-            document.getElementById('bgWallpaper').value = settings.wallpaper || '';
-        }
-
-        async function applyBackground() {
+        async function setBackground(url) {
             if (!currentUser) return;
-
-            const color = document.getElementById('bgColor').value;
-            const blur = parseInt(document.getElementById('bgBlur').value) || 0;
-            const brightness = parseInt(document.getElementById('bgBrightness').value) || 100;
-            const wallpaper = document.getElementById('bgWallpaper').value.trim();
-
-            const dashboard = document.getElementById('dashboard');
-
-            if (wallpaper) {
-                dashboard.style.backgroundImage = `url(${wallpaper})`;
-                dashboard.style.backgroundSize = 'cover';
-                dashboard.style.backgroundPosition = 'center';
-            } else {
-                dashboard.style.backgroundImage = 'none';
-                dashboard.style.backgroundColor = color;
-            }
-
-            dashboard.style.backdropFilter = `blur(${blur}px) brightness(${brightness}%)`;
-            dashboard.style.backgroundBlendMode = 'overlay';
-
-            document.getElementById('bgBlurValue').textContent = blur + 'px';
-            document.getElementById('bgBrightnessValue').textContent = brightness + '%';
-
-            // Save to Firebase
             try {
                 await updateDoc(doc(db, COLLECTIONS.SETTINGS, currentUser.uid), {
-                    background: color,
-                    blur: blur,
-                    brightness: brightness,
-                    wallpaper: wallpaper,
+                    background: url,
                     updatedAt: serverTimestamp()
                 });
-                settings.background = color;
-                settings.blur = blur;
-                settings.brightness = brightness;
-                settings.wallpaper = wallpaper;
+                settings.background = url;
+                applyBackground(url);
+                closeModal('bgModal');
+                showToast('Background updated!', 'success');
             } catch (error) {
-                console.error('Error saving background:', error);
+                console.error('Error setting background:', error);
+                showToast('Error setting background', 'error');
             }
-
-            closeModal('bgModal');
         }
 
         function resetBackground() {
-            const dashboard = document.getElementById('dashboard');
-            dashboard.style.backgroundImage = 'none';
-            dashboard.style.backgroundColor = 'var(--black-5)';
-            dashboard.style.backdropFilter = 'none';
-
-            document.getElementById('bgColor').value = '#f0f0f0';
-            document.getElementById('bgColorHex').value = '#f0f0f0';
-            document.getElementById('bgBlur').value = '0';
-            document.getElementById('bgBlurValue').textContent = '0px';
-            document.getElementById('bgBrightness').value = '100';
-            document.getElementById('bgBrightnessValue').textContent = '100%';
-            document.getElementById('bgWallpaper').value = '';
-
-            if (currentUser) {
-                updateDoc(doc(db, COLLECTIONS.SETTINGS, currentUser.uid), {
-                    background: '#f0f0f0',
-                    blur: 0,
-                    brightness: 100,
-                    wallpaper: '',
-                    updatedAt: serverTimestamp()
-                }).catch(console.error);
-            }
-
-            closeModal('bgModal');
-        }
-
-        function applyBackground() {
-            const dashboard = document.getElementById('dashboard');
-            const wallpaper = settings.wallpaper || '';
-
-            if (wallpaper) {
-                dashboard.style.backgroundImage = `url(${wallpaper})`;
-                dashboard.style.backgroundSize = 'cover';
-                dashboard.style.backgroundPosition = 'center';
-            } else {
-                dashboard.style.backgroundImage = 'none';
-                dashboard.style.backgroundColor = settings.background || 'var(--black-5)';
-            }
-
-            dashboard.style.backdropFilter =
-                `blur(${settings.blur || 0}px) brightness(${settings.brightness || 100}%)`;
-            dashboard.style.backgroundBlendMode = 'overlay';
+            setBackground(DEFAULT_BG);
         }
 
         // ============================================================
-        // SIDEBAR TOGGLE
+        // IMGBB UPLOAD
         // ============================================================
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('main').classList.toggle('sidebar-open');
-        }
+        async function uploadImage(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('key', IMGBB_API_KEY);
 
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('open');
-            document.getElementById('main').classList.remove('sidebar-open');
-        }
-
-        // ============================================================
-        // EDIT MODE
-        // ============================================================
-        function toggleEditMode() {
-            editMode = !editMode;
-            const btn = document.getElementById('editToggle');
-            btn.innerHTML = editMode ?
-                '<span class="icon">✓</span> <span>Done</span>' :
-                '<span class="icon">✎</span> <span>Edit</span>';
-            btn.style.background = editMode ? 'var(--orange-500)' : 'transparent';
-            btn.style.color = editMode ? 'var(--white)' : '';
-            renderWidgets();
-        }
-
-        // ============================================================
-        // DRAG & DROP
-        // ============================================================
-        let dragWidgetId = null;
-
-        function onDragStart(e) {
-            if (!editMode) return;
-            const widget = e.target.closest('.widget');
-            if (!widget) return;
-            dragWidgetId = widget.dataset.widgetId;
-            widget.classList.add('dragging');
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/plain', dragWidgetId);
-        }
-
-        function onDragEnd(e) {
-            const widget = e.target.closest('.widget');
-            if (widget) widget.classList.remove('dragging');
-            document.querySelectorAll('.widget.drag-over').forEach(el => el.classList.remove('drag-over'));
-        }
-
-        function onDragOver(e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-            const target = e.target.closest('.widget');
-            if (target) target.classList.add('drag-over');
-        }
-
-        function onDragEnter(e) {
-            e.preventDefault();
-            const target = e.target.closest('.widget');
-            if (target) target.classList.add('drag-over');
-        }
-
-        function onDragLeave(e) {
-            const target = e.target.closest('.widget');
-            if (target) target.classList.remove('drag-over');
-        }
-
-        async function onDrop(e) {
-            e.preventDefault();
-            const target = e.target.closest('.widget');
-            if (!target) return;
-            target.classList.remove('drag-over');
-
-            const fromId = e.dataTransfer.getData('text/plain');
-            const toId = target.dataset.widgetId;
-            if (!fromId || !toId || fromId === toId) return;
-
-            const fromIndex = widgets.findIndex(w => w.id === fromId);
-            const toIndex = widgets.findIndex(w => w.id === toId);
-            if (fromIndex === -1 || toIndex === -1) return;
-
-            // Reorder in state
-            const [moved] = widgets.splice(fromIndex, 1);
-            widgets.splice(toIndex, 0, moved);
-
-            // Update order in Firebase
             try {
-                const batch = writeBatch(db);
-                widgets.forEach((w, i) => {
-                    const ref = doc(db, COLLECTIONS.WIDGETS, w.id);
-                    batch.update(ref, { order: i, updatedAt: serverTimestamp() });
+                const response = await fetch('https://api.imgbb.com/1/upload', {
+                    method: 'POST',
+                    body: formData
                 });
-                await batch.commit();
+                const data = await response.json();
+                if (data.success) {
+                    return data.data.url;
+                } else {
+                    throw new Error(data.error?.message || 'Upload failed');
+                }
             } catch (error) {
-                console.error('Error reordering widgets:', error);
-                showToast('Error reordering widgets', 'error');
+                console.error('Upload error:', error);
+                showToast('Upload failed: ' + error.message, 'error');
+                return null;
             }
         }
 
         // ============================================================
-        // RESIZE
+        // PROFILE IMAGE
         // ============================================================
-        let resizeData = null;
+        async function changeProfileImage() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
 
-        function onResizeStart(e) {
-            e.preventDefault();
-            const widget = e.target.closest('.widget');
-            if (!widget) return;
-            const rect = widget.getBoundingClientRect();
-            resizeData = {
-                widget: widget,
-                startX: e.clientX,
-                startY: e.clientY,
-                startWidth: rect.width,
-                startHeight: rect.height,
-                widgetId: widget.dataset.widgetId,
-            };
-            document.addEventListener('mousemove', onResizeMove);
-            document.addEventListener('mouseup', onResizeEnd);
-            widget.classList.add('resizing');
-        }
+                const url = await uploadImage(file);
+                if (!url) return;
 
-        function onResizeMove(e) {
-            if (!resizeData) return;
-            const dx = e.clientX - resizeData.startX;
-            const dy = e.clientY - resizeData.startY;
-            const newWidth = Math.max(200, resizeData.startWidth + dx);
-            const newHeight = Math.max(140, resizeData.startHeight + dy);
-            resizeData.widget.style.width = newWidth + 'px';
-            resizeData.widget.style.height = newHeight + 'px';
-            resizeData.widget.style.gridColumn = 'span ' + Math.ceil(newWidth / 240);
-        }
-
-        async function onResizeEnd(e) {
-            if (!resizeData) return;
-            const widget = resizeData.widget;
-            widget.classList.remove('resizing');
-
-            const width = widget.style.width;
-            const height = widget.style.height;
-
-            if (width && height) {
-                const cols = Math.ceil(parseInt(width) / 240);
-                const size = cols <= 1 ? 'small' : cols <= 2 ? 'medium' : cols <= 3 ? 'large' : 'full';
-                const h = parseInt(height);
-                const heightClass = h < 180 ? 'sm' : h < 260 ? 'md' : h < 360 ? 'lg' : 'xl';
-
-                const widgetId = resizeData.widgetId;
                 try {
-                    await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
-                        size: size,
-                        height: heightClass,
+                    await updateProfile(currentUser, { photoURL: url });
+                    await updateDoc(doc(db, COLLECTIONS.SETTINGS, currentUser.uid), {
+                        profileImage: url,
                         updatedAt: serverTimestamp()
                     });
+                    updateAvatar();
+                    showToast('Profile image updated!', 'success');
                 } catch (error) {
-                    console.error('Error saving resize:', error);
+                    console.error('Error updating profile:', error);
+                    showToast('Error updating profile image', 'error');
                 }
-            }
-
-            resizeData = null;
-            document.removeEventListener('mousemove', onResizeMove);
-            document.removeEventListener('mouseup', onResizeEnd);
+            };
+            input.click();
         }
 
         // ============================================================
-        // SEARCH
+        // BACKGROUND MODAL
         // ============================================================
-        function doSearch() {
-            const input = document.getElementById('searchInput');
-            const engine = document.getElementById('searchEngine');
-            const query = input.value.trim();
-            if (!query) return;
-            window.open(engine.value + encodeURIComponent(query), '_blank');
+        function openBackgroundModal() {
+            document.getElementById('bgModal').classList.add('open');
+            renderBgGrid();
         }
 
-        document.getElementById('searchInput').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') doSearch();
-        });
+        function renderBgGrid() {
+            const grid = document.getElementById('bgGrid');
+            const currentBg = settings.background || DEFAULT_BG;
 
-        function openSearchModal() {
-            document.getElementById('searchModal').classList.add('open');
-            document.getElementById('dashboardSearch').value = '';
-            document.getElementById('searchResults').innerHTML = '';
-            setTimeout(() => document.getElementById('dashboardSearch').focus(), 100);
+            grid.innerHTML = BG_IMAGES.map(url => `
+                        <div class="bg-grid__item ${url === currentBg ? 'active' : ''}"
+                             style="background-image:url(${url})"
+                             onclick="setBackground('${url}')">
+                            <div class="check">✓</div>
+                        </div>
+                    `).join('');
         }
-
-        document.getElementById('dashboardSearch').addEventListener('input', () => {
-            const query = document.getElementById('dashboardSearch').value.trim().toLowerCase();
-            const results = document.getElementById('searchResults');
-
-            if (!query) { results.innerHTML = ''; return; }
-
-            const matches = [];
-
-            widgets.forEach(w => {
-                if (w.type === 'bookmarks' && w.data?.items) {
-                    w.data.items.forEach(b => {
-                        if (b.name.toLowerCase().includes(query) || (b.url && b.url.toLowerCase()
-                                .includes(query))) {
-                            matches.push({ type: 'Bookmark', name: b.name, url: b.url, widget: w
-                                    .title });
-                        }
-                    });
-                }
-                if (w.type === 'projects' && w.data?.items) {
-                    w.data.items.forEach(p => {
-                        if (p.name.toLowerCase().includes(query)) {
-                            matches.push({ type: 'Project', name: p.name, status: p.status,
-                                widget: w.title });
-                        }
-                    });
-                }
-                if (w.type === 'notes' && w.data?.content) {
-                    if (w.data.content.toLowerCase().includes(query)) {
-                        matches.push({ type: 'Note', name: w.title, widget: w.title });
-                    }
-                }
-                if (w.type === 'tasks' && w.data?.items) {
-                    w.data.items.forEach(t => {
-                        if (t.text.toLowerCase().includes(query)) {
-                            matches.push({ type: 'Task', name: t.text, done: t.done, widget: w
-                                    .title });
-                        }
-                    });
-                }
-            });
-
-            if (matches.length === 0) {
-                results.innerHTML =
-                    '<div style="text-align:center;color:var(--black-30);padding:20px;">No results found</div>';
-            } else {
-                results.innerHTML = matches.map(m => `
-                            <div style="display:flex;gap:10px;padding:8px 12px;border-bottom:1px solid var(--black-5);font-size:13px;align-items:center;">
-                                <span style="font-weight:600;color:var(--orange-500);font-size:11px;">${m.type}</span>
-                                <span style="flex:1;">${m.name}</span>
-                                <span style="color:var(--black-40);font-size:11px;">${m.widget}</span>
-                            </div>
-                        `).join('');
-            }
-        });
 
         // ============================================================
         // MODALS
         // ============================================================
         function openAddWidget() {
             document.getElementById('addWidgetModal').classList.add('open');
-            renderWidgetPicker();
         }
 
         function renderWidgetPicker() {
@@ -3075,14 +2246,51 @@
         });
 
         // ============================================================
-        // PROFILE / LOGOUT
+        // DROPDOWN
         // ============================================================
-        function toggleProfileMenu() {
-            if (confirm('Logout from DockGrid?')) {
-                logout();
-            }
+        function toggleDropdown() {
+            dropdown.classList.toggle('open');
         }
 
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header__avatar') && !e.target.closest('.dropdown')) {
+                dropdown.classList.remove('open');
+            }
+        });
+
+        // ============================================================
+        // CLOCK
+        // ============================================================
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour12: false });
+            const date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const timeEl = document.getElementById('clockTime');
+            const dateEl = document.getElementById('clockDate');
+            if (timeEl) timeEl.textContent = time;
+            if (dateEl) dateEl.textContent = date;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'toastOut 400ms ease-out forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        }
+
+        // ============================================================
+        // LOGOUT
+        // ============================================================
         async function logout() {
             try {
                 await signOut(auth);
@@ -3094,121 +2302,54 @@
         }
 
         // ============================================================
-        // TOAST
-        // ============================================================
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.animation = 'toastOut 400ms ease-out forwards';
-                setTimeout(() => toast.remove(), 400);
-            }, 3500);
-        }
-
-        // ============================================================
-        // CLOCK
-        // ============================================================
-        function startClock() {
-            updateClock();
-            setInterval(updateClock, 1000);
-        }
-
-        function updateClock() {
-            const now = new Date();
-            const time = now.toLocaleTimeString('en-US', { hour12: false });
-            const date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-            const timeEl = document.getElementById('clockTime');
-            const dateEl = document.getElementById('clockDate');
-
-            if (timeEl) timeEl.textContent = time;
-            if (dateEl) dateEl.textContent = date;
-        }
-
-        // Start clock
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // ============================================================
         // KEYBOARD SHORTCUTS
         // ============================================================
         document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'E') {
-                e.preventDefault();
-                toggleEditMode();
-            }
             if (e.key === 'Escape') {
                 document.querySelectorAll('.modal-overlay.open').forEach(el => el.classList.remove('open'));
-                if (document.getElementById('sidebar').classList.contains('open')) {
-                    closeSidebar();
-                }
-            }
-            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
-                e.preventDefault();
-                toggleSidebar();
-            }
-            if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
-                if (!document.activeElement || document.activeElement.tagName !== 'INPUT') {
-                    e.preventDefault();
-                    document.getElementById('searchInput').focus();
-                }
+                dropdown.classList.remove('open');
             }
         });
 
         // ============================================================
-        // MAKE FUNCTIONS GLOBAL
+        // BACKGROUND UPLOAD HANDLER
         // ============================================================
-        window.toggleSidebar = toggleSidebar;
-        window.closeSidebar = closeSidebar;
-        window.switchPage = switchPage;
-        window.addPage = addPage;
+        document.getElementById('bgUploadInput').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const url = await uploadImage(file);
+            if (url) {
+                setBackground(url);
+            }
+            e.target.value = '';
+        });
+
+        // ============================================================
+        // EXPOSE GLOBALS
+        // ============================================================
         window.addWidget = addWidget;
         window.deleteWidget = deleteWidget;
         window.duplicateWidget = duplicateWidget;
-        window.refreshWidget = refreshWidget;
         window.openWidgetSettings = openWidgetSettings;
         window.openAddWidget = openAddWidget;
         window.openBackgroundModal = openBackgroundModal;
-        window.applyBackground = applyBackground;
+        window.setBackground = setBackground;
         window.resetBackground = resetBackground;
-        window.openSearchModal = openSearchModal;
-        window.toggleEditMode = toggleEditMode;
-        window.doSearch = doSearch;
         window.closeModal = closeModal;
         window.showToast = showToast;
         window.logout = logout;
-        window.toggleProfileMenu = toggleProfileMenu;
+        window.toggleDropdown = toggleDropdown;
+        window.changeProfileImage = changeProfileImage;
         window.addTask = addTask;
         window.toggleTask = toggleTask;
-        window.askAI = askAI;
         window.saveNoteContent = saveNoteContent;
 
-        // ============================================================
-        // EXPOSE TO CONSOLE FOR DEBUGGING
-        // ============================================================
-        console.log('%c🚀 DockGrid Dashboard %cv1.0 (Firebase)',
-            'font-size:20px;font-weight:900;color:#ff6b35;font-family:monospace;',
-            'font-size:14px;color:#000;');
-        console.log('%c📊 ' + pages.length + ' pages · ' + widgets.length + ' widgets',
-            'color:#555;');
-        console.log('%c🔧 Press Ctrl+Shift+E to toggle edit mode', 'color:#777;font-size:11px;');
-        console.log('%c🔍 Press / to focus search', 'color:#777;font-size:11px;');
-        console.log('%c☁️ All data stored in Firebase Firestore', 'color:#777;font-size:11px;');
-        console.log('%c👤 User:', currentUser?.email || 'Not logged in', 'color:#777;font-size:11px;');
-
-        console.log('🔧 Available functions:', {
-            addWidget: window.addWidget,
-            deleteWidget: window.deleteWidget,
-            duplicateWidget: window.duplicateWidget,
-            addPage: window.addPage,
-            switchPage: window.switchPage,
-            toggleEditMode: window.toggleEditMode,
-            logout: window.logout
-        });
+        console.log('%c🚀 DockGrid %c(Firebase)',
+            'font-size:20px;font-weight:900;color:#ff6b35;',
+            'font-size:14px;color:#fff;');
+        console.log('📊 ' + widgets.length + ' widgets');
+        console.log('👤 ' + (currentUser?.email || 'Not logged in'));
     </script>
 </body>
 </html>
