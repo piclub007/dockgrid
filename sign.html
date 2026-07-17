@@ -9,19 +9,13 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#ff6b35">
     
-    <!-- Open Graph -->
     <meta property="og:title" content="Sign In - DockGrid">
     <meta property="og:description" content="Access your DockGrid dashboard. Free personal start page & bookmark manager.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://dockgrid.app/sign">
     
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23ff6b35'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='18' font-weight='bold' font-family='system-ui'>D</text></svg>">
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Iconify API -->
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 
     <style>
@@ -30,290 +24,463 @@
             --orange-600: #e85d2c;
             --orange-700: #d44f20;
             --orange-400: #ff8c5a;
+            --orange-300: #ffb088;
             --orange-100: #fff0e8;
             --orange-50: #fff8f4;
             --black-100: #000000;
             --black-90: #0a0a0a;
             --black-80: #1a1a1a;
             --black-70: #2a2a2a;
+            --black-60: #3a3a3a;
             --black-50: #555555;
             --black-40: #777777;
-            --black-10: #dddddd;
-            --black-5: #f0f0f0;
+            --black-30: #999999;
+            --black-20: #cccccc;
+            --black-10: #e0e0e0;
+            --black-5: #f5f5f5;
             --white: #ffffff;
+            --white-alpha-05: rgba(255,255,255,0.05);
+            --white-alpha-08: rgba(255,255,255,0.08);
+            --white-alpha-10: rgba(255,255,255,0.1);
+            --white-alpha-15: rgba(255,255,255,0.15);
+            --white-alpha-20: rgba(255,255,255,0.2);
             --white-alpha-30: rgba(255,255,255,0.3);
             --white-alpha-50: rgba(255,255,255,0.5);
+            --white-alpha-60: rgba(255,255,255,0.6);
             --white-alpha-70: rgba(255,255,255,0.7);
+            --white-alpha-80: rgba(255,255,255,0.8);
             --white-alpha-90: rgba(255,255,255,0.9);
             --red-500: #ef4444;
+            --red-400: #f87171;
             --green-500: #22c55e;
+            --green-400: #4ade80;
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
             --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
-            --radius-xs: 6px;
+            --radius-xs: 4px;
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
             --radius-xl: 20px;
             --radius-2xl: 24px;
             --radius-full: 9999px;
-            --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
-            --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-            --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
-            --shadow-xl: 0 16px 48px rgba(0,0,0,0.12);
-            --transition-fast: 150ms ease-out;
-            --transition-base: 300ms ease-out;
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-bounce: 600ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            --transition-spring: 600ms cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: var(--font-sans);
-            background: var(--black-90);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-font-smoothing: antialiased;
-            overflow: hidden;
-        }
-
-        /* ===== MAIN CONTAINER ===== */
-        .auth-wrapper {
+        html, body {
             width: 100%;
-            max-width: 1050px;
-            height: 650px;
-            display: flex;
-            position: relative;
-            border-radius: var(--radius-2xl);
+            height: 100%;
             overflow: hidden;
-            box-shadow: 0 32px 64px rgba(0,0,0,0.4), 0 0 0 2px rgba(255,255,255,0.05);
-            animation: containerAppear 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: var(--font-sans);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        @keyframes containerAppear {
-            from { opacity: 0; transform: scale(0.95) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+        body {
+            background: var(--black-90);
+            display: flex;
         }
 
-        /* ===== PANELS ===== */
-        .auth-panel {
+        /* ===== FULL PAGE LAYOUT ===== */
+        .auth-page {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== LEFT PANEL - INFO & BRANDING ===== */
+        .auth-info {
             flex: 1;
+            background: var(--black-80);
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            padding: 48px 40px;
+            padding: 80px 64px;
             position: relative;
-            transition: all var(--transition-slow);
             overflow: hidden;
-        }
-
-        /* Left Panel - Form Side */
-        .auth-panel--form {
-            background: var(--white);
-            z-index: 2;
-            position: relative;
-        }
-
-        /* Right Panel - Info Side */
-        .auth-panel--info {
-            background: var(--black-80);
-            color: var(--white);
             z-index: 1;
-            position: relative;
-            text-align: center;
+            transition: all var(--transition-slow);
         }
 
-        .auth-panel--info::before {
-            content: '';
+        /* Animated background elements */
+        .auth-info__bg {
             position: absolute;
-            top: -30%;
-            right: -30%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .auth-info__orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orbFloat 8s ease-in-out infinite;
+        }
+
+        .auth-info__orb--1 {
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(255,107,53,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
+            background: var(--orange-500);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
         }
 
-        .auth-panel--info::after {
-            content: '';
-            position: absolute;
-            bottom: -20%;
-            left: -20%;
+        .auth-info__orb--2 {
             width: 300px;
             height: 300px;
-            background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
+            background: var(--orange-700);
+            bottom: -80px;
+            left: -60px;
+            animation-delay: -4s;
         }
 
-        /* ===== SWITCH STATES ===== */
-        .auth-wrapper.sign-up-mode .auth-panel--form {
-            order: 2;
+        .auth-info__orb--3 {
+            width: 200px;
+            height: 200px;
+            background: var(--orange-400);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -2s;
+            opacity: 0.2;
         }
 
-        .auth-wrapper.sign-up-mode .auth-panel--info {
-            order: 1;
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(-30px, -20px) scale(1.02); }
         }
 
-        /* When in sign-up mode, swap the info panel content */
-        .auth-info-content {
-            position: relative;
-            z-index: 1;
-            transition: all var(--transition-slow);
+        /* Grid pattern overlay */
+        .auth-info__grid {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 360px;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
         }
 
-        .auth-info-signin {
-            display: block;
-        }
-
-        .auth-info-signup {
-            display: none;
-        }
-
-        .auth-wrapper.sign-up-mode .auth-info-signin {
-            display: none;
-        }
-
-        .auth-wrapper.sign-up-mode .auth-info-signup {
-            display: block;
-            animation: fadeSlideIn 500ms ease-out;
-        }
-
-        .auth-wrapper:not(.sign-up-mode) .auth-info-signin {
-            animation: fadeSlideIn 500ms ease-out;
-        }
-
-        @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(16px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== LOGO ===== */
-        .auth-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            text-decoration: none;
+        .auth-info__content {
             position: relative;
             z-index: 2;
+            max-width: 480px;
         }
 
-        .auth-logo--form {
-            color: var(--black-100);
+        .auth-info__logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 48px;
         }
 
-        .auth-logo--info {
-            color: var(--white);
-            justify-content: center;
-        }
-
-        .auth-logo__icon {
-            width: 44px;
-            height: 44px;
-            background: var(--black-100);
-            border-radius: var(--radius-sm);
+        .auth-info__logo-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--white);
+            border-radius: var(--radius-md);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--orange-500);
             font-family: var(--font-mono);
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 900;
             position: relative;
             overflow: hidden;
             flex-shrink: 0;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
         }
 
-        .auth-logo__icon::after {
+        .auth-info__logo-icon::after {
             content: '';
             position: absolute;
             bottom: 0;
             right: 0;
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
             background: var(--orange-500);
         }
 
-        .auth-logo--info .auth-logo__icon {
-            background: var(--white);
-        }
-
-        .auth-logo__text {
+        .auth-info__logo-text {
             font-family: var(--font-mono);
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 800;
+            color: var(--white);
             letter-spacing: -0.5px;
+            line-height: 1.1;
         }
 
-        .auth-logo__text span {
+        .auth-info__logo-text span {
             color: var(--orange-500);
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.7;
         }
 
-        /* ===== BACK LINK ===== */
+        .auth-info__tagline {
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--white);
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+
+        .auth-info__tagline span {
+            color: var(--orange-500);
+            position: relative;
+        }
+
+        .auth-info__tagline span::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--orange-500);
+            opacity: 0.4;
+            border-radius: var(--radius-full);
+        }
+
+        .auth-info__description {
+            font-size: 16px;
+            color: var(--white-alpha-60);
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        /* Feature list */
+        .auth-info__features {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .auth-info__feature {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--white-alpha-05);
+            border: 1px solid var(--white-alpha-08);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            cursor: default;
+        }
+
+        .auth-info__feature:hover {
+            background: var(--white-alpha-08);
+            border-color: var(--orange-500);
+            transform: translateX(6px);
+        }
+
+        .auth-info__feature-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--orange-500);
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+            font-size: 18px;
+            color: var(--white);
+        }
+
+        .auth-info__feature-text {
+            font-size: 14px;
+            color: var(--white-alpha-70);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .auth-info__feature-text strong {
+            color: var(--white);
+            display: block;
+            font-size: 13px;
+            margin-bottom: 2px;
+        }
+
+        /* Stats row */
+        .auth-info__stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--white-alpha-10);
+        }
+
+        .auth-info__stat-value {
+            font-size: 28px;
+            font-weight: 900;
+            font-family: var(--font-mono);
+            color: var(--orange-500);
+            letter-spacing: -1px;
+        }
+
+        .auth-info__stat-label {
+            font-size: 11px;
+            color: var(--white-alpha-40);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* ===== RIGHT PANEL - FORM ===== */
+        .auth-form-panel {
+            flex: 1;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 64px;
+            position: relative;
+            z-index: 2;
+            box-shadow: -8px 0 40px rgba(0,0,0,0.3);
+            transition: all var(--transition-slow);
+        }
+
+        .auth-form-panel__inner {
+            max-width: 420px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* Back link */
         .auth-back {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 24px;
+            gap: 8px;
             font-size: 13px;
             font-weight: 600;
-            color: var(--black-50);
+            color: var(--black-40);
             text-decoration: none;
-            transition: color var(--transition-fast);
-            cursor: pointer;
-            position: relative;
-            z-index: 2;
+            transition: all var(--transition-fast);
+            margin-bottom: 40px;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
         }
 
         .auth-back:hover {
             color: var(--orange-500);
+            background: var(--orange-50);
         }
 
-        /* ===== FORM STYLES ===== */
-        .auth-form-wrapper {
-            width: 100%;
-            max-width: 380px;
-            position: relative;
-            z-index: 2;
-        }
-
+        /* Form header */
         .auth-form-header {
-            margin-bottom: 28px;
+            margin-bottom: 36px;
         }
 
-        .auth-form-title {
-            font-size: 26px;
+        .auth-form-header__greeting {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--orange-500);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            font-family: var(--font-mono);
+        }
+
+        .auth-form-header__title {
+            font-size: 32px;
             font-weight: 900;
             color: var(--black-100);
-            letter-spacing: -0.8px;
-            margin-bottom: 6px;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            line-height: 1.2;
         }
 
-        .auth-form-subtitle {
-            font-size: 14px;
-            color: var(--black-50);
+        .auth-form-header__subtitle {
+            font-size: 15px;
+            color: var(--black-40);
             line-height: 1.5;
         }
 
-        .form-group {
-            margin-bottom: 18px;
+        /* Tabs */
+        .auth-tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 32px;
+            background: var(--black-5);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            color: var(--black-40);
+            font-family: var(--font-sans);
+            letter-spacing: -0.2px;
             position: relative;
+        }
+
+        .auth-tab.active {
+            background: var(--white);
+            color: var(--black-100);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .auth-tab:hover:not(.active) {
+            color: var(--black-60);
+        }
+
+        /* Form wrapper */
+        .auth-form {
+            display: none;
+            animation: formAppear 400ms ease-out;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        @keyframes formAppear {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
         }
 
         .form-label {
             display: block;
             font-size: 12px;
             font-weight: 700;
-            color: var(--black-70);
-            margin-bottom: 6px;
-            letter-spacing: 0.3px;
+            color: var(--black-60);
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
         }
 
@@ -323,11 +490,10 @@
 
         .form-input-icon {
             position: absolute;
-            left: 14px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--black-40);
-            font-size: 18px;
+            color: var(--black-30);
             pointer-events: none;
             transition: color var(--transition-fast);
             display: flex;
@@ -337,8 +503,8 @@
 
         .form-input {
             width: 100%;
-            padding: 13px 14px 13px 44px;
-            font-size: 14px;
+            padding: 15px 16px 15px 48px;
+            font-size: 15px;
             font-family: var(--font-sans);
             border: 2px solid var(--black-10);
             border-radius: var(--radius-lg);
@@ -347,6 +513,10 @@
             transition: all var(--transition-fast);
             outline: none;
             letter-spacing: -0.2px;
+        }
+
+        .form-input:hover {
+            border-color: var(--black-20);
         }
 
         .form-input:focus {
@@ -363,37 +533,41 @@
             box-shadow: 0 0 0 4px rgba(239,68,68,0.08);
         }
 
-        .form-error {
-            font-size: 11px;
+        .form-input.error ~ .form-input-icon {
             color: var(--red-500);
-            margin-top: 5px;
+        }
+
+        .form-error {
+            font-size: 12px;
+            color: var(--red-500);
+            margin-top: 6px;
             display: none;
-            font-weight: 500;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+            font-weight: 500;
         }
 
         .form-error.visible {
             display: flex;
-            animation: fadeSlideIn 200ms ease-out;
+            animation: formAppear 200ms ease-out;
         }
 
-        /* Password Toggle */
+        /* Password toggle */
         .password-toggle {
             position: absolute;
-            right: 12px;
+            right: 8px;
             top: 50%;
             transform: translateY(-50%);
             background: none;
             border: none;
             cursor: pointer;
-            color: var(--black-40);
-            padding: 6px;
-            transition: color var(--transition-fast);
+            color: var(--black-30);
+            padding: 8px;
+            transition: all var(--transition-fast);
             display: flex;
             align-items: center;
-            z-index: 1;
             border-radius: var(--radius-xs);
+            z-index: 1;
         }
 
         .password-toggle:hover {
@@ -401,11 +575,11 @@
             background: var(--orange-50);
         }
 
-        /* Submit Button */
+        /* Submit button */
         .btn-submit {
             width: 100%;
-            padding: 14px 24px;
-            font-size: 15px;
+            padding: 16px 24px;
+            font-size: 16px;
             font-weight: 700;
             font-family: var(--font-sans);
             background: var(--black-100);
@@ -415,19 +589,34 @@
             cursor: pointer;
             transition: all var(--transition-base);
             letter-spacing: -0.3px;
-            position: relative;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            margin-top: 4px;
+            gap: 10px;
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,107,53,0.3), transparent);
+            transition: left 500ms ease-out;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
         }
 
         .btn-submit:hover {
             background: var(--orange-500);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255,107,53,0.35);
+            box-shadow: 0 8px 28px rgba(255,107,53,0.4);
         }
 
         .btn-submit:active {
@@ -444,8 +633,8 @@
 
         .btn-submit .spinner {
             display: none;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border: 2.5px solid transparent;
             border-top-color: var(--white);
             border-radius: 50%;
@@ -460,306 +649,137 @@
             display: none;
         }
 
+        .btn-submit.loading::before {
+            display: none;
+        }
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Divider */
-        .auth-divider {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin: 22px 0;
-            color: var(--black-40);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .auth-divider::before,
-        .auth-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--black-10);
-        }
-
-        /* Social Buttons */
-        .social-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-social {
-            flex: 1;
-            padding: 12px 16px;
-            font-size: 13px;
-            font-weight: 600;
-            font-family: var(--font-sans);
-            background: var(--white);
-            border: 2px solid var(--black-10);
-            border-radius: var(--radius-lg);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            color: var(--black-80);
-        }
-
-        .btn-social:hover {
-            border-color: var(--black-100);
-            background: var(--black-5);
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-social iconify-icon {
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
-        /* Switch Link (Mobile only) */
-        .auth-switch-mobile {
-            display: none;
+        /* Switch link */
+        .auth-switch {
             text-align: center;
-            margin-top: 20px;
-            font-size: 13px;
-            color: var(--black-50);
-            position: relative;
-            z-index: 2;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--black-40);
         }
 
-        .auth-switch-mobile button {
+        .auth-switch button {
             background: none;
             border: none;
             color: var(--orange-500);
             font-weight: 700;
             cursor: pointer;
-            font-size: 13px;
+            font-size: 14px;
             font-family: var(--font-sans);
             text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color var(--transition-fast);
         }
 
-        .auth-switch-mobile button:hover {
+        .auth-switch button:hover {
             color: var(--orange-700);
         }
 
-        /* ===== INFO PANEL CONTENT ===== */
-        .auth-info-icon {
-            font-size: 56px;
-            margin-bottom: 20px;
-            display: inline-flex;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .auth-info-title {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            margin-bottom: 12px;
-            line-height: 1.2;
-        }
-
-        .auth-info-title span {
-            color: var(--orange-500);
-        }
-
-        .auth-info-text {
-            font-size: 14px;
-            color: var(--white-alpha-70);
-            line-height: 1.6;
-            margin-bottom: 28px;
-        }
-
-        .auth-info-features {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            text-align: left;
-        }
-
-        .auth-info-feature {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 13px;
-            color: var(--white-alpha-70);
-            padding: 10px 14px;
-            background: rgba(255,255,255,0.05);
-            border-radius: var(--radius-sm);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all var(--transition-fast);
-        }
-
-        .auth-info-feature:hover {
-            background: rgba(255,255,255,0.08);
-            border-color: var(--orange-500);
-            transform: translateX(4px);
-        }
-
-        .auth-info-feature iconify-icon {
-            font-size: 18px;
-            flex-shrink: 0;
-            color: var(--orange-400);
-        }
-
-        .auth-info-stats {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            margin-top: 28px;
-            padding-top: 24px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .auth-info-stat {
+        /* Terms */
+        .auth-terms {
             text-align: center;
+            margin-top: 32px;
+            font-size: 12px;
+            color: var(--black-30);
+            line-height: 1.6;
         }
 
-        .auth-info-stat-value {
-            font-size: 22px;
-            font-weight: 900;
-            font-family: var(--font-mono);
+        .auth-terms a {
             color: var(--orange-500);
+            text-decoration: none;
+            font-weight: 600;
         }
 
-        .auth-info-stat-label {
-            font-size: 10px;
-            color: var(--white-alpha-50);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 2px;
-        }
-
-        /* Switch Button on Info Panel */
-        .btn-switch {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 28px;
-            background: transparent;
-            border: 2px solid var(--white-alpha-50);
-            color: var(--white);
-            border-radius: var(--radius-lg);
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all var(--transition-base);
-            font-family: var(--font-sans);
-            margin-top: 8px;
-            letter-spacing: -0.2px;
-        }
-
-        .btn-switch:hover {
-            background: var(--orange-500);
-            border-color: var(--orange-500);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255,107,53,0.3);
+        .auth-terms a:hover {
+            text-decoration: underline;
         }
 
         /* ===== TOAST ===== */
         .toast-container {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 24px;
+            right: 24px;
             z-index: 9999;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
+            pointer-events: none;
         }
 
         .toast {
-            padding: 14px 20px;
+            padding: 16px 22px;
             background: var(--black-100);
             color: var(--white);
-            border: 2px solid var(--orange-500);
+            border-left: 3px solid var(--orange-500);
             border-radius: var(--radius-md);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
-            box-shadow: var(--shadow-lg);
-            animation: toastIn 400ms ease-out;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            animation: toastIn 400ms cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            gap: 10px;
-            max-width: 380px;
+            gap: 12px;
+            max-width: 420px;
             letter-spacing: -0.2px;
+            pointer-events: auto;
         }
 
         .toast.error {
-            border-color: var(--red-500);
+            border-left-color: var(--red-500);
         }
 
         .toast.success {
-            border-color: var(--green-500);
+            border-left-color: var(--green-500);
         }
 
         @keyframes toastIn {
-            from { opacity: 0; transform: translateX(100%); }
+            from { opacity: 0; transform: translateX(120%); }
             to { opacity: 1; transform: translateX(0); }
         }
 
         @keyframes toastOut {
             from { opacity: 1; transform: translateX(0); }
-            to { opacity: 0; transform: translateX(100%); }
+            to { opacity: 0; transform: translateX(120%); }
         }
 
         /* ===== RESPONSIVE ===== */
-        @media (max-width: 850px) {
-            body {
-                align-items: flex-start;
-                padding: 16px;
-                background: var(--white);
-            }
-
-            .auth-wrapper {
-                flex-direction: column;
-                height: auto;
-                max-width: 480px;
-                box-shadow: var(--shadow-lg);
-                border-radius: var(--radius-xl);
-            }
-
-            .auth-panel--info {
+        @media (max-width: 900px) {
+            .auth-info {
                 display: none;
             }
 
-            .auth-panel--form {
-                padding: 36px 28px;
-                border-radius: var(--radius-xl);
+            .auth-form-panel {
+                flex: 1;
+                padding: 48px 32px;
             }
 
-            .auth-switch-mobile {
-                display: block;
+            .auth-form-header__title {
+                font-size: 26px;
             }
 
-            .auth-form-title {
-                font-size: 22px;
-            }
-
-            .auth-wrapper.sign-up-mode .auth-panel--form {
-                order: 1;
+            .auth-info__tagline {
+                font-size: 28px;
             }
         }
 
-        @media (max-width: 480px) {
-            .auth-panel--form {
-                padding: 28px 20px;
+        @media (min-width: 901px) and (max-width: 1200px) {
+            .auth-info {
+                padding: 60px 40px;
             }
 
-            .auth-form-title {
-                font-size: 20px;
+            .auth-form-panel {
+                padding: 60px 40px;
             }
 
-            .social-buttons {
-                flex-direction: column;
+            .auth-info__tagline {
+                font-size: 34px;
             }
         }
     </style>
@@ -769,38 +789,135 @@
     <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Auth Wrapper -->
-    <div class="auth-wrapper" id="authWrapper">
+    <!-- Full Page Layout -->
+    <div class="auth-page">
         
-        <!-- ===== LEFT PANEL - FORM ===== -->
-        <div class="auth-panel auth-panel--form">
-            <!-- Back Link -->
-            <a href="index.html" class="auth-back" style="align-self:flex-start;margin-left:20px;">
-                <iconify-icon icon="mdi:arrow-left" width="16" height="16"></iconify-icon>
-                Back to DockGrid
-            </a>
+        <!-- ===== LEFT PANEL - INFO & BRANDING ===== -->
+        <div class="auth-info">
+            <!-- Background effects -->
+            <div class="auth-info__bg">
+                <div class="auth-info__orb auth-info__orb--1"></div>
+                <div class="auth-info__orb auth-info__orb--2"></div>
+                <div class="auth-info__orb auth-info__orb--3"></div>
+                <div class="auth-info__grid"></div>
+            </div>
 
-            <!-- Logo -->
-            <a href="index.html" class="auth-logo auth-logo--form">
-                <div class="auth-logo__icon">D</div>
-                <div class="auth-logo__text">Dock<span>Grid</span></div>
-            </a>
-
-            <!-- Sign In Form -->
-            <div class="auth-form-wrapper" id="signInFormWrapper">
-                <div class="auth-form-header">
-                    <h2 class="auth-form-title">Welcome back 👋</h2>
-                    <p class="auth-form-subtitle">Sign in to access your personalized dashboard</p>
+            <!-- Content -->
+            <div class="auth-info__content">
+                <!-- Logo -->
+                <div class="auth-info__logo">
+                    <div class="auth-info__logo-icon">D</div>
+                    <div class="auth-info__logo-text">
+                        DockGrid
+                        <span>by PIReactive</span>
+                    </div>
                 </div>
 
-                <form id="signInForm" onsubmit="handleSignIn(event)">
+                <!-- Tagline -->
+                <h2 class="auth-info__tagline">
+                    Your digital life,<br>
+                    <span>perfectly organized.</span>
+                </h2>
+                <p class="auth-info__description">
+                    Create a beautiful personal dashboard for your bookmarks, links, notes, 
+                    RSS feeds, and widgets. Everything you need, one click away — 100% free, forever.
+                </p>
+
+                <!-- Features -->
+                <div class="auth-info__features">
+                    <div class="auth-info__feature">
+                        <div class="auth-info__feature-icon">
+                            <iconify-icon icon="mdi:bookmark-multiple-outline"></iconify-icon>
+                        </div>
+                        <div class="auth-info__feature-text">
+                            <strong>Smart Bookmarks</strong>
+                            Organize links with folders, tags, and visual previews
+                        </div>
+                    </div>
+                    <div class="auth-info__feature">
+                        <div class="auth-info__feature-icon">
+                            <iconify-icon icon="mdi:note-text-outline"></iconify-icon>
+                        </div>
+                        <div class="auth-info__feature-text">
+                            <strong>Rich Notes & To-Dos</strong>
+                            Sticky notes, task lists, and kanban boards
+                        </div>
+                    </div>
+                    <div class="auth-info__feature">
+                        <div class="auth-info__feature-icon">
+                            <iconify-icon icon="mdi:rss"></iconify-icon>
+                        </div>
+                        <div class="auth-info__feature-text">
+                            <strong>RSS Feeds & Widgets</strong>
+                            News, weather, calendar — all in one dashboard
+                        </div>
+                    </div>
+                    <div class="auth-info__feature">
+                        <div class="auth-info__feature-icon">
+                            <iconify-icon icon="mdi:devices"></iconify-icon>
+                        </div>
+                        <div class="auth-info__feature-text">
+                            <strong>Web + Desktop App</strong>
+                            Access anywhere. Works offline with desktop app
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="auth-info__stats">
+                    <div>
+                        <div class="auth-info__stat-value">10K+</div>
+                        <div class="auth-info__stat-label">Active Users</div>
+                    </div>
+                    <div>
+                        <div class="auth-info__stat-value">500K+</div>
+                        <div class="auth-info__stat-label">Bookmarks</div>
+                    </div>
+                    <div>
+                        <div class="auth-info__stat-value">4.9★</div>
+                        <div class="auth-info__stat-label">Rating</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== RIGHT PANEL - FORM ===== -->
+        <div class="auth-form-panel">
+            <div class="auth-form-panel__inner">
+                <!-- Back link -->
+                <a href="index.html" class="auth-back">
+                    <iconify-icon icon="mdi:arrow-left" width="16" height="16"></iconify-icon>
+                    Back to home
+                </a>
+
+                <!-- Form header -->
+                <div class="auth-form-header">
+                    <div class="auth-form-header__greeting" id="formGreeting">Welcome back</div>
+                    <h1 class="auth-form-header__title" id="formTitle">Sign in to DockGrid</h1>
+                    <p class="auth-form-header__subtitle" id="formSubtitle">Access your personalized dashboard and pick up where you left off</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="sign-in" onclick="switchTab('sign-in')">
+                        <iconify-icon icon="mdi:login" width="18" height="18"></iconify-icon>
+                        &nbsp;Sign In
+                    </button>
+                    <button class="auth-tab" data-tab="sign-up" onclick="switchTab('sign-up')">
+                        <iconify-icon icon="mdi:account-plus" width="18" height="18"></iconify-icon>
+                        &nbsp;Sign Up
+                    </button>
+                </div>
+
+                <!-- Sign In Form -->
+                <form class="auth-form active" id="signInForm" onsubmit="handleSignIn(event)">
                     <div class="form-group">
                         <label class="form-label" for="signInEmail">Email Address</label>
                         <div class="form-input-wrapper">
                             <span class="form-input-icon">
-                                <iconify-icon icon="mdi:email-outline" width="18" height="18"></iconify-icon>
+                                <iconify-icon icon="mdi:email-outline" width="20" height="20"></iconify-icon>
                             </span>
-                            <input type="email" class="form-input" id="signInEmail" placeholder="you@example.com" required autocomplete="email">
+                            <input type="email" class="form-input" id="signInEmail" placeholder="you@example.com" required autocomplete="email" inputmode="email">
                         </div>
                         <div class="form-error" id="signInEmailError"></div>
                     </div>
@@ -809,11 +926,11 @@
                         <label class="form-label" for="signInPassword">Password</label>
                         <div class="form-input-wrapper">
                             <span class="form-input-icon">
-                                <iconify-icon icon="mdi:lock-outline" width="18" height="18"></iconify-icon>
+                                <iconify-icon icon="mdi:lock-outline" width="20" height="20"></iconify-icon>
                             </span>
                             <input type="password" class="form-input" id="signInPassword" placeholder="Enter your password" required autocomplete="current-password">
-                            <button type="button" class="password-toggle" onclick="togglePassword('signInPassword', this)" aria-label="Toggle password">
-                                <iconify-icon icon="mdi:eye-off-outline" width="18" height="18"></iconify-icon>
+                            <button type="button" class="password-toggle" onclick="togglePassword('signInPassword', this)" aria-label="Toggle password visibility">
+                                <iconify-icon icon="mdi:eye-off-outline" width="20" height="20"></iconify-icon>
                             </button>
                         </div>
                         <div class="form-error" id="signInPasswordError"></div>
@@ -821,40 +938,20 @@
 
                     <button type="submit" class="btn-submit" id="signInButton">
                         <span class="btn-text">
-                            <iconify-icon icon="mdi:login" width="18" height="18"></iconify-icon>
+                            <iconify-icon icon="mdi:login" width="20" height="20"></iconify-icon>
                             Sign In
                         </span>
                         <span class="spinner"></span>
                     </button>
                 </form>
 
-                <div class="auth-divider">or continue with</div>
-
-                <div class="social-buttons">
-                    <button class="btn-social" onclick="signInWithGoogle()">
-                        <iconify-icon icon="logos:google-icon"></iconify-icon>
-                        Google
-                    </button>
-                    <button class="btn-social" onclick="signInWithGitHub()">
-                        <iconify-icon icon="mdi:github" width="20" height="20"></iconify-icon>
-                        GitHub
-                    </button>
-                </div>
-            </div>
-
-            <!-- Sign Up Form -->
-            <div class="auth-form-wrapper" id="signUpFormWrapper" style="display:none;">
-                <div class="auth-form-header">
-                    <h2 class="auth-form-title">Create your account 🚀</h2>
-                    <p class="auth-form-subtitle">Start organizing your digital life in seconds</p>
-                </div>
-
-                <form id="signUpForm" onsubmit="handleSignUp(event)">
+                <!-- Sign Up Form -->
+                <form class="auth-form" id="signUpForm" onsubmit="handleSignUp(event)">
                     <div class="form-group">
                         <label class="form-label" for="signUpName">Full Name</label>
                         <div class="form-input-wrapper">
                             <span class="form-input-icon">
-                                <iconify-icon icon="mdi:account-outline" width="18" height="18"></iconify-icon>
+                                <iconify-icon icon="mdi:account-outline" width="20" height="20"></iconify-icon>
                             </span>
                             <input type="text" class="form-input" id="signUpName" placeholder="John Doe" required autocomplete="name">
                         </div>
@@ -865,9 +962,9 @@
                         <label class="form-label" for="signUpEmail">Email Address</label>
                         <div class="form-input-wrapper">
                             <span class="form-input-icon">
-                                <iconify-icon icon="mdi:email-outline" width="18" height="18"></iconify-icon>
+                                <iconify-icon icon="mdi:email-outline" width="20" height="20"></iconify-icon>
                             </span>
-                            <input type="email" class="form-input" id="signUpEmail" placeholder="you@example.com" required autocomplete="email">
+                            <input type="email" class="form-input" id="signUpEmail" placeholder="you@example.com" required autocomplete="email" inputmode="email">
                         </div>
                         <div class="form-error" id="signUpEmailError"></div>
                     </div>
@@ -876,7 +973,7 @@
                         <label class="form-label" for="signUpUsername">Username</label>
                         <div class="form-input-wrapper">
                             <span class="form-input-icon">
-                                <iconify-icon icon="mdi:at" width="18" height="18"></iconify-icon>
+                                <iconify-icon icon="mdi:at" width="20" height="20"></iconify-icon>
                             </span>
                             <input type="text" class="form-input" id="signUpUsername" placeholder="johndoe" required autocomplete="username" pattern="[a-zA-Z0-9_]{3,20}">
                         </div>
@@ -887,11 +984,11 @@
                         <label class="form-label" for="signUpPassword">Password</label>
                         <div class="form-input-wrapper">
                             <span class="form-input-icon">
-                                <iconify-icon icon="mdi:lock-outline" width="18" height="18"></iconify-icon>
+                                <iconify-icon icon="mdi:lock-outline" width="20" height="20"></iconify-icon>
                             </span>
-                            <input type="password" class="form-input" id="signUpPassword" placeholder="Min. 6 characters" required autocomplete="new-password" minlength="6">
-                            <button type="button" class="password-toggle" onclick="togglePassword('signUpPassword', this)" aria-label="Toggle password">
-                                <iconify-icon icon="mdi:eye-off-outline" width="18" height="18"></iconify-icon>
+                            <input type="password" class="form-input" id="signUpPassword" placeholder="Minimum 6 characters" required autocomplete="new-password" minlength="6">
+                            <button type="button" class="password-toggle" onclick="togglePassword('signUpPassword', this)" aria-label="Toggle password visibility">
+                                <iconify-icon icon="mdi:eye-off-outline" width="20" height="20"></iconify-icon>
                             </button>
                         </div>
                         <div class="form-error" id="signUpPasswordError"></div>
@@ -899,142 +996,26 @@
 
                     <button type="submit" class="btn-submit" id="signUpButton">
                         <span class="btn-text">
-                            <iconify-icon icon="mdi:account-plus" width="18" height="18"></iconify-icon>
+                            <iconify-icon icon="mdi:account-plus" width="20" height="20"></iconify-icon>
                             Create Free Account
                         </span>
                         <span class="spinner"></span>
                     </button>
                 </form>
 
-                <div class="auth-divider">or continue with</div>
-
-                <div class="social-buttons">
-                    <button class="btn-social" onclick="signInWithGoogle()">
-                        <iconify-icon icon="logos:google-icon"></iconify-icon>
-                        Google
-                    </button>
-                    <button class="btn-social" onclick="signInWithGitHub()">
-                        <iconify-icon icon="mdi:github" width="20" height="20"></iconify-icon>
-                        GitHub
-                    </button>
-                </div>
-            </div>
-
-            <!-- Mobile Switch -->
-            <div class="auth-switch-mobile">
-                <span id="mobileSwitchText">Don't have an account?</span>
-                <button id="mobileSwitchBtn" onclick="toggleMode()">Sign Up</button>
-            </div>
-        </div>
-
-        <!-- ===== RIGHT PANEL - INFO ===== -->
-        <div class="auth-panel auth-panel--info">
-            <!-- Sign In Info -->
-            <div class="auth-info-content auth-info-signin">
-                <div class="auth-logo auth-logo--info">
-                    <div class="auth-logo__icon">D</div>
-                    <div class="auth-logo__text">Dock<span>Grid</span></div>
-                </div>
-                
-                <div class="auth-info-icon">
-                    <iconify-icon icon="mdi:dashboard" width="56" height="56" style="color: var(--orange-400);"></iconify-icon>
-                </div>
-                
-                <h3 class="auth-info-title">Your <span>digital command center</span> awaits</h3>
-                <p class="auth-info-text">
-                    Access your beautifully organized bookmarks, notes, RSS feeds, and widgets. 
-                    Everything exactly where you left it.
-                </p>
-                
-                <div class="auth-info-features">
-                    <div class="auth-info-feature">
-                        <iconify-icon icon="mdi:flash-outline"></iconify-icon>
-                        Instant access to all your links
-                    </div>
-                    <div class="auth-info-feature">
-                        <iconify-icon icon="mdi:sync"></iconify-icon>
-                        Seamless sync across devices
-                    </div>
-                    <div class="auth-info-feature">
-                        <iconify-icon icon="mdi:shield-check-outline"></iconify-icon>
-                        Secure & private by default
-                    </div>
-                </div>
-                
-                <div class="auth-info-stats">
-                    <div class="auth-info-stat">
-                        <div class="auth-info-stat-value">10K+</div>
-                        <div class="auth-info-stat-label">Users</div>
-                    </div>
-                    <div class="auth-info-stat">
-                        <div class="auth-info-stat-value">500K+</div>
-                        <div class="auth-info-stat-label">Bookmarks</div>
-                    </div>
-                    <div class="auth-info-stat">
-                        <div class="auth-info-stat-value">4.9★</div>
-                        <div class="auth-info-stat-label">Rating</div>
-                    </div>
+                <!-- Switch link -->
+                <div class="auth-switch">
+                    <span id="switchText">Don't have an account?</span>
+                    <button id="switchBtn" onclick="toggleTab()">Sign up for free</button>
                 </div>
 
-                <br>
-                <button class="btn-switch" onclick="toggleMode()">
-                    <iconify-icon icon="mdi:account-plus" width="18" height="18"></iconify-icon>
-                    New here? Create an account
-                </button>
-            </div>
-
-            <!-- Sign Up Info -->
-            <div class="auth-info-content auth-info-signup">
-                <div class="auth-logo auth-logo--info">
-                    <div class="auth-logo__icon">D</div>
-                    <div class="auth-logo__text">Dock<span>Grid</span></div>
+                <!-- Terms -->
+                <div class="auth-terms">
+                    By continuing, you agree to DockGrid's<br>
+                    <a href="#">Terms of Service</a> &amp; <a href="#">Privacy Policy</a>
+                    <br><br>
+                    Created by <strong>PIReactive</strong> 🚀
                 </div>
-                
-                <div class="auth-info-icon">
-                    <iconify-icon icon="mdi:rocket-launch" width="56" height="56" style="color: var(--orange-400);"></iconify-icon>
-                </div>
-                
-                <h3 class="auth-info-title">Start <span>organizing</span> in seconds</h3>
-                <p class="auth-info-text">
-                    Join thousands who've transformed their digital life. 
-                    Create your free account and get a beautiful dashboard instantly.
-                </p>
-                
-                <div class="auth-info-features">
-                    <div class="auth-info-feature">
-                        <iconify-icon icon="mdi:gift-outline"></iconify-icon>
-                        100% free — no ads, no catch
-                    </div>
-                    <div class="auth-info-feature">
-                        <iconify-icon icon="mdi:palette-outline"></iconify-icon>
-                        Beautiful customizable themes
-                    </div>
-                    <div class="auth-info-feature">
-                        <iconify-icon icon="mdi:devices"></iconify-icon>
-                        Web + Desktop + Offline mode
-                    </div>
-                </div>
-                
-                <div class="auth-info-stats">
-                    <div class="auth-info-stat">
-                        <div class="auth-info-stat-value">&lt;2min</div>
-                        <div class="auth-info-stat-label">Setup Time</div>
-                    </div>
-                    <div class="auth-info-stat">
-                        <div class="auth-info-stat-value">∞</div>
-                        <div class="auth-info-stat-label">Free Forever</div>
-                    </div>
-                    <div class="auth-info-stat">
-                        <div class="auth-info-stat-value">🖥️</div>
-                        <div class="auth-info-stat-label">Desktop App</div>
-                    </div>
-                </div>
-
-                <br>
-                <button class="btn-switch" onclick="toggleMode()">
-                    <iconify-icon icon="mdi:login" width="18" height="18"></iconify-icon>
-                    Already have an account? Sign In
-                </button>
             </div>
         </div>
     </div>
@@ -1046,18 +1027,20 @@
             getAuth, 
             createUserWithEmailAndPassword,
             signInWithEmailAndPassword,
-            signInWithPopup,
-            GoogleAuthProvider,
-            GithubAuthProvider,
             onAuthStateChanged,
-            updateProfile
+            updateProfile,
+            signOut
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
         import { 
             getFirestore, 
             doc, 
             setDoc, 
             getDoc, 
-            serverTimestamp 
+            serverTimestamp,
+            collection,
+            query,
+            where,
+            getDocs
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
 
@@ -1077,82 +1060,108 @@
         const db = getFirestore(app);
         const analytics = getAnalytics(app);
 
-        const googleProvider = new GoogleAuthProvider();
-        googleProvider.setCustomParameters({ prompt: 'select_account' });
-        const githubProvider = new GithubAuthProvider();
+        // Collection references with DockGrid naming convention
+        const COLLECTIONS = {
+            USERS: 'DockGrid_Users',
+            PAGES: 'DockGrid_Pages',
+            BOOKMARKS: 'DockGrid_Bookmarks',
+            NOTES: 'DockGrid_Notes',
+            WIDGETS: 'DockGrid_Widgets',
+            SETTINGS: 'DockGrid_Settings',
+            SESSIONS: 'DockGrid_Sessions',
+            ANALYTICS: 'DockGrid_Analytics'
+        };
 
+        // Make available globally
         window.firebaseAuth = auth;
         window.firebaseDb = db;
-        window.googleProvider = googleProvider;
-        window.githubProvider = githubProvider;
+        window.firebaseCollections = COLLECTIONS;
         window.updateProfileFn = updateProfile;
         window.serverTimestampFn = serverTimestamp;
         window.docFn = doc;
         window.setDocFn = setDoc;
         window.getDocFn = getDoc;
+        window.collectionFn = collection;
+        window.queryFn = query;
+        window.whereFn = where;
+        window.getDocsFn = getDocs;
+        window.signOutFn = signOut;
 
-        onAuthStateChanged(auth, (user) => {
+        // Check if user is already signed in
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
+                console.log('User already authenticated:', user.uid);
+                // Check if we should redirect
                 const params = new URLSearchParams(window.location.search);
                 const action = params.get('q');
+                
                 if (!action || action === 'sign-in' || action === 'sign-up') {
-                    redirectToDashboard(user);
+                    // User is signed in and on auth page - redirect to dashboard
+                    showToast('Already signed in. Redirecting to dashboard...', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'startpage.html';
+                    }, 1000);
                 }
             }
         });
 
         console.log('%c🔐 DockGrid Auth %cReady %cby PIReactive',
-            'font-size:18px;font-weight:900;color:#ff6b35;font-family:monospace;',
+            'font-size:20px;font-weight:900;color:#ff6b35;font-family:monospace;',
             'font-size:14px;color:#000;',
             'font-size:12px;color:#555;');
+        console.log('%cFirestore Collections: %cDockGrid_Users, DockGrid_Pages, DockGrid_Bookmarks, DockGrid_Notes, DockGrid_Widgets, DockGrid_Settings, DockGrid_Sessions',
+            'color:#ff6b35;', 'color:#888;font-size:11px;');
     </script>
 
     <script>
-        // ===== MODE TOGGLE =====
-        let isSignUpMode = false;
+        // ===== STATE =====
+        let currentTab = 'sign-in';
 
-        function toggleMode() {
-            const wrapper = document.getElementById('authWrapper');
-            const signInForm = document.getElementById('signInFormWrapper');
-            const signUpForm = document.getElementById('signUpFormWrapper');
-            const mobileSwitchText = document.getElementById('mobileSwitchText');
-            const mobileSwitchBtn = document.getElementById('mobileSwitchBtn');
+        // ===== TAB SWITCHING =====
+        function switchTab(tab) {
+            currentTab = tab;
             
-            isSignUpMode = !isSignUpMode;
+            // Update tabs
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
             
-            if (isSignUpMode) {
-                wrapper.classList.add('sign-up-mode');
-                signInForm.style.display = 'none';
-                signUpForm.style.display = 'block';
-                signUpForm.style.animation = 'fadeSlideIn 500ms ease-out';
-                if (mobileSwitchText) mobileSwitchText.textContent = 'Already have an account?';
-                if (mobileSwitchBtn) mobileSwitchBtn.textContent = 'Sign In';
-                document.title = 'Sign Up - DockGrid';
-            } else {
-                wrapper.classList.remove('sign-up-mode');
-                signInForm.style.display = 'block';
-                signUpForm.style.display = 'none';
-                signInForm.style.animation = 'fadeSlideIn 500ms ease-out';
-                if (mobileSwitchText) mobileSwitchText.textContent = "Don't have an account?";
-                if (mobileSwitchBtn) mobileSwitchBtn.textContent = 'Sign Up';
+            // Update forms
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            document.getElementById(tab === 'sign-in' ? 'signInForm' : 'signUpForm').classList.add('active');
+            
+            // Update header text
+            const greeting = document.getElementById('formGreeting');
+            const title = document.getElementById('formTitle');
+            const subtitle = document.getElementById('formSubtitle');
+            const switchText = document.getElementById('switchText');
+            const switchBtn = document.getElementById('switchBtn');
+            
+            if (tab === 'sign-in') {
+                greeting.textContent = 'Welcome back';
+                title.textContent = 'Sign in to DockGrid';
+                subtitle.textContent = 'Access your personalized dashboard and pick up where you left off';
+                switchText.textContent = "Don't have an account?";
+                switchBtn.textContent = 'Sign up for free';
                 document.title = 'Sign In - DockGrid';
+            } else {
+                greeting.textContent = 'Get started';
+                title.textContent = 'Create your account';
+                subtitle.textContent = 'Join thousands organizing their digital life with DockGrid';
+                switchText.textContent = 'Already have an account?';
+                switchBtn.textContent = 'Sign in instead';
+                document.title = 'Sign Up - DockGrid';
             }
             
             clearAllErrors();
             
             // Update URL
             const url = new URL(window.location);
-            url.searchParams.set('q', isSignUpMode ? 'sign-up' : 'sign-in');
+            url.searchParams.set('q', tab);
             window.history.replaceState({}, '', url);
         }
 
-        // Initialize based on URL
-        function initMode() {
-            const params = new URLSearchParams(window.location.search);
-            const action = params.get('q');
-            if (action === 'sign-up' && !isSignUpMode) {
-                toggleMode();
-            }
+        function toggleTab() {
+            switchTab(currentTab === 'sign-in' ? 'sign-up' : 'sign-in');
         }
 
         // ===== PASSWORD TOGGLE =====
@@ -1173,7 +1182,7 @@
             const errorEl = document.getElementById(`${formType}${field}Error`);
             const inputEl = document.getElementById(`${formType}${field}`);
             if (errorEl) {
-                errorEl.innerHTML = `<iconify-icon icon="mdi:alert-circle" width="14" height="14"></iconify-icon> ${message}`;
+                errorEl.innerHTML = `<iconify-icon icon="mdi:alert-circle" width="16" height="16"></iconify-icon> ${message}`;
                 errorEl.classList.add('visible');
             }
             if (inputEl) inputEl.classList.add('error');
@@ -1182,12 +1191,12 @@
         function clearError(formType, field) {
             const errorEl = document.getElementById(`${formType}${field}Error`);
             const inputEl = document.getElementById(`${formType}${field}`);
-            if (errorEl) { errorEl.textContent = ''; errorEl.classList.remove('visible'); }
+            if (errorEl) { errorEl.innerHTML = ''; errorEl.classList.remove('visible'); }
             if (inputEl) inputEl.classList.remove('error');
         }
 
         function clearAllErrors() {
-            document.querySelectorAll('.form-error').forEach(el => { el.textContent = ''; el.classList.remove('visible'); });
+            document.querySelectorAll('.form-error').forEach(el => { el.innerHTML = ''; el.classList.remove('visible'); });
             document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
         }
 
@@ -1197,16 +1206,16 @@
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             const icons = {
-                info: '<iconify-icon icon="mdi:information-outline" width="18" height="18"></iconify-icon>',
-                success: '<iconify-icon icon="mdi:check-circle-outline" width="18" height="18"></iconify-icon>',
-                error: '<iconify-icon icon="mdi:alert-circle-outline" width="18" height="18"></iconify-icon>'
+                info: '<iconify-icon icon="mdi:information-outline" width="20" height="20"></iconify-icon>',
+                success: '<iconify-icon icon="mdi:check-circle-outline" width="20" height="20"></iconify-icon>',
+                error: '<iconify-icon icon="mdi:alert-circle-outline" width="20" height="20"></iconify-icon>'
             };
             toast.innerHTML = `${icons[type] || icons.info} ${message}`;
             container.appendChild(toast);
             setTimeout(() => {
-                toast.style.animation = 'toastOut 300ms ease-out forwards';
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
+                toast.style.animation = 'toastOut 400ms ease-out forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 4500);
         }
 
         // ===== LOADING STATE =====
@@ -1216,18 +1225,8 @@
             else { button.classList.remove('loading'); button.disabled = false; }
         }
 
-        // ===== SESSION =====
-        function saveSession(user) {
-            const session = {
-                uid: user.uid, email: user.email, displayName: user.displayName,
-                photoURL: user.photoURL, loggedInAt: new Date().toISOString(),
-                expiresAt: new Date().getTime() + (30 * 24 * 60 * 60 * 1000)
-            };
-            localStorage.setItem('dockgrid_session', JSON.stringify(session));
-        }
-
-        function redirectToDashboard(user) {
-            if (user) saveSession(user);
+        // ===== REDIRECT =====
+        function redirectToDashboard() {
             window.location.href = 'startpage.html';
         }
 
@@ -1235,42 +1234,71 @@
         async function handleSignIn(event) {
             event.preventDefault();
             clearAllErrors();
+            
             const email = document.getElementById('signInEmail').value.trim();
             const password = document.getElementById('signInPassword').value;
+            
             let hasError = false;
-            if (!email) { showError('signIn', 'Email', 'Email is required'); hasError = true; }
-            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('signIn', 'Email', 'Please enter a valid email'); hasError = true; }
+            if (!email) { showError('signIn', 'Email', 'Email address is required'); hasError = true; }
+            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('signIn', 'Email', 'Please enter a valid email address'); hasError = true; }
             if (!password) { showError('signIn', 'Password', 'Password is required'); hasError = true; }
             if (hasError) return;
 
             setLoading('signInButton', true);
+            
             try {
                 const auth = window.firebaseAuth;
                 const db = window.firebaseDb;
+                const COLLECTIONS = window.firebaseCollections;
+                
                 const { signInWithEmailAndPassword } = await import("https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js");
                 const userCredential = await signInWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 
-                const userRef = window.docFn(db, 'users', user.uid);
+                // Update last login in DockGrid_Users
+                const userRef = window.docFn(db, COLLECTIONS.USERS, user.uid);
                 await window.setDocFn(userRef, {
-                    lastLogin: window.serverTimestampFn(),
-                    email: user.email,
+                    lastLoginAt: window.serverTimestampFn(),
+                    lastLoginIP: 'client',
                     updatedAt: window.serverTimestampFn()
                 }, { merge: true });
                 
-                showToast('Welcome back! Redirecting...', 'success');
-                saveSession(user);
-                setTimeout(() => redirectToDashboard(user), 1000);
+                // Create session record in DockGrid_Sessions
+                const sessionRef = window.docFn(db, COLLECTIONS.SESSIONS, user.uid);
+                await window.setDocFn(sessionRef, {
+                    userId: user.uid,
+                    email: user.email,
+                    loginAt: window.serverTimestampFn(),
+                    expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform
+                });
+                
+                showToast('Welcome back! Redirecting to your dashboard...', 'success');
+                setTimeout(() => redirectToDashboard(), 1200);
+                
             } catch (error) {
                 console.error('Sign in error:', error);
                 setLoading('signInButton', false);
-                if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-                    showError('signIn', 'Password', 'Invalid email or password');
-                    showToast('Invalid email or password', 'error');
-                } else if (error.code === 'auth/too-many-requests') {
-                    showToast('Too many attempts. Please try again later.', 'error');
-                } else {
-                    showToast('An error occurred. Please try again.', 'error');
+                
+                switch (error.code) {
+                    case 'auth/invalid-credential':
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password':
+                        showError('signIn', 'Password', 'Invalid email or password. Please try again.');
+                        showToast('Invalid credentials. Please check and try again.', 'error');
+                        break;
+                    case 'auth/invalid-email':
+                        showError('signIn', 'Email', 'Please enter a valid email address');
+                        break;
+                    case 'auth/user-disabled':
+                        showToast('This account has been disabled. Please contact support.', 'error');
+                        break;
+                    case 'auth/too-many-requests':
+                        showToast('Too many login attempts. Please wait and try again.', 'error');
+                        break;
+                    default:
+                        showToast('An unexpected error occurred. Please try again.', 'error');
                 }
             }
         }
@@ -1279,142 +1307,182 @@
         async function handleSignUp(event) {
             event.preventDefault();
             clearAllErrors();
+            
             const name = document.getElementById('signUpName').value.trim();
             const email = document.getElementById('signUpEmail').value.trim();
             const password = document.getElementById('signUpPassword').value;
-            const username = document.getElementById('signUpUsername').value.trim();
+            const username = document.getElementById('signUpUsername').value.trim().toLowerCase();
             
             let hasError = false;
-            if (!name) { showError('signUp', 'Name', 'Name is required'); hasError = true; }
-            else if (name.length < 2) { showError('signUp', 'Name', 'At least 2 characters'); hasError = true; }
-            if (!email) { showError('signUp', 'Email', 'Email is required'); hasError = true; }
-            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('signUp', 'Email', 'Please enter a valid email'); hasError = true; }
-            if (!password) { showError('signUp', 'Password', 'Password is required'); hasError = true; }
-            else if (password.length < 6) { showError('signUp', 'Password', 'At least 6 characters'); hasError = true; }
+            
+            if (!name) { showError('signUp', 'Name', 'Full name is required'); hasError = true; }
+            else if (name.length < 2) { showError('signUp', 'Name', 'Name must be at least 2 characters'); hasError = true; }
+            
+            if (!email) { showError('signUp', 'Email', 'Email address is required'); hasError = true; }
+            else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('signUp', 'Email', 'Please enter a valid email address'); hasError = true; }
+            
             if (!username) { showError('signUp', 'Username', 'Username is required'); hasError = true; }
-            else if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) { showError('signUp', 'Username', '3-20 chars: letters, numbers, _'); hasError = true; }
+            else if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) { showError('signUp', 'Username', '3-20 characters: letters, numbers, underscores only'); hasError = true; }
+            
+            if (!password) { showError('signUp', 'Password', 'Password is required'); hasError = true; }
+            else if (password.length < 6) { showError('signUp', 'Password', 'Password must be at least 6 characters'); hasError = true; }
+            
             if (hasError) return;
 
             setLoading('signUpButton', true);
+            
             try {
                 const auth = window.firebaseAuth;
                 const db = window.firebaseDb;
-                const { createUserWithEmailAndPassword } = await import("https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js");
+                const COLLECTIONS = window.firebaseCollections;
                 
+                // Check if username is already taken
+                const usersRef = window.collectionFn(db, COLLECTIONS.USERS);
+                const usernameQuery = window.queryFn(usersRef, window.whereFn('username', '==', username));
+                const usernameSnapshot = await window.getDocsFn(usernameQuery);
+                
+                if (!usernameSnapshot.empty) {
+                    showError('signUp', 'Username', 'This username is already taken');
+                    setLoading('signUpButton', false);
+                    return;
+                }
+                
+                const { createUserWithEmailAndPassword } = await import("https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js");
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
                 
+                // Update Firebase Auth profile
                 await window.updateProfileFn(user, { displayName: name });
                 
-                const userRef = window.docFn(db, 'users', user.uid);
+                // Create user document in DockGrid_Users
+                const userRef = window.docFn(db, COLLECTIONS.USERS, user.uid);
                 await window.setDocFn(userRef, {
-                    uid: user.uid, name, email, username,
-                    photoURL: user.photoURL || '',
+                    uid: user.uid,
+                    name: name,
+                    email: email,
+                    username: username,
+                    photoURL: '',
                     createdAt: window.serverTimestampFn(),
-                    lastLogin: window.serverTimestampFn(),
+                    lastLoginAt: window.serverTimestampFn(),
                     updatedAt: window.serverTimestampFn(),
-                    settings: { theme: 'light', defaultPage: 'dashboard', notifications: true },
-                    stats: { totalBookmarks: 0, totalNotes: 0, totalPages: 1, totalFeeds: 0 },
-                    subscription: { plan: 'free', status: 'active' }
+                    accountStatus: 'active',
+                    accountType: 'free',
+                    emailVerified: false
                 });
                 
-                const defaultPageRef = window.docFn(db, 'users', user.uid, 'pages', 'default');
+                // Create user settings in DockGrid_Settings
+                const settingsRef = window.docFn(db, COLLECTIONS.SETTINGS, user.uid);
+                await window.setDocFn(settingsRef, {
+                    userId: user.uid,
+                    theme: 'light',
+                    language: 'en',
+                    defaultPage: 'dashboard',
+                    notifications: true,
+                    desktopNotifications: false,
+                    autoSave: true,
+                    createdAt: window.serverTimestampFn(),
+                    updatedAt: window.serverTimestampFn()
+                });
+                
+                // Create default page in DockGrid_Pages
+                const defaultPageRef = window.docFn(db, COLLECTIONS.PAGES, `${user.uid}_default`);
                 await window.setDocFn(defaultPageRef, {
-                    id: 'default', title: 'My Dashboard', icon: '🏠', order: 0,
-                    isPublic: false, backgroundColor: '#ffffff', widgets: [],
-                    createdAt: window.serverTimestampFn(), updatedAt: window.serverTimestampFn()
+                    pageId: 'default',
+                    userId: user.uid,
+                    title: 'My Dashboard',
+                    icon: '🏠',
+                    description: 'My first DockGrid dashboard',
+                    order: 0,
+                    isPublic: false,
+                    backgroundColor: '#ffffff',
+                    backgroundType: 'solid',
+                    layout: 'grid',
+                    createdAt: window.serverTimestampFn(),
+                    updatedAt: window.serverTimestampFn()
                 });
                 
-                showToast('Account created! Welcome to DockGrid! 🚀', 'success');
-                saveSession(user);
-                setTimeout(() => redirectToDashboard(user), 1500);
+                // Create session in DockGrid_Sessions
+                const sessionRef = window.docFn(db, COLLECTIONS.SESSIONS, user.uid);
+                await window.setDocFn(sessionRef, {
+                    userId: user.uid,
+                    email: user.email,
+                    loginAt: window.serverTimestampFn(),
+                    expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    isActive: true
+                });
+                
+                showToast('Account created successfully! Welcome to DockGrid! 🚀', 'success');
+                setTimeout(() => redirectToDashboard(), 1800);
+                
             } catch (error) {
                 console.error('Sign up error:', error);
                 setLoading('signUpButton', false);
-                if (error.code === 'auth/email-already-in-use') {
-                    showError('signUp', 'Email', 'This email is already registered');
-                    showToast('Email already registered. Sign in instead.', 'error');
-                } else if (error.code === 'auth/weak-password') {
-                    showError('signUp', 'Password', 'Password is too weak');
-                } else {
-                    showToast('An error occurred. Please try again.', 'error');
+                
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        showError('signUp', 'Email', 'This email is already registered');
+                        showToast('Email already in use. Please sign in instead.', 'error');
+                        break;
+                    case 'auth/invalid-email':
+                        showError('signUp', 'Email', 'Please enter a valid email address');
+                        break;
+                    case 'auth/weak-password':
+                        showError('signUp', 'Password', 'Password is too weak. Use at least 6 characters');
+                        break;
+                    case 'auth/operation-not-allowed':
+                        showToast('Registration is temporarily unavailable. Try again later.', 'error');
+                        break;
+                    default:
+                        showToast('Registration failed. Please try again.', 'error');
                 }
             }
         }
 
-        // ===== SOCIAL SIGN IN =====
-        async function socialSignIn(providerName) {
-            try {
-                const auth = window.firebaseAuth;
-                const db = window.firebaseDb;
-                const { signInWithPopup } = await import("https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js");
-                const provider = providerName === 'google' ? window.googleProvider : window.githubProvider;
-                
-                const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-                
-                const userRef = window.docFn(db, 'users', user.uid);
-                const userDoc = await window.getDocFn(userRef);
-                
-                if (!userDoc.exists()) {
-                    const username = user.email ? user.email.split('@')[0] : 'user_' + Date.now();
-                    await window.setDocFn(userRef, {
-                        uid: user.uid, name: user.displayName || 'User', email: user.email || '',
-                        username, photoURL: user.photoURL || '', provider: providerName,
-                        createdAt: window.serverTimestampFn(), lastLogin: window.serverTimestampFn(),
-                        updatedAt: window.serverTimestampFn(),
-                        settings: { theme: providerName === 'github' ? 'dark' : 'light', defaultPage: 'dashboard', notifications: true },
-                        stats: { totalBookmarks: 0, totalNotes: 0, totalPages: 1, totalFeeds: 0 },
-                        subscription: { plan: 'free', status: 'active' }
-                    });
-                    
-                    const defaultPageRef = window.docFn(db, 'users', user.uid, 'pages', 'default');
-                    await window.setDocFn(defaultPageRef, {
-                        id: 'default', title: 'My Dashboard', icon: '🏠', order: 0,
-                        isPublic: false, backgroundColor: providerName === 'github' ? '#1a1a1a' : '#ffffff',
-                        widgets: [], createdAt: window.serverTimestampFn(), updatedAt: window.serverTimestampFn()
-                    });
-                } else {
-                    await window.setDocFn(userRef, { lastLogin: window.serverTimestampFn(), updatedAt: window.serverTimestampFn() }, { merge: true });
-                }
-                
-                showToast(`Signed in with ${providerName === 'google' ? 'Google' : 'GitHub'}! Redirecting...`, 'success');
-                saveSession(user);
-                setTimeout(() => redirectToDashboard(user), 1000);
-            } catch (error) {
-                console.error(`${providerName} sign in error:`, error);
-                if (error.code !== 'auth/popup-closed-by-user') {
-                    showToast(`${providerName === 'google' ? 'Google' : 'GitHub'} sign in failed.`, 'error');
-                }
+        // ===== INITIALIZATION =====
+        function init() {
+            const params = new URLSearchParams(window.location.search);
+            const action = params.get('q');
+            
+            if (action === 'sign-up') {
+                switchTab('sign-up');
+            } else if (action === 'sign-in') {
+                switchTab('sign-in');
             }
+            
+            // Setup real-time input validation clearing
+            setupInputListeners();
         }
 
-        function signInWithGoogle() { socialSignIn('google'); }
-        function signInWithGitHub() { socialSignIn('github'); }
-
-        // ===== INPUT LISTENERS =====
         function setupInputListeners() {
-            ['signInEmail', 'signInPassword'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.addEventListener('input', () => clearError('signIn', id.replace('signIn', '')));
-            });
-            ['signUpName', 'signUpEmail', 'signUpUsername', 'signUpPassword'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.addEventListener('input', () => clearError('signUp', id.replace('signUp', '')));
+            const inputMap = {
+                'signInEmail': 'signIn',
+                'signInPassword': 'signIn',
+                'signUpName': 'signUp',
+                'signUpEmail': 'signUp',
+                'signUpUsername': 'signUp',
+                'signUpPassword': 'signUp'
+            };
+            
+            Object.entries(inputMap).forEach(([inputId, formType]) => {
+                const input = document.getElementById(inputId);
+                if (input) {
+                    const field = inputId.replace(formType, '');
+                    input.addEventListener('input', () => clearError(formType, field));
+                }
             });
         }
 
         // ===== KEYBOARD SHORTCUTS =====
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') window.location.href = 'index.html';
+            if (e.key === 'Escape') {
+                window.location.href = 'index.html';
+            }
         });
 
-        // ===== INIT =====
-        document.addEventListener('DOMContentLoaded', () => {
-            initMode();
-            setupInputListeners();
-        });
+        // Start
+        document.addEventListener('DOMContentLoaded', init);
     </script>
-
 </body>
 </html>
