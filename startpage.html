@@ -11,8 +11,8 @@
     <style>
         :root {
             --orange-500:#ff6b35;--orange-600:#e85d2c;--orange-400:#ff8c5a;
-            --black-100:#000;--black-90:#0a0a0a;--black-80:#1a1a1a;--black-60:#3a3a3a;
-            --black-40:#777;--black-20:#ccc;--black-10:#e0e0e0;--black-5:#f5f5f5;
+            --black-100:#000;--black-90:#0a0a0a;--black-80:#1a1a1a;
+            --black-40:#777;--black-10:#e0e0e0;--black-5:#f5f5f5;
             --white:#fff;--white-a10:rgba(255,255,255,0.1);--white-a20:rgba(255,255,255,0.2);
             --white-a50:rgba(255,255,255,0.5);--white-a70:rgba(255,255,255,0.7);--white-a90:rgba(255,255,255,0.9);
             --red-500:#ef4444;--green-500:#22c55e;
@@ -20,21 +20,21 @@
             --radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:20px;--radius-2xl:28px;
             --shadow-sm:0 2px 8px rgba(0,0,0,0.08);--shadow-md:0 4px 16px rgba(0,0,0,0.12);
             --shadow-lg:0 8px 32px rgba(0,0,0,0.15);
-            --transition:200ms cubic-bezier(0.4,0,0.2,1);
+            --transition:180ms cubic-bezier(0.4,0,0.2,1);
         }
         *{margin:0;padding:0;box-sizing:border-box}
         html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font);-webkit-font-smoothing:antialiased}
         body{background:#1a1a1a;display:flex;flex-direction:column}
         
         .bg-layer{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background-size:cover;background-position:center;opacity:0.9;transition:background-image 0.6s ease}
-        .bg-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;background:rgba(0,0,0,0.4);pointer-events:none}
+        .bg-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;background:rgba(0,0,0,0.38);pointer-events:none}
         
         .app{position:relative;z-index:2;display:flex;flex-direction:column;height:100%}
         
         /* Header */
         .header{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;z-index:10;flex-shrink:0;gap:12px}
-        .header-left{display:flex;align-items:center;gap:8px;flex-shrink:0}
-        .header-center{flex:1;display:flex;justify-content:center;max-width:500px;margin:0 auto}
+        .header-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .header-center{flex:1;display:flex;justify-content:center;max-width:480px;margin:0 auto}
         .header-right{display:flex;align-items:center;gap:8px;flex-shrink:0;margin-left:auto}
         
         .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;font-size:12px;font-weight:600;font-family:var(--font);border:none;border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);letter-spacing:-0.2px}
@@ -42,19 +42,21 @@
         .btn-dark:hover{background:rgba(0,0,0,0.7)}
         .btn-primary{background:var(--orange-500);color:var(--white)}
         .btn-primary:hover{background:var(--orange-600)}
+        .btn-ghost{background:transparent;color:var(--white-a70)}
+        .btn-ghost:hover{background:rgba(255,255,255,0.08);color:var(--white)}
         
         .search-box{width:100%;max-width:400px;position:relative}
         .search-input{width:100%;padding:9px 16px 9px 40px;font-size:13px;font-family:var(--font);background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-xl);color:var(--white);outline:none;transition:all var(--transition);backdrop-filter:blur(8px)}
         .search-input::placeholder{color:var(--white-a50)}
         .search-input:focus{border-color:var(--orange-500);background:rgba(0,0,0,0.6)}
-        .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--white-a50);pointer-events:none}
+        .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--white-a50);pointer-events:none;font-size:16px}
         
         .avatar{width:34px;height:34px;border-radius:50%;background:var(--orange-500);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:14px;cursor:pointer;border:2px solid rgba(255,255,255,0.2);transition:all var(--transition);overflow:hidden;flex-shrink:0}
         .avatar img{width:100%;height:100%;object-fit:cover}
         .avatar:hover{border-color:var(--orange-500)}
         
         .dropdown{position:relative}
-        .dropdown-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;min-width:220px;background:rgba(20,20,20,0.97);backdrop-filter:blur(20px);border:1px solid var(--white-a10);border-radius:var(--radius-lg);padding:8px;z-index:100;box-shadow:0 16px 48px rgba(0,0,0,0.4)}
+        .dropdown-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;min-width:210px;background:rgba(20,20,20,0.97);backdrop-filter:blur(20px);border:1px solid var(--white-a10);border-radius:var(--radius-lg);padding:6px;z-index:100;box-shadow:0 16px 48px rgba(0,0,0,0.4)}
         .dropdown-menu.show{display:block;animation:dropIn 150ms ease-out}
         @keyframes dropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
         .dropdown-item{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:12px;color:var(--white-a70);cursor:pointer;border-radius:var(--radius-sm);transition:all var(--transition);border:none;background:none;width:100%;text-align:left;font-family:var(--font)}
@@ -72,39 +74,66 @@
         .widget-grid.cols-3{grid-template-columns:repeat(3,1fr)}
         .widget-grid.cols-4{grid-template-columns:repeat(4,1fr)}
         
-        /* Widget - clean style */
+        /* Widget */
         .widget{background:rgba(255,255,255,0.96);border-radius:var(--radius-md);box-shadow:0 2px 10px rgba(0,0,0,0.15);overflow:hidden;display:flex;flex-direction:column;min-height:180px;transition:all var(--transition)}
         .widget:hover{box-shadow:0 4px 16px rgba(0,0,0,0.2)}
-        .widget-header{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;background:#fafafa;border-bottom:1px solid #ececec;min-height:45px}
-        .widget-title{font-size:15px;font-weight:600;color:#222;cursor:text;padding:2px 4px;border-radius:4px;border:1px solid transparent;outline:none;font-family:var(--font);background:transparent;min-width:40px}
+        .widget-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fafafa;border-bottom:1px solid #ececec;min-height:44px}
+        .widget-title{font-size:15px;font-weight:600;color:#222;cursor:text;padding:2px 6px;border-radius:4px;border:1px solid transparent;outline:none;font-family:var(--font);background:transparent;min-width:40px;max-width:70%}
         .widget-title:hover{border-color:#ddd}
         .widget-title:focus{border-color:var(--orange-500);background:#fff}
         .widget-actions{display:flex;gap:2px}
         .widget-dot{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:transparent;color:#999;transition:all var(--transition);font-size:18px}
         .widget-dot:hover{background:#eee;color:#333}
-        .widget-body{padding:16px 18px;color:#444;font-size:13px;line-height:1.5;flex:1}
+        .widget-body{padding:14px 16px;color:#444;font-size:13px;line-height:1.5;flex:1;max-height:400px;overflow-y:auto}
         .widget-body::-webkit-scrollbar{width:4px}
         .widget-body::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
         
         .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;color:var(--white-a50);text-align:center;gap:12px}
         .empty-state iconify-icon{font-size:56px;opacity:0.4}
         .empty-state h3{font-size:18px;font-weight:700;color:var(--white-a70)}
-        .empty-state p{font-size:13px}
+        
+        /* Pages Sidebar */
+        .pages-sidebar{position:fixed;left:0;top:0;bottom:0;width:280px;background:rgba(18,18,18,0.98);backdrop-filter:blur(20px);z-index:150;transform:translateX(-100%);transition:transform 250ms ease-out;display:flex;flex-direction:column;border-right:1px solid var(--white-a10)}
+        .pages-sidebar.open{transform:translateX(0)}
+        .pages-sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--white-a10)}
+        .pages-sidebar-title{font-size:15px;font-weight:700;color:var(--white)}
+        .pages-sidebar-close{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:var(--white-a10);color:var(--white-a70);font-size:16px}
+        .pages-sidebar-close:hover{background:var(--white-a20);color:var(--white)}
+        .pages-sidebar-body{flex:1;overflow-y:auto;padding:12px}
+        .pages-sidebar-body::-webkit-scrollbar{width:4px}
+        .pages-sidebar-body::-webkit-scrollbar-thumb{background:var(--white-a10);border-radius:2px}
+        .page-item{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);color:var(--white-a70);font-size:13px;font-weight:500;margin-bottom:2px}
+        .page-item:hover{background:var(--white-a10);color:var(--white)}
+        .page-item.active{background:rgba(255,107,53,0.2);color:var(--orange-500);font-weight:600}
+        .page-item iconify-icon{font-size:18px;flex-shrink:0}
+        .pages-sidebar-footer{padding:14px 20px;border-top:1px solid var(--white-a10)}
+        .pages-sidebar-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:149}
+        .pages-sidebar-overlay.show{display:block}
         
         /* Modal */
         .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;align-items:center;justify-content:center}
         .modal-overlay.show{display:flex;animation:fadeIn 150ms ease-out}
         @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-        .modal{background:#1e1e1e;border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-2xl);max-width:560px;width:92%;max-height:80vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.5);animation:modalIn 250ms ease-out}
+        .modal{background:#1e1e1e;border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-2xl);max-width:600px;width:92%;max-height:82vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.5);animation:modalIn 250ms ease-out}
         @keyframes modalIn{from{opacity:0;transform:scale(0.95) translateY(16px)}to{opacity:1;transform:scale(1) translateY(0)}}
-        .modal::-webkit-scrollbar{width:4px}
-        .modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
-        .modal-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;background:#1e1e1e;z-index:1;border-radius:var(--radius-2xl) var(--radius-2xl) 0 0}
+        .modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}
         .modal-title{font-size:16px;font-weight:700;color:var(--white);letter-spacing:-0.3px}
-        .modal-close{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:rgba(255,255,255,0.08);color:var(--white-a70);font-size:18px;transition:all var(--transition)}
+        .modal-close{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:rgba(255,255,255,0.08);color:var(--white-a70);font-size:16px;transition:all var(--transition)}
         .modal-close:hover{background:rgba(255,255,255,0.15);color:var(--white)}
-        .modal-body{padding:20px 22px}
-        .modal-section{margin-bottom:22px}
+        
+        /* Tabs */
+        .modal-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0}
+        .modal-tab{flex:1;padding:12px 16px;font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;background:transparent;color:var(--white-a50);transition:all var(--transition);text-align:center;border-bottom:2px solid transparent}
+        .modal-tab:hover{color:var(--white-a70);background:rgba(255,255,255,0.03)}
+        .modal-tab.active{color:var(--orange-500);border-bottom-color:var(--orange-500)}
+        
+        .modal-body{flex:1;overflow-y:auto;padding:18px 20px}
+        .modal-body::-webkit-scrollbar{width:4px}
+        .modal-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+        .tab-content{display:none}
+        .tab-content.active{display:block;animation:fadeIn 200ms ease-out}
+        
+        .modal-section{margin-bottom:18px}
         .modal-section:last-child{margin-bottom:0}
         .modal-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--white-a50);margin-bottom:10px}
         
@@ -113,30 +142,45 @@
         .form-input{width:100%;padding:10px 12px;font-size:13px;font-family:var(--font);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);color:var(--white);outline:none;transition:all var(--transition)}
         .form-input:focus{border-color:var(--orange-500)}
         .form-input::placeholder{color:rgba(255,255,255,0.3)}
-        .form-textarea{min-height:60px;resize:vertical}
+        .form-textarea{min-height:55px;resize:vertical}
         .form-select{width:100%;padding:10px 12px;font-size:13px;font-family:var(--font);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--radius-sm);color:var(--white);outline:none;cursor:pointer}
         .form-select option{background:#1e1e1e;color:#fff}
         .form-range{width:100%;-webkit-appearance:none;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;outline:none;cursor:pointer}
         .form-range::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--orange-500);cursor:pointer}
+        .form-helper{font-size:10px;color:var(--white-a50);margin-top:3px}
         
         .image-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
         .image-option{aspect-ratio:16/10;border-radius:var(--radius-sm);cursor:pointer;border:2px solid transparent;transition:all var(--transition);overflow:hidden;background-size:cover;background-position:center}
         .image-option:hover{border-color:var(--orange-500)}
         .image-option.selected{border-color:var(--orange-500);box-shadow:0 0 0 3px rgba(255,107,53,0.3)}
         
-        .widget-type-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-        .widget-type-btn{padding:14px;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:all var(--transition);display:flex;align-items:center;gap:10px;background:transparent;color:var(--white-a70);font-family:var(--font);text-align:left;font-size:12px;width:100%}
+        .widget-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+        .widget-type-btn{padding:14px 10px;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:all var(--transition);display:flex;flex-direction:column;align-items:center;gap:6px;background:transparent;color:var(--white-a70);font-family:var(--font);text-align:center;font-size:11px;width:100%}
         .widget-type-btn:hover{background:rgba(255,255,255,0.05);border-color:var(--orange-500)}
-        .widget-type-btn iconify-icon{font-size:22px;color:var(--orange-500);flex-shrink:0}
+        .widget-type-btn iconify-icon{font-size:24px;color:var(--orange-500)}
         
+        /* Bookmark items */
         .bookmark-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;text-decoration:none;color:#444;transition:all var(--transition)}
         .bookmark-item:hover{background:#f5f5f5}
         .bookmark-favicon{width:18px;height:18px;border-radius:3px;flex-shrink:0}
         .bookmark-info{flex:1;min-width:0}
         .bookmark-btitle{font-size:13px;font-weight:600;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .bookmark-burl{font-size:11px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .bookmark-burl{font-size:10px;color:#999;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .bookmark-desc{font-size:10px;color:#aaa;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        
         .task-item{display:flex;align-items:center;gap:10px;padding:6px 10px;border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition)}
         .task-item:hover{background:#f5f5f5}
+        
+        /* Column editor */
+        .column-list{display:flex;flex-direction:column;gap:8px}
+        .column-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-sm)}
+        .column-item-info{display:flex;align-items:center;gap:10px}
+        .column-item-name{font-size:13px;font-weight:600;color:var(--white)}
+        .column-item-count{font-size:11px;color:var(--white-a50)}
+        .column-item-actions{display:flex;gap:6px}
+        .column-size-btn{padding:4px 10px;font-size:10px;font-weight:600;border:1px solid rgba(255,255,255,0.15);border-radius:4px;cursor:pointer;background:transparent;color:var(--white-a50);transition:all var(--transition);font-family:var(--font)}
+        .column-size-btn:hover{background:rgba(255,255,255,0.1);color:var(--white)}
+        .column-size-btn.active{background:var(--orange-500);border-color:var(--orange-500);color:var(--white)}
         
         .toast-container{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:6px}
         .toast{padding:10px 16px;background:#1e1e1e;color:var(--white);border-left:3px solid var(--orange-500);border-radius:var(--radius-sm);font-size:12px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:slideIn 250ms ease-out;max-width:340px}
@@ -144,7 +188,16 @@
         .toast.success{border-left-color:var(--green-500)}
         @keyframes slideIn{from{opacity:0;transform:translateX(80px)}to{opacity:1;transform:translateX(0)}}
         
-        @media(max-width:768px){.widget-grid{grid-template-columns:1fr!important}.header-center{display:none}.header{padding:8px 12px}}
+        /* Embed preview */
+        .embed-preview{border-radius:var(--radius-sm);overflow:hidden;background:#000;min-height:200px;display:flex;align-items:center;justify-content:center}
+        .embed-preview iframe{width:100%;height:100%;min-height:200px;border:none}
+        
+        /* Project card */
+        .project-card{padding:12px;background:#f9f9f9;border-radius:var(--radius-sm);margin-bottom:6px}
+        .project-name{font-size:14px;font-weight:700;color:#222}
+        .project-meta{font-size:11px;color:#999;margin-top:4px;display:flex;gap:12px;flex-wrap:wrap}
+        
+        @media(max-width:768px){.widget-grid{grid-template-columns:1fr!important}.header-center{display:none}.header{padding:8px 12px}.widget-type-grid{grid-template-columns:repeat(2,1fr)}}
     </style>
 </head>
 <body>
@@ -154,11 +207,32 @@
 
 <div class="toast-container" id="toastContainer"></div>
 
+<!-- Pages Sidebar Overlay -->
+<div class="pages-sidebar-overlay" id="pagesOverlay" onclick="closePagesSidebar()"></div>
+
+<!-- Pages Sidebar -->
+<div class="pages-sidebar" id="pagesSidebar">
+    <div class="pages-sidebar-header">
+        <span class="pages-sidebar-title">Your Pages</span>
+        <button class="pages-sidebar-close" onclick="closePagesSidebar()">
+            <iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon>
+        </button>
+    </div>
+    <div class="pages-sidebar-body" id="pagesList"></div>
+    <div class="pages-sidebar-footer">
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="createNewPage()">
+            <iconify-icon icon="mdi:plus" width="16" height="16"></iconify-icon>
+            New Page
+        </button>
+    </div>
+</div>
+
 <div class="app">
+    <!-- Header -->
     <header class="header">
         <div class="header-left">
-            <button class="btn btn-dark" onclick="openPageSettingsModal()">
-                <iconify-icon icon="mdi:file-document-outline" width="16" height="16"></iconify-icon>
+            <button class="btn btn-dark" onclick="openPagesSidebar()">
+                <iconify-icon icon="mdi:file-document-multiple-outline" width="16" height="16"></iconify-icon>
                 Pages
             </button>
             <span style="color:var(--white-a70);font-size:12px;font-weight:500" id="usernameDisplay">@user</span>
@@ -179,7 +253,7 @@
                 Edit
             </button>
             <div class="dropdown" id="avatarDropdown">
-                <div class="avatar" id="avatarBtn" onclick="toggleAvatarMenu()">
+                <div class="avatar" id="avatarBtn" onclick="toggleDropdown('avatarMenu')">
                     <span id="avatarInitial">U</span>
                 </div>
                 <div class="dropdown-menu" id="avatarMenu">
@@ -192,19 +266,20 @@
         </div>
     </header>
 
+    <!-- Main -->
     <main class="main" id="mainContent">
         <div class="widget-grid cols-3" id="widgetGrid"></div>
         <div class="empty-state" id="emptyState">
             <iconify-icon icon="mdi:view-dashboard-outline"></iconify-icon>
             <h3>Your dashboard is empty</h3>
-            <p>Click <strong>Add</strong> to add your first widget</p>
+            <p style="color:var(--white-a50);font-size:13px">Click <strong style="color:var(--orange-500)">Add</strong> to add your first widget</p>
         </div>
     </main>
 </div>
 
 <!-- Add Widget Modal -->
 <div class="modal-overlay" id="addWidgetModal">
-    <div class="modal">
+    <div class="modal" style="max-width:520px">
         <div class="modal-header"><span class="modal-title">Add Widget</span><button class="modal-close" onclick="closeModal('addWidgetModal')"><iconify-icon icon="mdi:close" width="18" height="18"></iconify-icon></button></div>
         <div class="modal-body">
             <div class="widget-type-grid" id="widgetTypeGrid"></div>
@@ -212,27 +287,50 @@
     </div>
 </div>
 
-<!-- Page Settings Modal -->
+<!-- Page Settings Modal with Tabs -->
 <div class="modal-overlay" id="pageSettingsModal">
     <div class="modal">
         <div class="modal-header"><span class="modal-title">Page Settings</span><button class="modal-close" onclick="closeModal('pageSettingsModal')"><iconify-icon icon="mdi:close" width="18" height="18"></iconify-icon></button></div>
+        <div class="modal-tabs">
+            <button class="modal-tab active" data-tab="tab-general" onclick="switchSettingsTab('tab-general',this)">General</button>
+            <button class="modal-tab" data-tab="tab-background" onclick="switchSettingsTab('tab-background',this)">Background</button>
+            <button class="modal-tab" data-tab="tab-columns" onclick="switchSettingsTab('tab-columns',this)">Columns</button>
+            <button class="modal-tab" data-tab="tab-preferences" onclick="switchSettingsTab('tab-preferences',this)">Preferences</button>
+        </div>
         <div class="modal-body">
-            <div class="modal-section"><div class="modal-label">General</div>
-                <div class="form-group"><label class="form-label">Page Title <small id="titleCount">3/50</small></label><input type="text" class="form-input" id="pageTitle" value="My Dashboard" maxlength="50" oninput="document.getElementById('titleCount').textContent=this.value.length+'/50'"></div>
+            <!-- General Tab -->
+            <div class="tab-content active" id="tab-general">
+                <div class="form-group"><label class="form-label">Page Title <small id="titleCount">0/50</small></label><input type="text" class="form-input" id="pageTitle" placeholder="Enter title (e.g. Work, Hobby, News, etc.)" maxlength="50" oninput="document.getElementById('titleCount').textContent=this.value.length+'/50'"></div>
                 <div class="form-group"><label class="form-label">Description</label><textarea class="form-input form-textarea" id="pageDescription" placeholder="Auto-generate"></textarea></div>
+                <div class="form-group"><label class="form-label">Belongs to</label><select class="form-select" id="pageBelongsTo"><option>Personal pages</option></select></div>
+                <div class="form-group" style="display:flex;align-items:center;gap:10px;padding:10px 0">
+                    <input type="checkbox" id="archivePage" style="accent-color:var(--orange-500)">
+                    <label for="archivePage" style="color:var(--white-a70);font-size:12px;cursor:pointer">Archive page <small style="color:var(--orange-500);font-weight:600">Pro</small><br><span style="color:var(--white-a50);font-size:10px">Hide this page from your main page list. You can restore it later.</span></label>
+                </div>
             </div>
-            <div class="modal-section"><div class="modal-label">Background</div>
-                <div class="image-grid" id="bgImageGrid"></div>
-                <div class="form-group" style="margin-top:10px"><label class="form-label">Upload Image (ImgBB)</label><input type="file" class="form-input" id="bgUpload" accept="image/*" onchange="uploadBg(event)" style="padding:8px"></div>
-                <div class="form-group"><label class="form-label">Widget Transparency: <span id="opLabel">96%</span></label><input type="range" class="form-range" min="80" max="100" value="96" id="widgetOpacity" oninput="updateOpacity(this.value)"></div>
+            <!-- Background Tab -->
+            <div class="tab-content" id="tab-background">
+                <div class="modal-section"><div class="modal-label">Select image</div><div class="image-grid" id="bgImageGrid"></div></div>
+                <div class="form-group"><label class="form-label">Upload image</label><input type="file" class="form-input" id="bgUpload" accept="image/*" onchange="uploadBg(event)" style="padding:8px"></div>
+                <div class="form-group"><button class="btn btn-dark" style="width:100%;justify-content:center" onclick="resetBg()">Reset background</button></div>
+                <div class="form-group"><label class="form-label">Widget transparency: <span id="opLabel">96%</span></label><input type="range" class="form-range" min="80" max="100" value="96" id="widgetOpacity" oninput="updateOpacity(this.value)"></div>
             </div>
-            <div class="modal-section"><div class="modal-label">Columns</div>
-                <div class="form-group"><select class="form-select" id="columnCount" onchange="updateCols(this.value)"><option value="1">1 Column</option><option value="2">2 Columns</option><option value="3" selected>3 Columns</option><option value="4">4 Columns</option></select></div>
+            <!-- Columns Tab -->
+            <div class="tab-content" id="tab-columns">
+                <div class="modal-section"><div class="modal-label">Columns</div>
+                    <div class="column-list" id="columnList"></div>
+                    <button class="btn btn-dark" style="width:100%;justify-content:center;margin-top:8px" onclick="addColumn()">
+                        <iconify-icon icon="mdi:plus" width="14" height="14"></iconify-icon>
+                        Add column
+                    </button>
+                </div>
             </div>
-            <div class="modal-section"><div class="modal-label">Preferences</div>
-                <div class="form-group"><label class="form-label">Open links in</label><select class="form-select" id="linkTarget"><option value="_blank" selected>New window</option><option value="_self">Same window</option></select></div>
+            <!-- Preferences Tab -->
+            <div class="tab-content" id="tab-preferences">
+                <p style="color:var(--white-a50);font-size:11px;margin-bottom:16px">These settings apply only to this page. Choose Default to use your User Preferences.</p>
+                <div class="form-group"><label class="form-label">Search bar <small style="color:var(--orange-500)">Pro</small></label><p style="color:var(--white-a50);font-size:11px;margin-bottom:6px">Display the search bar on this page.</p><select class="form-select" id="searchBarSetting"><option>Default (Show)</option><option>Hide</option></select></div>
+                <div class="form-group"><label class="form-label">Open links in a new window</label><p style="color:var(--white-a50);font-size:11px;margin-bottom:6px">Choose how links on this page should open.</p><select class="form-select" id="linkTarget"><option value="_blank">Default (New window)</option><option value="_self">Same window</option></select></div>
             </div>
-            <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px" onclick="savePageSettings()">Save Settings</button>
         </div>
     </div>
 </div>
@@ -251,7 +349,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, serverTimestamp, collection, onSnapshot, deleteDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp, collection, onSnapshot, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBbrRHlakmOdKwuDGwYAx5qf-e6DOHW7s0",
@@ -267,10 +365,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const COL = {
-    USERS: 'DockGrid_Users',
-    PAGES: 'DockGrid_Pages',
-    WIDGETS: 'DockGrid_Widgets',
-    SETTINGS: 'DockGrid_Settings'
+    USERS: 'DockGrid_Users', PAGES: 'DockGrid_Pages',
+    WIDGETS: 'DockGrid_Widgets', SETTINGS: 'DockGrid_Settings'
 };
 
 const IMGBB_KEY = 'ba8023ca74166460c442e8e703d2a1b0';
@@ -284,13 +380,13 @@ const DEFAULT_BGS = [
     'https://cdn.pixabay.com/photo/2020/06/20/11/09/cat-5320572_1280.jpg'
 ];
 
-// Make available globally
 window.COL = COL; window.db = db; window.auth = auth;
 window.docFn = doc; window.setDocFn = setDoc; window.getDocFn = getDoc;
 window.serverTimestampFn = serverTimestamp; window.collectionFn = collection;
-window.deleteDocFn = deleteDoc; window.IMGBB_KEY = IMGBB_KEY; window.DEFAULT_BGS = DEFAULT_BGS;
+window.deleteDocFn = deleteDoc; window.queryFn = query; window.whereFn = where;
+window.IMGBB_KEY = IMGBB_KEY; window.DEFAULT_BGS = DEFAULT_BGS;
 
-// Auth check
+// Auth
 onAuthStateChanged(auth, async (user) => {
     if (!user) { window.location.href = 'sign.html'; return; }
     window.currentUser = user;
@@ -305,33 +401,35 @@ async function initApp(user) {
     
     setupBgGrid();
     setupWidgetTypeGrid();
-    loadSettings(user.uid);
+    setupColumnEditor();
+    await loadSettings(user.uid);
     loadWidgets(user.uid);
+    loadPages(user.uid);
 }
 
 function setupBgGrid() {
     const grid = document.getElementById('bgImageGrid');
-    grid.innerHTML = DEFAULT_BGS.map(url => `
+    grid.innerHTML = window.DEFAULT_BGS.map(url => `
         <div class="image-option" style="background-image:url('${url}')" onclick="setBg('${url}')" data-bg="${url}"></div>
     `).join('');
 }
 
 function setupWidgetTypeGrid() {
     const types = [
-        {id:'bookmarks',icon:'mdi:bookmark-multiple-outline',name:'Bookmarks',desc:'Save links with auto-fetch'},
-        {id:'rss',icon:'mdi:rss',name:'News (RSS)',desc:'Follow your favorite feeds'},
-        {id:'notes',icon:'mdi:note-text-outline',name:'Notes',desc:'Quick notes & ideas'},
+        {id:'bookmarks',icon:'mdi:bookmark-multiple-outline',name:'Bookmarks',desc:'Save links'},
+        {id:'rss',icon:'mdi:rss',name:'RSS News',desc:'Follow feeds'},
+        {id:'notes',icon:'mdi:note-text-outline',name:'Notes',desc:'Quick notes'},
         {id:'tasks',icon:'mdi:checkbox-marked-outline',name:'Tasks',desc:'To-do list'},
-        {id:'embed',icon:'mdi:code-tags',name:'Embed',desc:'YouTube, Figma, Docs'},
-        {id:'project',icon:'mdi:folder-outline',name:'Project',desc:'Track GitHub repos'},
-        {id:'clock',icon:'mdi:clock-outline',name:'Clock & Timer',desc:'Time & countdown'},
-        {id:'gallery',icon:'mdi:image-multiple-outline',name:'Image Gallery',desc:'Photo collection'},
-        {id:'calculator',icon:'mdi:calculator',name:'Calculator',desc:'Quick calculations'}
+        {id:'embed',icon:'mdi:code-tags',name:'Embed',desc:'YouTube etc.'},
+        {id:'project',icon:'mdi:folder-outline',name:'Project',desc:'Track repos'},
+        {id:'clock',icon:'mdi:clock-outline',name:'Clock',desc:'Time & timer'},
+        {id:'gallery',icon:'mdi:image-multiple-outline',name:'Gallery',desc:'Photos'},
+        {id:'calculator',icon:'mdi:calculator',name:'Calculator',desc:'Quick math'}
     ];
     document.getElementById('widgetTypeGrid').innerHTML = types.map(t => `
         <button class="widget-type-btn" onclick="addWidget('${t.id}')">
             <iconify-icon icon="${t.icon}"></iconify-icon>
-            <div><strong>${t.name}</strong><br><small>${t.desc}</small></div>
+            ${t.name}
         </button>
     `).join('');
 }
@@ -342,375 +440,234 @@ async function loadSettings(uid) {
         const snap = await getDoc(ref);
         if (snap.exists()) {
             const d = snap.data();
-            if (d.bg) { window.currentBg = d.bg; document.getElementById('bgLayer').style.backgroundImage = `url(${d.bg})`; markSelectedBg(d.bg); }
-            if (d.cols) { window.colCount = d.cols; updateColDisplay(d.cols); document.getElementById('columnCount').value = d.cols; }
-            if (d.opacity) { window.widgetOpacity = d.opacity; updateOpacityUI(d.opacity); }
-            if (d.profileImg) { 
-                document.getElementById('avatarBtn').innerHTML = `<img src="${d.profileImg}" alt="P">`;
-                document.getElementById('profileAvatar').innerHTML = `<img src="${d.profileImg}" alt="P" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
-            }
+            if (d.bg) { window.currentBg = d.bg; updateBgDisplay(d.bg); }
+            if (d.cols) { window.colCount = d.cols; updateColDisplay(d.cols); }
+            if (d.opacity != null) { window.widgetOpacity = d.opacity; updateOpacityUI(d.opacity); }
+            if (d.pageTitle) document.getElementById('pageTitle').value = d.pageTitle;
+            if (d.profileImg) updateProfileImages(d.profileImg);
         }
-    } catch(e) { console.log('Settings load:', e); }
+    } catch(e) {}
 }
 
 function loadWidgets(uid) {
     const q = collection(db, COL.WIDGETS);
     onSnapshot(q, (snap) => {
         window.widgetsData = [];
-        snap.forEach(doc => {
-            if (doc.data().userId === uid) window.widgetsData.push({id:doc.id,...doc.data()});
-        });
+        snap.forEach(doc => { if (doc.data().userId === uid) window.widgetsData.push({id:doc.id,...doc.data()}); });
         renderWidgets();
     });
 }
 
-// Global state
+async function loadPages(uid) {
+    const pagesRef = collection(db, COL.PAGES);
+    const q = query(pagesRef, where('userId','==',uid));
+    onSnapshot(q, (snap) => {
+        const pages = [];
+        snap.forEach(doc => pages.push({id:doc.id,...doc.data()}));
+        renderPagesList(pages);
+    });
+}
+
+function renderPagesList(pages) {
+    const list = document.getElementById('pagesList');
+    if (pages.length === 0) {
+        list.innerHTML = '<div style="color:var(--white-a50);text-align:center;padding:20px;font-size:12px">No pages yet</div>';
+        return;
+    }
+    list.innerHTML = pages.map(p => `
+        <div class="page-item ${p.id === (window.currentPageId||'default') ? 'active' : ''}" onclick="switchPage('${p.id}')">
+            <iconify-icon icon="mdi:file-document-outline"></iconify-icon>
+            <span>${p.title || 'Untitled'}</span>
+        </div>
+    `).join('');
+}
+
 window.currentBg = DEFAULT_BGS[0];
 window.colCount = 3;
 window.widgetOpacity = 96;
 window.widgetsData = [];
 window.currentUser = null;
+window.currentPageId = 'default';
 </script>
 
 <script>
-// ===== GLOBAL FUNCTIONS =====
-function toggleAvatarMenu() {
-    document.getElementById('avatarMenu').classList.toggle('show');
+// ===== HELPERS =====
+function $(id){return document.getElementById(id)}
+function toggleDropdown(id){$(id).classList.toggle('show')}
+function openModal(id){$(id).classList.add('show');$('avatarMenu').classList.remove('show')}
+function closeModal(id){$(id).classList.remove('show')}
+function openAddWidgetModal(){openModal('addWidgetModal')}
+function openProfileModal(){openModal('profileModal')}
+function openBackgroundModal(){openModal('pageSettingsModal');setTimeout(()=>switchSettingsTab('tab-background',document.querySelector('[data-tab="tab-background"]')),100)}
+function openPageSettingsModal(){openModal('pageSettingsModal')}
+
+function showToast(msg,type='info'){
+    const c=$('toastContainer');const t=document.createElement('div');
+    t.className=`toast ${type}`;t.textContent=msg;c.appendChild(t);
+    setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(80px)';t.style.transition='all 250ms';setTimeout(()=>t.remove(),250)},3000);
+}
+function searchGoogle(q){if(!q.trim())return;window.open(`https://www.google.com/search?q=${encodeURIComponent(q)}`,'_blank')}
+
+// ===== PAGES SIDEBAR =====
+function openPagesSidebar(){$('pagesSidebar').classList.add('open');$('pagesOverlay').classList.add('show');$('avatarMenu').classList.remove('show')}
+function closePagesSidebar(){$('pagesSidebar').classList.remove('open');$('pagesOverlay').classList.remove('show')}
+async function createNewPage(){
+    const{db,COL,docFn,setDocFn,serverTimestampFn}=window;const uid=window.currentUser.uid;
+    const pageId='page_'+Date.now();
+    await setDocFn(docFn(db,COL.PAGES,pageId),{id:pageId,userId:uid,title:'New Page',icon:'📄',order:0,isPublic:false,createdAt:serverTimestampFn(),updatedAt:serverTimestampFn()});
+    showToast('Page created!','success');
+}
+async function switchPage(pageId){
+    window.currentPageId=pageId;
+    closePagesSidebar();
+    showToast('Switched page','success');
 }
 
-function openModal(id) {
-    document.getElementById(id).classList.add('show');
-    document.getElementById('avatarMenu').classList.remove('show');
-}
-
-function closeModal(id) {
-    document.getElementById(id).classList.remove('show');
-}
-
-function openAddWidgetModal() { openModal('addWidgetModal'); }
-function openPageSettingsModal() { openModal('pageSettingsModal'); }
-function openProfileModal() { openModal('profileModal'); }
-function openBackgroundModal() { openModal('pageSettingsModal'); }
-
-function showToast(msg, type='info') {
-    const c = document.getElementById('toastContainer');
-    const t = document.createElement('div');
-    t.className = `toast ${type}`;
-    t.textContent = msg;
-    c.appendChild(t);
-    setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(80px)'; t.style.transition='all 250ms'; setTimeout(()=>t.remove(),250); }, 3000);
-}
-
-function searchGoogle(query) {
-    if (!query.trim()) return;
-    window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+// ===== SETTINGS TABS =====
+function switchSettingsTab(tabId,btn){
+    document.querySelectorAll('.modal-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+    btn.classList.add('active');$(tabId).classList.add('active');
 }
 
 // ===== BACKGROUND =====
-function setBg(url) {
-    window.currentBg = url;
-    document.getElementById('bgLayer').style.backgroundImage = `url(${url})`;
-    markSelectedBg(url);
-    saveSetting('bg', url);
+function setBg(url){window.currentBg=url;updateBgDisplay(url);saveSetting('bg',url)}
+function updateBgDisplay(url){$('bgLayer').style.backgroundImage=`url(${url})`;markSelectedBg(url)}
+function markSelectedBg(url){document.querySelectorAll('.image-option').forEach(e=>e.classList.remove('selected'));const m=document.querySelector(`.image-option[data-bg="${url}"]`);if(m)m.classList.add('selected')}
+function resetBg(){setBg(window.DEFAULT_BGS[0]);showToast('Background reset','success')}
+async function uploadBg(event){
+    const file=event.target.files[0];if(!file)return;showToast('Uploading...');
+    const fd=new FormData();fd.append('image',file);
+    try{const res=await fetch(`https://api.imgbb.com/1/upload?key=${window.IMGBB_KEY}`,{method:'POST',body:fd});const d=await res.json();if(d.success){setBg(d.data.url);showToast('Background updated!','success')}}catch(e){showToast('Upload failed','error')}
 }
-
-function markSelectedBg(url) {
-    document.querySelectorAll('.image-option').forEach(el => el.classList.remove('selected'));
-    const match = document.querySelector(`.image-option[data-bg="${url}"]`);
-    if (match) match.classList.add('selected');
+async function uploadProfile(event){
+    const file=event.target.files[0];if(!file)return;showToast('Uploading...');
+    const fd=new FormData();fd.append('image',file);
+    try{const res=await fetch(`https://api.imgbb.com/1/upload?key=${window.IMGBB_KEY}`,{method:'POST',body:fd});const d=await res.json();if(d.success){updateProfileImages(d.data.url);saveSetting('profileImg',d.data.url);closeModal('profileModal');showToast('Profile updated!','success')}}catch(e){showToast('Upload failed','error')}
 }
-
-async function uploadBg(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    showToast('Uploading...');
-    const fd = new FormData(); fd.append('image', file);
-    try {
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${window.IMGBB_KEY}`, {method:'POST',body:fd});
-        const data = await res.json();
-        if (data.success) { setBg(data.data.url); showToast('Background updated!','success'); }
-    } catch(e) { showToast('Upload failed','error'); }
-}
-
-async function uploadProfile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-    showToast('Uploading...');
-    const fd = new FormData(); fd.append('image', file);
-    try {
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${window.IMGBB_KEY}`, {method:'POST',body:fd});
-        const data = await res.json();
-        if (data.success) {
-            document.getElementById('avatarBtn').innerHTML = `<img src="${data.data.url}" alt="P">`;
-            document.getElementById('profileAvatar').innerHTML = `<img src="${data.data.url}" alt="P" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`;
-            saveSetting('profileImg', data.data.url);
-            closeModal('profileModal');
-            showToast('Profile updated!','success');
-        }
-    } catch(e) { showToast('Upload failed','error'); }
-}
+function updateProfileImages(url){$('avatarBtn').innerHTML=`<img src="${url}" alt="P">`;$('profileAvatar').innerHTML=`<img src="${url}" alt="P" style="width:100%;height:100%;object-fit:cover;border-radius:50%">`}
 
 // ===== SETTINGS =====
-async function saveSetting(key, value) {
-    if (!window.currentUser) return;
-    const { db, COL, docFn, setDocFn } = window;
-    await setDocFn(docFn(db, COL.SETTINGS, window.currentUser.uid), {[key]:value}, {merge:true});
+async function saveSetting(key,value){
+    if(!window.currentUser)return;const{db,COL,docFn,setDocFn}=window;
+    await setDocFn(docFn(db,COL.SETTINGS,window.currentUser.uid),{[key]:value},{merge:true});
 }
+function updateOpacity(val){window.widgetOpacity=parseInt(val);$('opLabel').textContent=val+'%';updateOpacityUI(val);saveSetting('opacity',parseInt(val))}
+function updateOpacityUI(val){const o=val/100;document.querySelectorAll('.widget').forEach(w=>{w.style.background=`rgba(255,255,255,${o})`;const h=w.querySelector('.widget-header');if(h)h.style.background=`rgba(250,250,250,${o})`})}
+function updateCols(val){window.colCount=parseInt(val);updateColDisplay(val);saveSetting('cols',parseInt(val))}
+function updateColDisplay(val){const g=$('widgetGrid');g.className='widget-grid';if(val>=1&&val<=4)g.classList.add(`cols-${val}`);$('columnCount').value=val}
 
-function updateOpacity(val) {
-    window.widgetOpacity = parseInt(val);
-    document.getElementById('opLabel').textContent = val + '%';
-    updateOpacityUI(val);
-    saveSetting('opacity', parseInt(val));
-}
-
-function updateOpacityUI(val) {
-    const opacity = val / 100;
-    document.querySelectorAll('.widget').forEach(w => {
-        w.style.background = `rgba(255,255,255,${opacity})`;
-        const header = w.querySelector('.widget-header');
-        if (header) header.style.background = `rgba(250,250,250,${opacity})`;
-    });
-}
-
-function updateCols(val) {
-    window.colCount = parseInt(val);
-    updateColDisplay(val);
-    saveSetting('cols', parseInt(val));
-}
-
-function updateColDisplay(val) {
-    const grid = document.getElementById('widgetGrid');
-    grid.className = 'widget-grid';
-    if (val >= 1 && val <= 4) grid.classList.add(`cols-${val}`);
-    document.getElementById('columnCount').value = val;
-}
-
-async function savePageSettings() {
-    const title = document.getElementById('pageTitle').value;
-    const cols = parseInt(document.getElementById('columnCount').value);
-    window.colCount = cols;
-    updateColDisplay(cols);
-    await saveSetting('pageTitle', title);
-    await saveSetting('cols', cols);
-    closeModal('pageSettingsModal');
-    showToast('Settings saved!','success');
-}
-
-// ===== WIDGETS =====
-async function addWidget(type) {
-    const names = {bookmarks:'Bookmarks',rss:'News Feed',notes:'Notes',tasks:'Tasks',embed:'Embed',project:'Project',clock:'Clock',gallery:'Gallery',calculator:'Calculator'};
-    const { db, COL, docFn, setDocFn, serverTimestampFn } = window;
-    const id = `${type}_${Date.now()}`;
-    await setDocFn(docFn(db, COL.WIDGETS, id), {
-        id, type, title: names[type] || 'Widget',
-        userId: window.currentUser.uid,
-        data: { bookmarks:[], tasks:[], content:'', items:[] },
-        createdAt: serverTimestampFn(), updatedAt: serverTimestampFn()
-    });
-    closeModal('addWidgetModal');
-    showToast(`Added ${names[type]}`, 'success');
-}
-
-async function removeWidget(id) {
-    if (!confirm('Remove this widget?')) return;
-    const { db, COL, docFn, deleteDocFn } = window;
-    await deleteDocFn(docFn(db, COL.WIDGETS, id));
-    showToast('Widget removed', 'success');
-}
-
-async function renameWidget(id, newTitle) {
-    if (!newTitle.trim()) return;
-    const { db, COL, docFn, setDocFn } = window;
-    await setDocFn(docFn(db, COL.WIDGETS, id), {title:newTitle.trim()}, {merge:true});
-}
-
-// ===== BOOKMARKS =====
-async function addBookmark(widgetId, input) {
-    const url = input.value.trim();
-    if (!url) return;
-    if (!url.startsWith('http')) { showToast('Enter a valid URL','error'); return; }
-    input.value = ''; input.placeholder = 'Loading...';
-    try {
-        const hostname = new URL(url).hostname;
-        const favicon = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
-        let title = hostname;
-        try {
-            const res = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
-            const d = await res.json();
-            if (d.status==='success' && d.data.title) title = d.data.title;
-        } catch(e) {}
-        const { db, COL, docFn, getDocFn, setDocFn, serverTimestampFn } = window;
-        const ref = docFn(db, COL.WIDGETS, widgetId);
-        const snap = await getDocFn(ref);
-        if (snap.exists()) {
-            const w = snap.data();
-            const bm = w.data?.bookmarks || [];
-            bm.push({url,title,favicon});
-            await setDocFn(ref, {data:{...w.data,bookmarks:bm},updatedAt:serverTimestampFn()},{merge:true});
-            showToast('Bookmark added!','success');
-        }
-    } catch(e) { showToast('Invalid URL','error'); }
-    input.placeholder = 'Paste URL and press Enter';
-}
-
-async function clearBookmarks(widgetId) {
-    const { db, COL, docFn, getDocFn, setDocFn, serverTimestampFn } = window;
-    const ref = docFn(db, COL.WIDGETS, widgetId);
-    const snap = await getDocFn(ref);
-    if (snap.exists()) {
-        const w = snap.data();
-        await setDocFn(ref, {data:{...w.data,bookmarks:[]},updatedAt:serverTimestampFn()},{merge:true});
-    }
-}
-
-// ===== TASKS =====
-async function addTask(widgetId, input) {
-    const text = input.value.trim();
-    if (!text) return;
-    input.value = '';
-    const { db, COL, docFn, getDocFn, setDocFn, serverTimestampFn } = window;
-    const ref = docFn(db, COL.WIDGETS, widgetId);
-    const snap = await getDocFn(ref);
-    if (snap.exists()) {
-        const w = snap.data();
-        const tasks = w.data?.tasks || [];
-        tasks.push({text,done:false});
-        await setDocFn(ref, {data:{...w.data,tasks},updatedAt:serverTimestampFn()},{merge:true});
-    }
-}
-
-async function toggleTask(widgetId, index) {
-    const { db, COL, docFn, getDocFn, setDocFn, serverTimestampFn } = window;
-    const ref = docFn(db, COL.WIDGETS, widgetId);
-    const snap = await getDocFn(ref);
-    if (snap.exists()) {
-        const w = snap.data();
-        const tasks = w.data?.tasks || [];
-        if (tasks[index]) { tasks[index].done = !tasks[index].done; }
-        await setDocFn(ref, {data:{...w.data,tasks},updatedAt:serverTimestampFn()},{merge:true});
-    }
-}
-
-async function saveNotes(widgetId, content) {
-    const { db, COL, docFn, setDocFn, serverTimestampFn } = window;
-    await setDocFn(docFn(db, COL.WIDGETS, widgetId), {data:{content},updatedAt:serverTimestampFn()},{merge:true});
-}
-
-// ===== RENDER =====
-function renderWidgets() {
-    const grid = document.getElementById('widgetGrid');
-    const empty = document.getElementById('emptyState');
-    const wData = window.widgetsData || [];
-    
-    if (wData.length === 0) { grid.innerHTML = ''; empty.style.display = 'flex'; return; }
-    empty.style.display = 'none';
-    
-    grid.innerHTML = wData.map(w => {
-        const icons = {bookmarks:'mdi:bookmark-multiple-outline',rss:'mdi:rss',notes:'mdi:note-text-outline',tasks:'mdi:checkbox-marked-outline',embed:'mdi:code-tags',project:'mdi:folder-outline',clock:'mdi:clock-outline',gallery:'mdi:image-multiple-outline',calculator:'mdi:calculator'};
-        let body = '';
-        switch(w.type) {
-            case 'bookmarks':
-                const bm = w.data?.bookmarks || [];
-                body = `<input type="url" class="form-input" placeholder="Paste URL and press Enter" onkeydown="if(event.key==='Enter')addBookmark('${w.id}',this)" style="margin-bottom:8px;font-size:12px">`;
-                body += bm.map(b => `
-                    <a href="${b.url}" target="_blank" class="bookmark-item" rel="noopener">
-                        <img src="${b.favicon}" class="bookmark-favicon" onerror="this.style.display='none'">
-                        <div class="bookmark-info"><div class="bookmark-btitle">${b.title}</div><div class="bookmark-burl">${new URL(b.url).hostname}</div></div>
-                    </a>`).join('');
-                break;
-            case 'notes':
-                body = `<textarea class="form-input form-textarea" style="min-height:100px;color:#333;background:#fff;border-color:#eee" placeholder="Write notes..." oninput="saveNotes('${w.id}',this.value)">${w.data?.content||''}</textarea>`;
-                break;
-            case 'tasks':
-                const tasks = w.data?.tasks || [];
-                body = `<input type="text" class="form-input" placeholder="Add task and press Enter" onkeydown="if(event.key==='Enter')addTask('${w.id}',this)" style="margin-bottom:6px;font-size:12px">`;
-                body += tasks.map((t,i) => `
-                    <div class="task-item" onclick="toggleTask('${w.id}',${i})">
-                        <iconify-icon icon="${t.done?'mdi:checkbox-marked':'mdi:checkbox-blank-outline'}" width="16" height="16" style="color:${t.done?'var(--green-500)':'#ccc'};flex-shrink:0"></iconify-icon>
-                        <span style="text-decoration:${t.done?'line-through':'none'};opacity:${t.done?'0.5':'1'};font-size:13px">${t.text}</span>
-                    </div>`).join('');
-                break;
-            case 'clock':
-                body = `<div style="text-align:center;padding:20px"><div style="font-size:36px;font-weight:800;color:#222" id="clock_${w.id}">--:--:--</div><div style="font-size:12px;color:#999;margin-top:4px" id="clockDate_${w.id}"></div></div>`;
-                setTimeout(() => startClock(w.id), 100);
-                break;
-            case 'calculator':
-                body = `<div style="text-align:center;padding:10px"><input type="text" class="form-input" id="calcInput_${w.id}" placeholder="2+2" style="text-align:right;font-size:20px;font-weight:600;margin-bottom:8px" onkeydown="if(event.key==='Enter')calcResult('${w.id}')"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px">${['7','8','9','/','4','5','6','*','1','2','3','-','0','.','=','+'].map(k => k==='='?`<button class="btn btn-primary btn-sm" onclick="calcResult('${w.id}')" style="padding:10px">${k}</button>`:`<button class="btn btn-dark btn-sm" onclick="calcInput('${w.id}','${k}')" style="padding:10px">${k}</button>`).join('')}</div></div>`;
-                break;
-            case 'gallery':
-                body = `<div style="text-align:center;padding:20px;color:#999"><iconify-icon icon="mdi:image-multiple-outline" width="32" height="32"></iconify-icon><p style="margin-top:8px;font-size:12px">Gallery widget ready</p></div>`;
-                break;
-            case 'rss':
-                body = `<div style="text-align:center;padding:20px;color:#999"><iconify-icon icon="mdi:rss" width="32" height="32"></iconify-icon><p style="margin-top:8px;font-size:12px">Enter RSS feed URL</p><input type="url" class="form-input" placeholder="RSS URL" style="margin-top:8px;font-size:12px"></div>`;
-                break;
-            case 'embed':
-                body = `<div style="text-align:center;padding:20px;color:#999"><iconify-icon icon="mdi:code-tags" width="32" height="32"></iconify-icon><p style="margin-top:8px;font-size:12px">Paste URL to embed</p><input type="url" class="form-input" placeholder="YouTube, Figma, Docs..." style="margin-top:8px;font-size:12px"></div>`;
-                break;
-            case 'project':
-                body = `<div style="text-align:center;padding:20px;color:#999"><iconify-icon icon="mdi:folder-outline" width="32" height="32"></iconify-icon><p style="margin-top:8px;font-size:12px">Project tracking</p><input type="text" class="form-input" placeholder="Project name" style="margin-top:8px;font-size:12px"></div>`;
-                break;
-            default: body = '<p style="color:#999;text-align:center;padding:20px">Widget ready</p>';
-        }
-        
-        return `<div class="widget" data-id="${w.id}">
-            <div class="widget-header">
-                <span class="widget-title" contenteditable="true" data-id="${w.id}" spellcheck="false" onblur="renameWidget('${w.id}',this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${w.title||'Untitled'}</span>
-                <div class="widget-actions">
-                    <button class="widget-dot" onclick="removeWidget('${w.id}')" title="Remove"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button>
-                </div>
+// ===== COLUMN EDITOR =====
+function setupColumnEditor(){updateColumnEditor()}
+function updateColumnEditor(){
+    const list=$('columnList');const cols=window.colCount||3;
+    let html='';
+    for(let i=1;i<=cols;i++){
+        html+=`<div class="column-item">
+            <div class="column-item-info"><span class="column-item-name">Column ${i}</span><span class="column-item-count">${Math.floor(Math.random()*6)+1} widgets</span></div>
+            <div class="column-item-actions">
+                <button class="column-size-btn ${i===cols&&cols>1?'active':''}" onclick="setColumnCount(${i})">${['','Small','Medium','Large','XL'][i]||'XL'}</button>
+                ${cols>1?`<button class="column-size-btn" style="color:var(--red-500)" onclick="removeColumn(${i})">✕</button>`:''}
             </div>
-            <div class="widget-body">${body}</div>
         </div>`;
+    }
+    list.innerHTML=html;
+}
+function addColumn(){if(window.colCount<4){window.colCount++;updateCols(window.colCount);updateColumnEditor();showToast('Column added','success')}}
+function removeColumn(i){if(window.colCount>1){window.colCount--;updateCols(window.colCount);updateColumnEditor();showToast('Column removed. Widgets preserved.','success')}}
+function setColumnCount(n){updateCols(n);updateColumnEditor()}
+
+// ===== WIDGET OPERATIONS =====
+async function addWidget(type){
+    const names={bookmarks:'Bookmarks',rss:'RSS News',notes:'Notes',tasks:'Tasks',embed:'Embed',project:'Project',clock:'Clock',gallery:'Gallery',calculator:'Calculator'};
+    const{db,COL,docFn,setDocFn,serverTimestampFn}=window;
+    const id=type+'_'+Date.now();
+    await setDocFn(docFn(db,COL.WIDGETS,id),{id,type,title:names[type]||'Widget',userId:window.currentUser.uid,pageId:window.currentPageId||'default',data:{bookmarks:[],tasks:[],content:'',items:[]},createdAt:serverTimestampFn(),updatedAt:serverTimestampFn()});
+    closeModal('addWidgetModal');showToast(`Added ${names[type]}`,'success');
+}
+async function removeWidget(id){if(!confirm('Remove this widget?'))return;const{db,COL,docFn,deleteDocFn}=window;await deleteDocFn(docFn(db,COL.WIDGETS,id));showToast('Widget removed','success')}
+async function renameWidget(id,newTitle){if(!newTitle.trim())return;const{db,COL,docFn,setDocFn}=window;await setDocFn(docFn(db,COL.WIDGETS,id),{title:newTitle.trim()},{merge:true})}
+
+// ===== BOOKMARK FUNCTIONS =====
+async function addBookmark(widgetId,input){
+    const url=input.value.trim();if(!url)return;if(!url.startsWith('http')){showToast('Enter a valid URL starting with http','error');return}
+    input.value='';input.placeholder='Fetching...';input.disabled=true;
+    try{
+        const hostname=new URL(url).hostname;
+        const favicon=`https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
+        let title=hostname;let description='';
+        try{const res=await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);const d=await res.json();if(d.status==='success'){if(d.data.title)title=d.data.title;if(d.data.description)description=d.data.description}}catch(e){}
+        const{db,COL,docFn,getDocFn,setDocFn,serverTimestampFn}=window;
+        const ref=docFn(db,COL.WIDGETS,widgetId);const snap=await getDocFn(ref);
+        if(snap.exists()){const w=snap.data();const bm=w.data?.bookmarks||[];bm.push({url,title,description,favicon,hostname});await setDocFn(ref,{data:{...w.data,bookmarks:bm},updatedAt:serverTimestampFn()},{merge:true});showToast('Bookmark added!','success')}
+    }catch(e){showToast('Failed to add bookmark','error')}
+    input.disabled=false;input.placeholder='Paste URL and press Enter';
+}
+
+// ===== TASK FUNCTIONS =====
+async function addTask(widgetId,input){const text=input.value.trim();if(!text)return;input.value='';const{db,COL,docFn,getDocFn,setDocFn,serverTimestampFn}=window;const ref=docFn(db,COL.WIDGETS,widgetId);const snap=await getDocFn(ref);if(snap.exists()){const w=snap.data();const tasks=w.data?.tasks||[];tasks.push({text,done:false});await setDocFn(ref,{data:{...w.data,tasks},updatedAt:serverTimestampFn()},{merge:true})}}
+async function toggleTask(widgetId,index){const{db,COL,docFn,getDocFn,setDocFn,serverTimestampFn}=window;const ref=docFn(db,COL.WIDGETS,widgetId);const snap=await getDocFn(ref);if(snap.exists()){const w=snap.data();const tasks=w.data?.tasks||[];if(tasks[index]){tasks[index].done=!tasks[index].done;await setDocFn(ref,{data:{...w.data,tasks},updatedAt:serverTimestampFn()},{merge:true})}}}
+async function saveNotes(widgetId,content){const{db,COL,docFn,setDocFn,serverTimestampFn}=window;await setDocFn(docFn(db,COL.WIDGETS,widgetId),{data:{content},updatedAt:serverTimestampFn()},{merge:true})}
+
+// ===== EMBED DETECTION =====
+function detectEmbedType(url){try{const h=new URL(url).hostname;if(h.includes('youtube.com')||h.includes('youtu.be'))return'youtube';if(h.includes('vimeo.com'))return'vimeo';if(h.includes('figma.com'))return'figma';if(h.includes('docs.google.com'))return'gdocs';if(h.includes('github.com'))return'github';return'website'}catch(e){return'invalid'}}
+
+// ===== CLOCK =====
+function startClock(widgetId){const update=()=>{const el=document.getElementById(`clock_${widgetId}`);if(!el)return;el.textContent=new Date().toLocaleTimeString()};update();setInterval(update,1000)}
+
+// ===== CALCULATOR =====
+function calcInput(widgetId,key){const input=document.getElementById(`calcInput_${widgetId}`);if(input)input.value+=key}
+function calcResult(widgetId){const input=document.getElementById(`calcInput_${widgetId}`);if(!input)return;try{input.value=Function('"use strict";return ('+input.value+')')()}catch(e){input.value='Error'}}
+
+// ===== RENDER WIDGETS =====
+function renderWidgets(){
+    const grid=$('widgetGrid');const empty=$('emptyState');const wData=window.widgetsData||[];
+    if(wData.length===0){grid.innerHTML='';empty.style.display='flex';return}
+    empty.style.display='none';
+    grid.innerHTML=wData.map(w=>{
+        const iconMap={bookmarks:'mdi:bookmark-multiple-outline',rss:'mdi:rss',notes:'mdi:note-text-outline',tasks:'mdi:checkbox-marked-outline',embed:'mdi:code-tags',project:'mdi:folder-outline',clock:'mdi:clock-outline',gallery:'mdi:image-multiple-outline',calculator:'mdi:calculator'};
+        let body='';
+        switch(w.type){
+            case'bookmarks':{const bm=w.data?.bookmarks||[];body=`<input type="url" class="form-input" placeholder="Paste URL and press Enter" onkeydown="if(event.key==='Enter')addBookmark('${w.id}',this)" style="margin-bottom:8px;font-size:12px;padding:8px 10px">`;body+=bm.map(b=>`<a href="${b.url}" target="_blank" class="bookmark-item" rel="noopener"><img src="${b.favicon}" class="bookmark-favicon" onerror="this.style.display='none'"><div class="bookmark-info"><div class="bookmark-btitle">${b.title}</div>${b.description?`<div class="bookmark-desc">${b.description}</div>`:''}<div class="bookmark-burl">${b.hostname||new URL(b.url).hostname}</div></div></a>`).join('');break}
+            case'notes':body=`<textarea class="form-input form-textarea" style="min-height:100px;color:#333;background:#fff;border-color:#e0e0e0;font-size:13px" placeholder="Write your notes here..." oninput="saveNotes('${w.id}',this.value)">${w.data?.content||''}</textarea>`;break;
+            case'tasks':{const tasks=w.data?.tasks||[];body=`<input type="text" class="form-input" placeholder="Add a task and press Enter" onkeydown="if(event.key==='Enter')addTask('${w.id}',this)" style="margin-bottom:6px;font-size:12px;padding:8px 10px">`;body+=tasks.map((t,i)=>`<div class="task-item" onclick="toggleTask('${w.id}',${i})"><iconify-icon icon="${t.done?'mdi:checkbox-marked':'mdi:checkbox-blank-outline'}" width="16" height="16" style="color:${t.done?'var(--green-500)':'#ccc'};flex-shrink:0"></iconify-icon><span style="text-decoration:${t.done?'line-through':'none'};opacity:${t.done?'0.5':'1'};font-size:13px">${t.text}</span></div>`).join('');break}
+            case'embed':body=`<input type="url" class="form-input" placeholder="Paste URL (YouTube, Figma, Docs...)" onkeydown="if(event.key==='Enter')embedContent('${w.id}',this.value)" style="margin-bottom:8px;font-size:12px;padding:8px 10px"><div id="embedContainer_${w.id}"><div style="text-align:center;padding:30px;color:#999"><iconify-icon icon="mdi:code-tags" width="36" height="36"></iconify-icon><p style="margin-top:8px;font-size:12px">Paste a URL above to embed</p></div></div>`;break;
+            case'project':body=`<input type="text" class="form-input" placeholder="Project name" onkeydown="if(event.key==='Enter')createProject('${w.id}',this)" style="margin-bottom:8px;font-size:12px;padding:8px 10px"><input type="url" class="form-input" placeholder="GitHub repo URL (optional)" onkeydown="if(event.key==='Enter')addProjectRepo('${w.id}',this)" style="margin-bottom:8px;font-size:12px;padding:8px 10px"><div id="projectContent_${w.id}"><div style="text-align:center;padding:20px;color:#999;font-size:12px">Add a project to get started</div></div>`;break;
+            case'clock':body=`<div style="text-align:center;padding:16px"><div style="font-size:38px;font-weight:800;color:#222" id="clock_${w.id}">--:--:--</div><div style="font-size:11px;color:#999;margin-top:4px" id="clockDate_${w.id}"></div></div>`;setTimeout(()=>startClock(w.id),100);break;
+            case'calculator':body=`<div style="text-align:center;padding:6px"><input type="text" class="form-input" id="calcInput_${w.id}" placeholder="2+2" style="text-align:right;font-size:22px;font-weight:700;margin-bottom:6px;padding:8px 10px" onkeydown="if(event.key==='Enter')calcResult('${w.id}')"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px">${['7','8','9','÷','4','5','6','×','1','2','3','−','0','.','=','+'].map(k=>{const acts={'÷':'/','×':'*','−':'-'};const v=acts[k]||k;return k==='='?`<button class="btn btn-primary btn-sm" onclick="calcResult('${w.id}')" style="padding:8px;font-size:13px">${k}</button>`:`<button class="btn btn-dark btn-sm" onclick="calcInput('${w.id}','${v}')" style="padding:8px;font-size:13px">${k}</button>`}).join('')}</div></div>`;break;
+            case'gallery':body=`<div style="text-align:center;padding:20px;color:#999"><iconify-icon icon="mdi:image-multiple-outline" width="36" height="36"></iconify-icon><p style="margin-top:8px;font-size:12px">Gallery - upload images</p><input type="file" class="form-input" accept="image/*" multiple style="padding:6px;font-size:11px;margin-top:8px"></div>`;break;
+            case'rss':body=`<input type="url" class="form-input" placeholder="Enter RSS feed URL" onkeydown="if(event.key==='Enter')loadRSS('${w.id}',this.value)" style="margin-bottom:8px;font-size:12px;padding:8px 10px"><div id="rssContent_${w.id}"><div style="text-align:center;padding:20px;color:#999"><iconify-icon icon="mdi:rss" width="36" height="36"></iconify-icon><p style="margin-top:8px;font-size:12px">Enter an RSS feed URL above</p></div></div>`;break;
+            default:body='<p style="color:#999;text-align:center;padding:20px">Widget ready</p>';
+        }
+        return`<div class="widget" data-id="${w.id}"><div class="widget-header"><span class="widget-title" contenteditable="true" data-id="${w.id}" spellcheck="false" onblur="renameWidget('${w.id}',this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${w.title||'Untitled'}</span><div class="widget-actions"><button class="widget-dot" onclick="removeWidget('${w.id}')" title="Remove"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div></div><div class="widget-body">${body}</div></div>`;
     }).join('');
 }
 
-// ===== CLOCK =====
-function startClock(widgetId) {
-    const update = () => {
-        const el = document.getElementById(`clock_${widgetId}`);
-        const dateEl = document.getElementById(`clockDate_${widgetId}`);
-        if (!el) return;
-        const now = new Date();
-        el.textContent = now.toLocaleTimeString();
-        if (dateEl) dateEl.textContent = now.toLocaleDateString(undefined, {weekday:'long',year:'numeric',month:'long',day:'numeric'});
-    };
-    update();
-    setInterval(update, 1000);
-}
-
-// ===== CALCULATOR =====
-function calcInput(widgetId, key) {
-    const input = document.getElementById(`calcInput_${widgetId}`);
-    if (input) input.value += key;
-}
-function calcResult(widgetId) {
-    const input = document.getElementById(`calcInput_${widgetId}`);
-    if (!input) return;
-    try {
-        input.value = Function('"use strict";return (' + input.value + ')')();
-    } catch(e) { input.value = 'Error'; }
+// ===== EMBED CONTENT =====
+async function embedContent(widgetId,url){
+    if(!url)return;
+    const container=document.getElementById(`embedContainer_${widgetId}`);
+    const type=detectEmbedType(url);
+    if(type==='youtube'){const vid=url.match(/(?:v=|\/)([\w-]{11})/)?.[1];if(vid){container.innerHTML=`<div class="embed-preview"><iframe src="https://www.youtube.com/embed/${vid}" allowfullscreen></iframe></div>`}}
+    else if(type==='vimeo'){const vid=url.match(/vimeo\.com\/(\d+)/)?.[1];if(vid){container.innerHTML=`<div class="embed-preview"><iframe src="https://player.vimeo.com/video/${vid}" allowfullscreen></iframe></div>`}}
+    else if(type==='gdocs'){container.innerHTML=`<div class="embed-preview"><iframe src="${url}" allowfullscreen></iframe></div>`}
+    else if(type==='figma'){container.innerHTML=`<div class="embed-preview"><iframe src="https://www.figma.com/embed?embed_host=astra&url=${encodeURIComponent(url)}" allowfullscreen></iframe></div>`}
+    else{container.innerHTML=`<div style="text-align:center;padding:20px"><p style="color:#999;font-size:12px;margin-bottom:8px">Website preview not available for embedding</p><a href="${url}" target="_blank" style="color:var(--orange-500);font-size:12px;font-weight:600">Open in new tab →</a></div>`}
 }
 
 // ===== SIGN OUT =====
-async function handleSignOut() {
-    const { auth } = window;
-    const { signOut } = await import("https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js");
-    await signOut(auth);
-    window.location.href = 'sign.html';
+async function handleSignOut(){
+    const{auth}=window;const{signOut}=await import("https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js");
+    await signOut(auth);window.location.href='sign.html';
 }
 
 // ===== CLICK OUTSIDE =====
-document.addEventListener('click', (e) => {
-    if (!e.target.closest('.dropdown')) document.getElementById('avatarMenu').classList.remove('show');
-    if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('show');
+document.addEventListener('click',(e)=>{
+    if(!e.target.closest('.dropdown')){$('avatarMenu').classList.remove('show')}
+    if(e.target.classList.contains('modal-overlay'))e.target.classList.remove('show');
 });
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-        document.querySelectorAll('.modal-overlay.show').forEach(m => m.classList.remove('show'));
-        document.getElementById('avatarMenu').classList.remove('show');
-    }
+document.addEventListener('keydown',(e)=>{
+    if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));$('avatarMenu').classList.remove('show');closePagesSidebar()}
 });
 </script>
 
