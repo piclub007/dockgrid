@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    
+    <!-- ========================
+         MAIN PAGES
+         ======================== -->
+    
+    <!-- Homepage - Highest Priority -->
+    <url>
+        <loc>https://dockgrid.app/</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/hero.webp</image:loc>
+            <image:title>DockGrid - Free Personal Dashboard &amp; Bookmark Manager</image:title>
+            <image:caption>Organize bookmarks, links, notes, RSS feeds, and widgets into a beautiful personal dashboard. 100% free, no ads.</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/1.webp</image:loc>
+            <image:title>Personal Browser Start Page</image:title>
+            <image:caption>Replace your new tab with a beautiful command center using DockGrid</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Features Page -->
+    <url>
+        <loc>https://dockgrid.app/features</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/features-overview.webp</image:loc>
+            <image:title>DockGrid Features - Smart Bookmarks, Notes, RSS Feeds, Widgets</image:title>
+            <image:caption>Explore all DockGrid features including bookmarks manager, rich notes, RSS reader, smart search, and custom themes</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- How It Works Page -->
+    <url>
+        <loc>https://dockgrid.app/how-it-works</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Use Cases Page -->
+    <url>
+        <loc>https://dockgrid.app/use-cases</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/2.webp</image:loc>
+            <image:title>Team Dashboard - Shared Workspace</image:title>
+            <image:caption>Keep teams aligned with shared dashboards on DockGrid</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/3.webp</image:loc>
+            <image:title>Student Study Hub Dashboard</image:title>
+            <image:caption>Organize research, notes, and class resources with DockGrid</image:caption>
+        </image:image>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/4.webp</image:loc>
+            <image:title>Professional Work Command Center</image:title>
+            <image:caption>Centralize tools, dashboards, and workflows with DockGrid</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Desktop App Page -->
+    <url>
+        <loc>https://dockgrid.app/desktop</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Download Page -->
+    <url>
+        <loc>https://dockgrid.app/download</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Download Platform-Specific Pages -->
+    <url>
+        <loc>https://dockgrid.app/download/windows</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <url>
+        <loc>https://dockgrid.app/download/macos</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <url>
+        <loc>https://dockgrid.app/download/linux</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Pricing Page -->
+    <url>
+        <loc>https://dockgrid.app/pricing</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         AUTHENTICATION PAGES
+         ======================== -->
+    
+    <!-- Sign Up Page -->
+    <url>
+        <loc>https://dockgrid.app/sign-up</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Sign In Page -->
+    <url>
+        <loc>https://dockgrid.app/sign-in</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Forgot Password -->
+    <url>
+        <loc>https://dockgrid.app/forgot-password</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Reset Password -->
+    <url>
+        <loc>https://dockgrid.app/reset-password</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         DASHBOARD PAGES
+         ======================== -->
+    
+    <!-- Main Dashboard (Authenticated) -->
+    <url>
+        <loc>https://dockgrid.app/dashboard</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Dashboard Settings -->
+    <url>
+        <loc>https://dockgrid.app/dashboard/settings</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Dashboard Profile -->
+    <url>
+        <loc>https://dockgrid.app/dashboard/profile</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Dashboard Themes -->
+    <url>
+        <loc>https://dockgrid.app/dashboard/themes</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Dashboard Bookmarks -->
+    <url>
+        <loc>https://dockgrid.app/dashboard/bookmarks</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Dashboard Notes -->
+    <url>
+        <loc>https://dockgrid.app/dashboard/notes</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Dashboard RSS Feeds -->
+    <url>
+        <loc>https://dockgrid.app/dashboard/feeds</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Dashboard To-Do Lists -->
+    <url>
+        <loc>https://dockgrid.app/dashboard/todos</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Dashboard Widgets -->
+    <url>
+        <loc>https://dockgrid.app/dashboard/widgets</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         TEAM PAGES
+         ======================== -->
+    
+    <!-- Teams Overview -->
+    <url>
+        <loc>https://dockgrid.app/teams</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/2.webp</image:loc>
+            <image:title>DockGrid for Teams - Shared Workspaces</image:title>
+            <image:caption>Create shared dashboards for your team with DockGrid</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Team Dashboard -->
+    <url>
+        <loc>https://dockgrid.app/teams/dashboard</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Team Settings -->
+    <url>
+        <loc>https://dockgrid.app/teams/settings</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Team Members -->
+    <url>
+        <loc>https://dockgrid.app/teams/members</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         EDUCATION PAGES
+         ======================== -->
+    
+    <!-- Education Overview -->
+    <url>
+        <loc>https://dockgrid.app/education</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/3.webp</image:loc>
+            <image:title>DockGrid for Education - Student &amp; Teacher Dashboards</image:title>
+            <image:caption>Organize research, lesson plans, and class resources with DockGrid</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Education Sign Up -->
+    <url>
+        <loc>https://dockgrid.app/education/sign-up</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         PROFESSIONAL PAGES
+         ======================== -->
+    
+    <!-- Professional Overview -->
+    <url>
+        <loc>https://dockgrid.app/professional</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/4.webp</image:loc>
+            <image:title>DockGrid for Professionals - Work Command Center</image:title>
+            <image:caption>Centralize your work tools, dashboards, and resources with DockGrid</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- ========================
+         BLOG & CONTENT PAGES
+         ======================== -->
+    
+    <!-- Blog Home -->
+    <url>
+        <loc>https://dockgrid.app/blog</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Blog Posts -->
+    <url>
+        <loc>https://dockgrid.app/blog/getting-started-with-dockgrid</loc>
+        <lastmod>2026-07-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+        <image:image>
+            <image:loc>https://dockgrid.app/assets/images/blog/getting-started.webp</image:loc>
+            <image:title>Getting Started with DockGrid - Complete Guide</image:title>
+            <image:caption>Learn how to set up your first DockGrid dashboard in minutes</image:caption>
+        </image:image>
+    </url>
+    
+    <url>
+        <loc>https://dockgrid.app/blog/10-productivity-tips-for-your-dashboard</loc>
+        <lastmod>2026-07-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <url>
+        <loc>https://dockgrid.app/blog/offline-productivity-with-desktop-app</loc>
+        <lastmod>2026-07-05</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <url>
+        <loc>https://dockgrid.app/blog/organize-bookmarks-like-a-pro</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <url>
+        <loc>https://dockgrid.app/blog/rss-feeds-guide-2026</loc>
+        <lastmod>2026-06-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         COMMUNITY PAGES
+         ======================== -->
+    
+    <!-- Community Hub -->
+    <url>
+        <loc>https://dockgrid.app/community</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Community Showcase -->
+    <url>
+        <loc>https://dockgrid.app/community/showcase</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Community Forums -->
+    <url>
+        <loc>https://dockgrid.app/community/forums</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         SUPPORT PAGES
+         ======================== -->
+    
+    <!-- Help Center -->
+    <url>
+        <loc>https://dockgrid.app/help</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Documentation -->
+    <url>
+        <loc>https://dockgrid.app/docs</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- API Documentation -->
+    <url>
+        <loc>https://dockgrid.app/docs/api</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Contact Page -->
+    <url>
+        <loc>https://dockgrid.app/contact</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- FAQ Page -->
+    <url>
+        <loc>https://dockgrid.app/faq</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         LEGAL PAGES
+         ======================== -->
+    
+    <!-- Privacy Policy -->
+    <url>
+        <loc>https://dockgrid.app/privacy</loc>
+        <lastmod>2026-07-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Terms of Service -->
+    <url>
+        <loc>https://dockgrid.app/terms</loc>
+        <lastmod>2026-07-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Cookie Policy -->
+    <url>
+        <loc>https://dockgrid.app/cookies</loc>
+        <lastmod>2026-07-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- GDPR -->
+    <url>
+        <loc>https://dockgrid.app/gdpr</loc>
+        <lastmod>2026-07-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         ABOUT PAGES
+         ======================== -->
+    
+    <!-- About Us -->
+    <url>
+        <loc>https://dockgrid.app/about</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Creator Page -->
+    <url>
+        <loc>https://dockgrid.app/about/creator</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Press Kit -->
+    <url>
+        <loc>https://dockgrid.app/press</loc>
+        <lastmod>2026-07-01</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         SPECIAL PAGES
+         ======================== -->
+    
+    <!-- Browser Extension -->
+    <url>
+        <loc>https://dockgrid.app/extension</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Chrome Extension -->
+    <url>
+        <loc>https://dockgrid.app/extension/chrome</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Firefox Add-on -->
+    <url>
+        <loc>https://dockgrid.app/extension/firefox</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Edge Add-on -->
+    <url>
+        <loc>https://dockgrid.app/extension/edge</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Mobile App -->
+    <url>
+        <loc>https://dockgrid.app/mobile</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Status Page -->
+    <url>
+        <loc>https://status.dockgrid.app</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>always</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Changelog -->
+    <url>
+        <loc>https://dockgrid.app/changelog</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Roadmap -->
+    <url>
+        <loc>https://dockgrid.app/roadmap</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Affiliate Program -->
+    <url>
+        <loc>https://dockgrid.app/affiliates</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.4</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- ========================
+         ALTERNATE LANGUAGE VERSIONS
+         ======================== -->
+    
+    <!-- English (Default) -->
+    <url>
+        <loc>https://dockgrid.app/en</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Spanish -->
+    <url>
+        <loc>https://dockgrid.app/es</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- French -->
+    <url>
+        <loc>https://dockgrid.app/fr</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- German -->
+    <url>
+        <loc>https://dockgrid.app/de</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Portuguese -->
+    <url>
+        <loc>https://dockgrid.app/pt</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Japanese -->
+    <url>
+        <loc>https://dockgrid.app/ja</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Chinese (Simplified) -->
+    <url>
+        <loc>https://dockgrid.app/zh-CN</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+    
+    <!-- Korean -->
+    <url>
+        <loc>https://dockgrid.app/ko</loc>
+        <lastmod>2026-07-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+        <mobile:mobile/>
+    </url>
+
+</urlset>
