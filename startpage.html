@@ -86,9 +86,6 @@
             overflow: hidden;
         }
 
-        /* ============================================================
-               SCROLLBAR
-               ============================================================ */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -105,6 +102,62 @@
         }
 
         /* ============================================================
+               LOADING SCREEN
+               ============================================================ */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            gap: 20px;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-screen__spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--black-10);
+            border-top-color: var(--orange-500);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-screen__text {
+            font-size: 16px;
+            color: var(--black-50);
+            font-weight: 500;
+        }
+
+        .loading-screen__logo {
+            font-size: 32px;
+            font-weight: 900;
+            font-family: var(--font-mono);
+            color: var(--black-100);
+        }
+
+        .loading-screen__logo span {
+            color: var(--orange-500);
+        }
+
+        /* ============================================================
                APP SHELL
                ============================================================ */
         .app {
@@ -112,6 +165,12 @@
             height: 100vh;
             height: 100dvh;
             overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .app.visible {
+            opacity: 1;
         }
 
         /* ============================================================
@@ -510,6 +569,29 @@
             align-content: start;
         }
 
+        .dashboard__empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--black-30);
+        }
+
+        .dashboard__empty .icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .dashboard__empty h3 {
+            font-weight: 700;
+            color: var(--black-60);
+            font-size: 20px;
+        }
+
+        .dashboard__empty p {
+            margin-top: 8px;
+            font-size: 15px;
+        }
+
         /* ============================================================
                WIDGET
                ============================================================ */
@@ -547,7 +629,6 @@
             user-select: none;
         }
 
-        /* Widget sizes */
         .widget--small {
             grid-column: span 1;
         }
@@ -574,7 +655,6 @@
             min-height: 420px;
         }
 
-        /* Widget Header */
         .widget__header {
             display: flex;
             align-items: center;
@@ -634,7 +714,6 @@
             color: #ef4444;
         }
 
-        /* Widget Body */
         .widget__body {
             padding: 16px;
             flex: 1;
@@ -652,7 +731,6 @@
             min-height: 80px;
         }
 
-        /* Widget Footer */
         .widget__footer {
             padding: 8px 16px;
             border-top: 1px solid var(--black-5);
@@ -664,7 +742,6 @@
             flex-shrink: 0;
         }
 
-        /* Resize handle */
         .widget__resize-handle {
             position: absolute;
             bottom: 0;
@@ -696,7 +773,6 @@
                WIDGET TYPES - SPECIFIC STYLES
                ============================================================ */
 
-        /* --- Bookmarks --- */
         .bookmark-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
@@ -744,7 +820,6 @@
             white-space: nowrap;
         }
 
-        /* --- Projects --- */
         .project-list {
             display: flex;
             flex-direction: column;
@@ -824,13 +899,11 @@
             background: #d1fae5;
             color: #059669;
         }
-
         .project-item__status--archived {
             background: var(--black-5);
             color: var(--black-40);
         }
 
-        /* --- Tasks --- */
         .task-list {
             display: flex;
             flex-direction: column;
@@ -947,7 +1020,6 @@
             background: var(--orange-500);
         }
 
-        /* --- Notes --- */
         .note-editor {
             width: 100%;
             min-height: 80px;
@@ -965,7 +1037,6 @@
             color: var(--black-30);
         }
 
-        /* --- Weather --- */
         .weather-display {
             display: flex;
             align-items: center;
@@ -995,7 +1066,6 @@
             font-size: 12px;
         }
 
-        /* --- RSS --- */
         .rss-list {
             display: flex;
             flex-direction: column;
@@ -1053,7 +1123,6 @@
             margin-top: 2px;
         }
 
-        /* --- Clock --- */
         .clock-display {
             text-align: center;
             padding: 12px 0;
@@ -1074,7 +1143,6 @@
             font-weight: 500;
         }
 
-        /* --- Calendar --- */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -1126,7 +1194,6 @@
             border-radius: var(--radius-full);
         }
 
-        /* --- Embed --- */
         .embed-container {
             width: 100%;
             height: 100%;
@@ -1228,7 +1295,6 @@
             padding-top: 20px;
         }
 
-        /* Widget picker grid */
         .widget-picker {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -1262,21 +1328,16 @@
         .widget-picker__item .name {
             font-size: 12px;
             font-weight: 600;
-            color: var(--black-60);
         }
 
-        /* ============================================================
-               BACKGROUND SETTINGS
-               ============================================================ */
         .bg-controls {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             padding: 12px 16px;
-            background: var(--white);
+            background: var(--black-5);
             border-radius: var(--radius-md);
-            border: 1px solid var(--black-10);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             align-items: center;
         }
 
@@ -1309,6 +1370,62 @@
             border-radius: var(--radius-sm);
             cursor: pointer;
             padding: 0;
+        }
+
+        /* ============================================================
+               TOAST
+               ============================================================ */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            padding: 14px 20px;
+            background: var(--black-100);
+            color: var(--white);
+            border-left: 4px solid var(--orange-500);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: var(--shadow-lg);
+            animation: toastIn 400ms ease-out;
+            max-width: 400px;
+        }
+
+        .toast.success {
+            border-left-color: #22c55e;
+        }
+
+        .toast.error {
+            border-left-color: #ef4444;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes toastOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
         }
 
         /* ============================================================
@@ -1381,6 +1498,20 @@
 <body>
 
     <!-- ============================================================
+    LOADING SCREEN
+    ============================================================ -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-screen__logo">Dock<span>Grid</span></div>
+        <div class="loading-screen__spinner"></div>
+        <div class="loading-screen__text">Loading your dashboard...</div>
+    </div>
+
+    <!-- ============================================================
+    TOAST CONTAINER
+    ============================================================ -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ============================================================
     APP
     ============================================================ -->
     <div class="app" id="app">
@@ -1441,7 +1572,7 @@
                     <button class="topnav__btn" onclick="openSearchModal()">
                         <span class="icon">🔍</span> <span>Search</span>
                     </button>
-                    <div class="topnav__profile" onclick="toggleProfileMenu()" title="Profile">P</div>
+                    <div class="topnav__profile" onclick="toggleProfileMenu()" title="Profile" id="profileAvatar">U</div>
                 </div>
             </nav>
 
@@ -1531,7 +1662,7 @@
     </div>
 
     <!-- ============================================================
-    SEARCH MODAL (Dashboard search)
+    SEARCH MODAL
     ============================================================ -->
     <div class="modal-overlay" id="searchModal">
         <div class="modal">
@@ -1546,239 +1677,373 @@
         </div>
     </div>
 
-
     <!-- ============================================================
-    JAVASCRIPT
+    FIREBASE SDK
     ============================================================ -->
-    <script>
-        // ============================================================
-        // DATA
-        // ============================================================
-
-        // Available widget types
-        const WIDGET_TYPES = [
-            { id: 'bookmarks', icon: '📑', name: 'Bookmarks', defaultTitle: 'Bookmarks' },
-            { id: 'rss', icon: '📰', name: 'RSS News', defaultTitle: 'News Feed' },
-            { id: 'notes', icon: '📝', name: 'Notes', defaultTitle: 'Notes' },
-            { id: 'tasks', icon: '✅', name: 'Tasks', defaultTitle: 'To-Do' },
-            { id: 'projects', icon: '📁', name: 'Projects', defaultTitle: 'Projects' },
-            { id: 'weather', icon: '🌤️', name: 'Weather', defaultTitle: 'Weather' },
-            { id: 'calendar', icon: '📅', name: 'Calendar', defaultTitle: 'Calendar' },
-            { id: 'clock', icon: '🕒', name: 'Clock', defaultTitle: 'Clock' },
-            { id: 'embed', icon: '🌍', name: 'Embed', defaultTitle: 'Embed' },
-            { id: 'github', icon: '🐙', name: 'GitHub Activity', defaultTitle: 'GitHub' },
-            { id: 'ai', icon: '🧠', name: 'AI Assistant', defaultTitle: 'AI Assistant' },
-        ];
-
-        // Default pages
-        const DEFAULT_PAGES = [
-            { id: 'home', name: 'Home', icon: '🏠' },
-            { id: 'development', name: 'Development', icon: '💻' },
-            { id: 'school', name: 'School', icon: '📚' },
-            { id: 'projects', name: 'Projects', icon: '📁' },
-            { id: 'personal', name: 'Personal', icon: '👤' },
-        ];
-
-        // Default widgets for a new page
-        function getDefaultWidgets() {
-            return [{
-                id: 'w1',
-                type: 'bookmarks',
-                title: 'Bookmarks',
-                size: 'medium',
-                height: 'md',
-                data: {
-                    items: [
-                        { name: 'Google', url: 'https://google.com', icon: '🌐' },
-                        { name: 'GitHub', url: 'https://github.com', icon: '🐙' },
-                        { name: 'YouTube', url: 'https://youtube.com', icon: '📺' },
-                        { name: 'Reddit', url: 'https://reddit.com', icon: '🤖' },
-                    ]
-                }
-            }, {
-                id: 'w2',
-                type: 'projects',
-                title: 'Projects',
-                size: 'medium',
-                height: 'lg',
-                data: {
-                    items: [
-                        { name: 'PI Club', progress: 95, status: 'progress', deadline: '2026-08-01' },
-                        { name: 'Djembay', progress: 70, status: 'progress', deadline: '2026-09-15' },
-                        { name: 'PIReactive', progress: 100, status: 'completed', deadline: '2026-06-01' },
-                        { name: 'Akazinikazi', progress: 40, status: 'planning', deadline: '2026-12-01' },
-                    ]
-                }
-            }, {
-                id: 'w3',
-                type: 'tasks',
-                title: 'To-Do',
-                size: 'small',
-                height: 'md',
-                data: {
-                    items: [
-                        { text: 'Review PR #42', done: false, priority: 'high', due: 'Today' },
-                        { text: 'Update documentation', done: false, priority: 'medium', due: 'Tomorrow' },
-                        { text: 'Deploy to production', done: true, priority: 'high', due: 'Yesterday' },
-                    ]
-                }
-            }, {
-                id: 'w4',
-                type: 'notes',
-                title: 'Quick Notes',
-                size: 'small',
-                height: 'md',
-                data: { content: 'Welcome to DockGrid!\n\nStart organizing your digital life.' }
-            }, {
-                id: 'w5',
-                type: 'weather',
-                title: 'Weather',
-                size: 'small',
-                height: 'sm',
-                data: { city: 'San Francisco', temp: 72, condition: 'Sunny', humidity: 45, wind: 12 }
-            }, {
-                id: 'w6',
-                type: 'clock',
-                title: 'Clock',
-                size: 'small',
-                height: 'sm',
-                data: { timezone: 'local' }
-            }, {
-                id: 'w7',
-                type: 'rss',
-                title: 'Tech News',
-                size: 'medium',
-                height: 'md',
-                data: {
-                    feed: 'https://feeds.feedburner.com/TechCrunch',
-                    items: [
-                        { title: 'AI Breakthrough in 2026', source: 'TechCrunch', time: '2h ago' },
-                        { title: 'New Framework Released', source: 'Dev.to', time: '5h ago' },
-                        { title: 'Startup Funding Surges', source: 'VentureBeat', time: '1d ago' },
-                    ]
-                }
-            }, {
-                id: 'w8',
-                type: 'calendar',
-                title: 'Calendar',
-                size: 'small',
-                height: 'md',
-                data: { events: [{ date: '2026-07-20', title: 'Team Sync' }, { date: '2026-07-25', title:
-                        'Project Deadline' }] }
-            }, ];
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js",
+                "firebase/firestore": "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js",
+                "firebase/analytics": "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js"
+            }
         }
+    </script>
+
+    <script type="module">
+        // ============================================================
+        // IMPORTS
+        // ============================================================
+        import { initializeApp } from "firebase/app";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut,
+            updateProfile
+        } from "firebase/auth";
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            updateDoc,
+            deleteDoc,
+            collection,
+            query,
+            where,
+            getDocs,
+            onSnapshot,
+            serverTimestamp,
+            writeBatch,
+            arrayUnion,
+            arrayRemove
+        } from "firebase/firestore";
+        import { getAnalytics } from "firebase/analytics";
+
+        // ============================================================
+        // FIREBASE CONFIG
+        // ============================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyBbrRHlakmOdKwuDGwYAx5qf-e6DOHW7s0",
+            authDomain: "joefootball-15e7a.firebaseapp.com",
+            databaseURL: "https://joefootball-15e7a-default-rtdb.firebaseio.com",
+            projectId: "joefootball-15e7a",
+            storageBucket: "joefootball-15e7a.firebasestorage.app",
+            messagingSenderId: "976347287101",
+            appId: "1:976347287101:web:6cbbb96d496d8221986454",
+            measurementId: "G-121M4Y3653"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+
+        // ============================================================
+        // COLLECTIONS
+        // ============================================================
+        const COLLECTIONS = {
+            USERS: 'DockGrid_Users',
+            PAGES: 'DockGrid_Pages',
+            WIDGETS: 'DockGrid_Widgets',
+            SETTINGS: 'DockGrid_Settings',
+        };
 
         // ============================================================
         // STATE
         // ============================================================
-
-        let state = {
-            pages: [],
-            currentPageId: 'home',
-            editMode: false,
-            dragData: null,
-            nextWidgetId: 100,
-            nextPageId: 10,
-        };
+        let currentUser = null;
+        let currentPageId = null;
+        let pages = [];
+        let widgets = [];
+        let settings = {};
+        let editMode = false;
+        let isInitialized = false;
 
         // ============================================================
-        // INIT
+        // WIDGET TYPES
         // ============================================================
+        const WIDGET_TYPES = [
+            { id: 'bookmarks', icon: '📑', name: 'Bookmarks' },
+            { id: 'rss', icon: '📰', name: 'RSS News' },
+            { id: 'notes', icon: '📝', name: 'Notes' },
+            { id: 'tasks', icon: '✅', name: 'Tasks' },
+            { id: 'projects', icon: '📁', name: 'Projects' },
+            { id: 'weather', icon: '🌤️', name: 'Weather' },
+            { id: 'calendar', icon: '📅', name: 'Calendar' },
+            { id: 'clock', icon: '🕒', name: 'Clock' },
+            { id: 'embed', icon: '🌍', name: 'Embed' },
+            { id: 'github', icon: '🐙', name: 'GitHub' },
+            { id: 'ai', icon: '🧠', name: 'AI Assistant' },
+        ];
 
-        function init() {
-            // Load from localStorage
-            const saved = localStorage.getItem('dockgrid_state');
-            if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    state = parsed;
-                    // Ensure each widget has an id
-                    state.pages.forEach(p => {
-                        p.widgets.forEach(w => { if (!w.id) w.id = 'w' + (state.nextWidgetId++); });
+        // ============================================================
+        // AUTH - REDIRECT IF NOT LOGGED IN
+        // ============================================================
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                // Not logged in - redirect to sign.html
+                window.location.href = 'sign.html?q=sign-in';
+                return;
+            }
+
+            // User is logged in
+            currentUser = user;
+
+            // Update profile avatar
+            const avatar = document.getElementById('profileAvatar');
+            if (user.displayName) {
+                avatar.textContent = user.displayName.charAt(0).toUpperCase();
+            } else if (user.email) {
+                avatar.textContent = user.email.charAt(0).toUpperCase();
+            }
+
+            // Load user data
+            await loadUserData();
+
+            // Hide loading screen, show app
+            document.getElementById('loadingScreen').classList.add('hidden');
+            document.getElementById('app').classList.add('visible');
+
+            // Set up real-time listeners
+            setupRealtimeListeners();
+
+            isInitialized = true;
+        });
+
+        // ============================================================
+        // LOAD USER DATA
+        // ============================================================
+        async function loadUserData() {
+            if (!currentUser) return;
+
+            try {
+                // 1. Load or create user settings
+                const settingsRef = doc(db, COLLECTIONS.SETTINGS, currentUser.uid);
+                const settingsSnap = await getDoc(settingsRef);
+
+                if (settingsSnap.exists()) {
+                    settings = settingsSnap.data();
+                } else {
+                    // Create default settings
+                    settings = {
+                        userId: currentUser.uid,
+                        theme: 'light',
+                        defaultPage: null,
+                        background: '#f0f0f0',
+                        blur: 0,
+                        brightness: 100,
+                        wallpaper: '',
+                        createdAt: serverTimestamp(),
+                        updatedAt: serverTimestamp()
+                    };
+                    await setDoc(settingsRef, settings);
+                }
+
+                // 2. Load pages
+                const pagesRef = collection(db, COLLECTIONS.PAGES);
+                const pagesQuery = query(pagesRef, where('userId', '==', currentUser.uid));
+                const pagesSnap = await getDocs(pagesQuery);
+
+                pages = [];
+                pagesSnap.forEach(doc => {
+                    pages.push({ id: doc.id, ...doc.data() });
+                });
+
+                // If no pages, create default
+                if (pages.length === 0) {
+                    const defaultPage = {
+                        userId: currentUser.uid,
+                        name: 'Home',
+                        icon: '🏠',
+                        order: 0,
+                        createdAt: serverTimestamp(),
+                        updatedAt: serverTimestamp()
+                    };
+                    const newPageRef = doc(collection(db, COLLECTIONS.PAGES));
+                    await setDoc(newPageRef, defaultPage);
+                    pages.push({ id: newPageRef.id, ...defaultPage });
+                }
+
+                // Sort pages by order
+                pages.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+                // Set current page
+                if (settings.defaultPage && pages.find(p => p.id === settings.defaultPage)) {
+                    currentPageId = settings.defaultPage;
+                } else {
+                    currentPageId = pages[0].id;
+                }
+
+                // 3. Load widgets for current page
+                await loadWidgets();
+
+                // 4. Render everything
+                renderAll();
+
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showToast('Error loading data. Please refresh.', 'error');
+            }
+        }
+
+        // ============================================================
+        // LOAD WIDGETS
+        // ============================================================
+        async function loadWidgets() {
+            if (!currentPageId) return;
+
+            try {
+                const widgetsRef = collection(db, COLLECTIONS.WIDGETS);
+                const widgetsQuery = query(
+                    widgetsRef,
+                    where('userId', '==', currentUser.uid),
+                    where('pageId', '==', currentPageId)
+                );
+                const widgetsSnap = await getDocs(widgetsQuery);
+
+                widgets = [];
+                widgetsSnap.forEach(doc => {
+                    widgets.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sort by order
+                widgets.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+            } catch (error) {
+                console.error('Error loading widgets:', error);
+                widgets = [];
+            }
+        }
+
+        // ============================================================
+        // REALTIME LISTENERS
+        // ============================================================
+        function setupRealtimeListeners() {
+            if (!currentUser) return;
+
+            // Listen for settings changes
+            const settingsRef = doc(db, COLLECTIONS.SETTINGS, currentUser.uid);
+            onSnapshot(settingsRef, (doc) => {
+                if (doc.exists()) {
+                    settings = doc.data();
+                    applyBackground();
+                }
+            }, (error) => {
+                console.error('Settings listener error:', error);
+            });
+
+            // Listen for pages changes
+            const pagesRef = collection(db, COLLECTIONS.PAGES);
+            const pagesQuery = query(pagesRef, where('userId', '==', currentUser.uid));
+            onSnapshot(pagesQuery, (snapshot) => {
+                pages = [];
+                snapshot.forEach(doc => {
+                    pages.push({ id: doc.id, ...doc.data() });
+                });
+                pages.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+                // If current page was deleted, switch to first available
+                if (currentPageId && !pages.find(p => p.id === currentPageId)) {
+                    currentPageId = pages.length > 0 ? pages[0].id : null;
+                }
+                if (!currentPageId && pages.length > 0) {
+                    currentPageId = pages[0].id;
+                }
+
+                renderSidebar();
+                updatePageName();
+
+                // If page changed, reload widgets
+                if (currentPageId) {
+                    loadWidgets().then(() => {
+                        renderWidgets();
                     });
-                } catch (e) { console.warn('Failed to load state, using defaults'); }
-            }
+                }
+            }, (error) => {
+                console.error('Pages listener error:', error);
+            });
 
-            // If no pages, create default
-            if (!state.pages || state.pages.length === 0) {
-                const defaultPage = {
-                    id: 'home',
-                    name: 'Home',
-                    icon: '🏠',
-                    widgets: getDefaultWidgets()
-                };
-                state.pages = [defaultPage, ...DEFAULT_PAGES.filter(p => p.id !== 'home').map(p => ({ ...p,
-                    widgets: [] }))];
-                state.currentPageId = 'home';
-                state.nextWidgetId = 100;
-                state.nextPageId = 10;
-                saveState();
-            }
+            // Listen for widgets changes on current page
+            // We'll set up a listener that re-runs when page changes
+            setupWidgetsListener();
+        }
 
-            renderAll();
-            applyBackground();
-            startClock();
-            setupSearchEnter();
-            setupTaskAdd();
-            setupSearchModal();
+        function setupWidgetsListener() {
+            if (!currentUser || !currentPageId) return;
+
+            const widgetsRef = collection(db, COLLECTIONS.WIDGETS);
+            const widgetsQuery = query(
+                widgetsRef,
+                where('userId', '==', currentUser.uid),
+                where('pageId', '==', currentPageId)
+            );
+
+            onSnapshot(widgetsQuery, (snapshot) => {
+                if (!isInitialized) return;
+
+                widgets = [];
+                snapshot.forEach(doc => {
+                    widgets.push({ id: doc.id, ...doc.data() });
+                });
+                widgets.sort((a, b) => (a.order || 0) - (b.order || 0));
+
+                renderWidgets();
+            }, (error) => {
+                console.error('Widgets listener error:', error);
+            });
         }
 
         // ============================================================
-        // STATE PERSISTENCE
+        // RENDER FUNCTIONS
         // ============================================================
-
-        function saveState() {
-            localStorage.setItem('dockgrid_state', JSON.stringify(state));
-        }
-
-        function getCurrentPage() {
-            return state.pages.find(p => p.id === state.currentPageId) || state.pages[0];
-        }
-
-        function getPage(id) {
-            return state.pages.find(p => p.id === id);
-        }
-
-        // ============================================================
-        // RENDER
-        // ============================================================
-
         function renderAll() {
             renderSidebar();
             renderWidgets();
             updatePageName();
             renderWidgetPicker();
+            applyBackground();
         }
 
         function renderSidebar() {
             const container = document.getElementById('pageList');
-            container.innerHTML = state.pages.map(p => `
-                        <div class="sidebar__page-item ${p.id === state.currentPageId ? 'active' : ''}"
-                             onclick="switchPage('${p.id}')">
-                            <span class="icon">${p.icon || '📄'}</span>
-                            ${p.name}
-                            <span class="badge">${p.widgets ? p.widgets.length : 0}</span>
-                        </div>
-                    `).join('');
-        }
-
-        function renderWidgets() {
-            const page = getCurrentPage();
-            const grid = document.getElementById('widgetGrid');
-            if (!page || !page.widgets || page.widgets.length === 0) {
-                grid.innerHTML = `
-                            <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--black-30);">
-                                <div style="font-size:48px;margin-bottom:16px;">📭</div>
-                                <h3 style="font-weight:700;color:var(--black-60);">No widgets yet</h3>
-                                <p style="margin-top:8px;">Click <strong>Add Widget</strong> to start building your dashboard</p>
+            if (!pages || pages.length === 0) {
+                container.innerHTML = `
+                            <div style="text-align:center;padding:20px;color:var(--black-30);font-size:13px;">
+                                No pages yet.<br>Click "New Page" to start.
                             </div>
                         `;
                 return;
             }
 
-            grid.innerHTML = page.widgets.map(w => renderWidget(w)).join('');
+            container.innerHTML = pages.map(p => `
+                        <div class="sidebar__page-item ${p.id === currentPageId ? 'active' : ''}"
+                             onclick="switchPage('${p.id}')">
+                            <span class="icon">${p.icon || '📄'}</span>
+                            ${p.name}
+                            <span class="badge">${p.id === currentPageId ? widgets.length : 0}</span>
+                        </div>
+                    `).join('');
+        }
 
-            // Re-attach event listeners for drag & drop
+        function renderWidgets() {
+            const grid = document.getElementById('widgetGrid');
+
+            if (!widgets || widgets.length === 0) {
+                grid.innerHTML = `
+                            <div class="dashboard__empty">
+                                <div class="icon">📭</div>
+                                <h3>No widgets yet</h3>
+                                <p>Click <strong>Add Widget</strong> to start building your dashboard</p>
+                            </div>
+                        `;
+                return;
+            }
+
+            grid.innerHTML = widgets.map(w => renderWidget(w)).join('');
+
+            // Re-attach event listeners
             document.querySelectorAll('.widget').forEach(el => {
                 el.addEventListener('dragstart', onDragStart);
                 el.addEventListener('dragend', onDragEnd);
@@ -1792,6 +2057,49 @@
             document.querySelectorAll('.widget__resize-handle').forEach(el => {
                 el.addEventListener('mousedown', onResizeStart);
             });
+
+            // Note auto-save
+            document.querySelectorAll('.note-editor').forEach(el => {
+                el.addEventListener('input', (e) => {
+                    const widgetId = e.target.dataset.widgetId;
+                    saveNoteContent(widgetId, e.target.value);
+                });
+            });
+
+            // Task add
+            document.querySelectorAll('.task-add__btn').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const widgetId = e.target.dataset.widgetId;
+                    const input = document.getElementById('taskInput_' + widgetId);
+                    if (input) addTask(widgetId, input.value);
+                });
+            });
+
+            document.querySelectorAll('.task-add__input').forEach(el => {
+                el.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        const widgetId = e.target.id.replace('taskInput_', '');
+                        addTask(widgetId, e.target.value);
+                    }
+                });
+            });
+
+            // AI ask
+            document.querySelectorAll('.task-add__btn[data-ai]').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const widgetId = e.target.dataset.widgetId;
+                    askAI(widgetId);
+                });
+            });
+
+            document.querySelectorAll('#aiInput_').forEach(el => {
+                el.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        const widgetId = e.target.id.replace('aiInput_', '');
+                        askAI(widgetId);
+                    }
+                });
+            });
         }
 
         function renderWidget(w) {
@@ -1802,13 +2110,13 @@
             return `
                         <div class="widget ${sizeClass} ${heightClass}" 
                              data-widget-id="${w.id}"
-                             draggable="${state.editMode ? 'true' : 'false'}"
+                             draggable="${editMode ? 'true' : 'false'}"
                              style="--widget-color: ${w.color || 'transparent'};">
                             <div class="widget__header">
                                 <span class="widget__header-icon">${getWidgetIcon(w.type)}</span>
                                 <span class="widget__header-title">${w.title || 'Widget'}</span>
                                 <div class="widget__header-actions">
-                                    ${state.editMode ? `
+                                    ${editMode ? `
                                         <button class="widget__header-btn" onclick="duplicateWidget('${w.id}')" title="Duplicate">⧉</button>
                                         <button class="widget__header-btn" onclick="openWidgetSettings('${w.id}')" title="Settings">⚙</button>
                                         <button class="widget__header-btn danger" onclick="deleteWidget('${w.id}')" title="Delete">✕</button>
@@ -1825,35 +2133,37 @@
                                     <button class="widget__header-btn" onclick="refreshWidget('${w.id}')">⟳</button>
                                 </div>
                             ` : ''}
-                            ${state.editMode ? `<div class="widget__resize-handle"></div>` : ''}
+                            ${editMode ? `<div class="widget__resize-handle"></div>` : ''}
                         </div>
                     `;
         }
 
         function renderWidgetBody(w) {
+            const data = w.data || {};
+
             switch (w.type) {
                 case 'bookmarks':
-                    return renderBookmarks(w.data);
+                    return renderBookmarks(data);
                 case 'projects':
-                    return renderProjects(w.data);
+                    return renderProjects(data);
                 case 'tasks':
-                    return renderTasks(w.data);
+                    return renderTasks(data, w.id);
                 case 'notes':
-                    return renderNotes(w.data);
+                    return renderNotes(data, w.id);
                 case 'weather':
-                    return renderWeather(w.data);
+                    return renderWeather(data);
                 case 'rss':
-                    return renderRSS(w.data);
+                    return renderRSS(data);
                 case 'clock':
-                    return renderClock(w.data);
+                    return renderClock(data);
                 case 'calendar':
-                    return renderCalendar(w.data);
+                    return renderCalendar(data);
                 case 'embed':
-                    return renderEmbed(w.data);
+                    return renderEmbed(data);
                 case 'github':
-                    return renderGitHub(w.data);
+                    return renderGitHub(data);
                 case 'ai':
-                    return renderAI(w.data);
+                    return renderAI(data, w.id);
                 default:
                     return `<div class="widget__body--empty">Unknown widget type</div>`;
             }
@@ -1900,13 +2210,13 @@
                     `;
         }
 
-        function renderTasks(data) {
+        function renderTasks(data, widgetId) {
             const items = data?.items || [];
             return `
                         <div class="task-list">
                             ${items.map((t, i) => `
                                 <div class="task-item" data-task-index="${i}">
-                                    <div class="task-item__checkbox ${t.done ? 'checked' : ''}" onclick="toggleTask('${data._widgetId}', ${i})">
+                                    <div class="task-item__checkbox ${t.done ? 'checked' : ''}" onclick="toggleTask('${widgetId}', ${i})">
                                         ${t.done ? '✓' : ''}
                                     </div>
                                     <span class="task-item__text ${t.done ? 'done' : ''}">${t.text}</span>
@@ -1916,14 +2226,14 @@
                             `).join('')}
                         </div>
                         <div class="task-add">
-                            <input class="task-add__input" id="taskInput_${data._widgetId}" placeholder="Add a task..." />
-                            <button class="task-add__btn" onclick="addTask('${data._widgetId}')">Add</button>
+                            <input class="task-add__input" id="taskInput_${widgetId}" placeholder="Add a task..." />
+                            <button class="task-add__btn" data-widget-id="${widgetId}">Add</button>
                         </div>
                     `;
         }
 
-        function renderNotes(data) {
-            return `<textarea class="note-editor" id="noteEditor_${data._widgetId}" placeholder="Write your note here...">${data?.content || ''}</textarea>`;
+        function renderNotes(data, widgetId) {
+            return `<textarea class="note-editor" data-widget-id="${widgetId}" placeholder="Write your note here...">${data?.content || ''}</textarea>`;
         }
 
         function renderWeather(data) {
@@ -1962,7 +2272,6 @@
         }
 
         function renderClock(data) {
-            const tz = data?.timezone || 'local';
             return `
                         <div class="clock-display" id="clockDisplay">
                             <div class="clock-display__time" id="clockTime">--:--:--</div>
@@ -2032,14 +2341,14 @@
                     `;
         }
 
-        function renderAI(data) {
+        function renderAI(data, widgetId) {
             return `
                         <div style="display:flex;flex-direction:column;gap:12px;">
                             <div style="display:flex;gap:8px;">
-                                <input class="task-add__input" id="aiInput_${data?._widgetId || 'ai'}" placeholder="Ask AI anything..." style="flex:1;" />
-                                <button class="task-add__btn" onclick="askAI('${data?._widgetId || 'ai'}')">Ask</button>
+                                <input class="task-add__input" id="aiInput_${widgetId}" placeholder="Ask AI anything..." style="flex:1;" />
+                                <button class="task-add__btn" data-ai="true" data-widget-id="${widgetId}">Ask</button>
                             </div>
-                            <div id="aiResponse_${data?._widgetId || 'ai'}" style="font-size:14px;color:var(--black-60);min-height:60px;padding:8px;background:var(--black-5);border-radius:var(--radius-sm);">
+                            <div id="aiResponse_${widgetId}" style="font-size:14px;color:var(--black-60);min-height:60px;padding:8px;background:var(--black-5);border-radius:var(--radius-sm);">
                                 ${data?.response || 'Ask me something! 🧠'}
                             </div>
                         </div>
@@ -2049,7 +2358,6 @@
         // ============================================================
         // WIDGET HELPERS
         // ============================================================
-
         function getWidgetIcon(type) {
             const found = WIDGET_TYPES.find(w => w.id === type);
             return found ? found.icon : '📦';
@@ -2060,98 +2368,11 @@
             return found ? found.name : type;
         }
 
-        // ============================================================
-        // SIDEBAR
-        // ============================================================
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const main = document.getElementById('main');
-            sidebar.classList.toggle('open');
-            main.classList.toggle('sidebar-open');
-        }
-
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('open');
-            document.getElementById('main').classList.remove('sidebar-open');
-        }
-
-        function switchPage(pageId) {
-            state.currentPageId = pageId;
-            saveState();
-            renderAll();
-            closeSidebar();
-        }
-
-        function addPage() {
-            const name = prompt('Enter page name:');
-            if (!name) return;
-            const newPage = {
-                id: 'page_' + (state.nextPageId++),
-                name: name,
-                icon: '📄',
-                widgets: []
-            };
-            state.pages.push(newPage);
-            state.currentPageId = newPage.id;
-            saveState();
-            renderAll();
-        }
-
-        // ============================================================
-        // PAGE NAME
-        // ============================================================
-
-        function updatePageName() {
-            const page = getCurrentPage();
-            const el = document.getElementById('pageName');
-            if (page) {
-                el.innerHTML = `${page.icon || '📄'} ${page.name} <span class="sub">· ${page.widgets ? page.widgets.length : 0} widgets</span>`;
-            }
-        }
-
-        // ============================================================
-        // EDIT MODE
-        // ============================================================
-
-        function toggleEditMode() {
-            state.editMode = !state.editMode;
-            const btn = document.getElementById('editToggle');
-            btn.innerHTML = state.editMode ?
-                '<span class="icon">✓</span> <span>Done</span>' :
-                '<span class="icon">✎</span> <span>Edit</span>';
-            btn.style.background = state.editMode ? 'var(--orange-500)' : 'transparent';
-            btn.style.color = state.editMode ? 'var(--white)' : '';
-            renderWidgets();
-        }
-
-        // ============================================================
-        // WIDGET CRUD
-        // ============================================================
-
-        function addWidget(type) {
-            const page = getCurrentPage();
-            const widget = {
-                id: 'w' + (state.nextWidgetId++),
-                type: type,
-                title: getWidgetTypeName(type),
-                size: 'small',
-                height: 'md',
-                color: null,
-                data: getDefaultWidgetData(type),
-            };
-            // Store widget id in data for reference
-            widget.data._widgetId = widget.id;
-            page.widgets.push(widget);
-            saveState();
-            renderAll();
-            closeModal('addWidgetModal');
-        }
-
         function getDefaultWidgetData(type) {
             switch (type) {
                 case 'bookmarks':
-                    return { items: [{ name: 'New Bookmark', url: 'https://example.com', icon: '🌐' }] };
+                    return { items: [{ name: 'Google', url: 'https://google.com', icon: '🌐' }, { name: 'GitHub',
+                            url: 'https://github.com', icon: '🐙' }] };
                 case 'projects':
                     return { items: [{ name: 'New Project', progress: 0, status: 'planning', deadline: '' }] };
                 case 'tasks':
@@ -2177,45 +2398,154 @@
             }
         }
 
-        function deleteWidget(widgetId) {
-            if (!confirm('Delete this widget?')) return;
-            const page = getCurrentPage();
-            page.widgets = page.widgets.filter(w => w.id !== widgetId);
-            saveState();
-            renderAll();
+        // ============================================================
+        // PAGE FUNCTIONS
+        // ============================================================
+        function updatePageName() {
+            const el = document.getElementById('pageName');
+            const page = pages.find(p => p.id === currentPageId);
+            if (page) {
+                el.innerHTML = `${page.icon || '📄'} ${page.name} <span class="sub">· ${widgets.length} widgets</span>`;
+            }
         }
 
-        function duplicateWidget(widgetId) {
-            const page = getCurrentPage();
-            const original = page.widgets.find(w => w.id === widgetId);
-            if (!original) return;
-            const copy = JSON.parse(JSON.stringify(original));
-            copy.id = 'w' + (state.nextWidgetId++);
-            copy.title = copy.title + ' (copy)';
-            copy.data._widgetId = copy.id;
-            page.widgets.push(copy);
-            saveState();
-            renderAll();
-        }
+        function switchPage(pageId) {
+            if (!currentUser || pageId === currentPageId) return;
+            currentPageId = pageId;
+            // Update default page in settings
+            updateDoc(doc(db, COLLECTIONS.SETTINGS, currentUser.uid), {
+                defaultPage: pageId,
+                updatedAt: serverTimestamp()
+            }).catch(console.error);
 
-        function refreshWidget(widgetId) {
-            // Simulate refresh
-            const page = getCurrentPage();
-            const widget = page.widgets.find(w => w.id === widgetId);
-            if (widget) {
-                widget.footerText = 'Updated ' + new Date().toLocaleTimeString();
-                saveState();
+            // Reload widgets for new page
+            loadWidgets().then(() => {
                 renderAll();
+                setupWidgetsListener();
+            });
+            closeSidebar();
+        }
+
+        async function addPage() {
+            if (!currentUser) return;
+            const name = prompt('Enter page name:');
+            if (!name) return;
+
+            try {
+                const newPage = {
+                    userId: currentUser.uid,
+                    name: name,
+                    icon: '📄',
+                    order: pages.length,
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
+                const docRef = doc(collection(db, COLLECTIONS.PAGES));
+                await setDoc(docRef, newPage);
+                showToast(`Page "${name}" created!`, 'success');
+            } catch (error) {
+                console.error('Error creating page:', error);
+                showToast('Error creating page', 'error');
+            }
+        }
+
+        // ============================================================
+        // WIDGET CRUD (Firebase)
+        // ============================================================
+        async function addWidget(type) {
+            if (!currentUser || !currentPageId) return;
+
+            try {
+                const newWidget = {
+                    userId: currentUser.uid,
+                    pageId: currentPageId,
+                    type: type,
+                    title: getWidgetTypeName(type),
+                    size: 'small',
+                    height: 'md',
+                    color: null,
+                    data: getDefaultWidgetData(type),
+                    order: widgets.length,
+                    footer: true,
+                    footerText: 'Created just now',
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
+
+                const docRef = doc(collection(db, COLLECTIONS.WIDGETS));
+                await setDoc(docRef, newWidget);
+
+                closeModal('addWidgetModal');
+                showToast(`Added ${getWidgetTypeName(type)} widget!`, 'success');
+
+            } catch (error) {
+                console.error('Error adding widget:', error);
+                showToast('Error adding widget', 'error');
+            }
+        }
+
+        async function deleteWidget(widgetId) {
+            if (!confirm('Delete this widget?')) return;
+
+            try {
+                await deleteDoc(doc(db, COLLECTIONS.WIDGETS, widgetId));
+                showToast('Widget deleted', 'success');
+            } catch (error) {
+                console.error('Error deleting widget:', error);
+                showToast('Error deleting widget', 'error');
+            }
+        }
+
+        async function duplicateWidget(widgetId) {
+            if (!currentUser || !currentPageId) return;
+
+            try {
+                const original = widgets.find(w => w.id === widgetId);
+                if (!original) return;
+
+                const copy = {
+                    userId: currentUser.uid,
+                    pageId: currentPageId,
+                    type: original.type,
+                    title: original.title + ' (copy)',
+                    size: original.size || 'small',
+                    height: original.height || 'md',
+                    color: original.color || null,
+                    data: JSON.parse(JSON.stringify(original.data || {})),
+                    order: widgets.length,
+                    footer: true,
+                    footerText: 'Copied just now',
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp()
+                };
+
+                const docRef = doc(collection(db, COLLECTIONS.WIDGETS));
+                await setDoc(docRef, copy);
+                showToast('Widget duplicated!', 'success');
+
+            } catch (error) {
+                console.error('Error duplicating widget:', error);
+                showToast('Error duplicating widget', 'error');
+            }
+        }
+
+        async function refreshWidget(widgetId) {
+            try {
+                const now = new Date().toLocaleTimeString();
+                await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
+                    footerText: `Updated ${now}`,
+                    updatedAt: serverTimestamp()
+                });
+            } catch (error) {
+                console.error('Error refreshing widget:', error);
             }
         }
 
         // ============================================================
         // WIDGET SETTINGS
         // ============================================================
-
-        function openWidgetSettings(widgetId) {
-            const page = getCurrentPage();
-            const widget = page.widgets.find(w => w.id === widgetId);
+        async function openWidgetSettings(widgetId) {
+            const widget = widgets.find(w => w.id === widgetId);
             if (!widget) return;
 
             const title = prompt('Widget title:', widget.title);
@@ -2244,192 +2574,104 @@
                 if (feed !== null) widget.data.feed = feed;
             }
 
-            saveState();
-            renderAll();
-        }
-
-        // ============================================================
-        // TASKS
-        // ============================================================
-
-        function setupTaskAdd() {
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && e.target.classList.contains('task-add__input')) {
-                    const id = e.target.id.replace('taskInput_', '');
-                    addTask(id);
-                }
-            });
-        }
-
-        function addTask(widgetId) {
-            const input = document.getElementById('taskInput_' + widgetId);
-            if (!input) return;
-            const text = input.value.trim();
-            if (!text) return;
-            const page = getCurrentPage();
-            const widget = page.widgets.find(w => w.id === widgetId);
-            if (!widget) return;
-            if (!widget.data.items) widget.data.items = [];
-            widget.data.items.push({ text, done: false, priority: 'medium', due: '' });
-            input.value = '';
-            saveState();
-            renderAll();
-        }
-
-        function toggleTask(widgetId, index) {
-            const page = getCurrentPage();
-            const widget = page.widgets.find(w => w.id === widgetId);
-            if (!widget || !widget.data.items || index >= widget.data.items.length) return;
-            widget.data.items[index].done = !widget.data.items[index].done;
-            saveState();
-            renderAll();
-        }
-
-        // ============================================================
-        // NOTES AUTO-SAVE
-        // ============================================================
-
-        document.addEventListener('input', (e) => {
-            if (e.target.classList.contains('note-editor')) {
-                const id = e.target.id.replace('noteEditor_', '');
-                const page = getCurrentPage();
-                const widget = page.widgets.find(w => w.id === id);
-                if (widget) {
-                    widget.data.content = e.target.value;
-                    saveState();
-                }
-            }
-        });
-
-        // ============================================================
-        // CLOCK
-        // ============================================================
-
-        function startClock() {
-            updateClock();
-            setInterval(updateClock, 1000);
-        }
-
-        function updateClock() {
-            const now = new Date();
-            const time = now.toLocaleTimeString('en-US', { hour12: false });
-            const date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-            const timeEl = document.getElementById('clockTime');
-            const dateEl = document.getElementById('clockDate');
-            if (timeEl) timeEl.textContent = time;
-            if (dateEl) dateEl.textContent = date;
-        }
-
-        // ============================================================
-        // SEARCH (Web)
-        // ============================================================
-
-        function setupSearchEnter() {
-            document.getElementById('searchInput').addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') doSearch();
-            });
-        }
-
-        function doSearch() {
-            const input = document.getElementById('searchInput');
-            const engine = document.getElementById('searchEngine');
-            const query = input.value.trim();
-            if (!query) return;
-            const url = engine.value + encodeURIComponent(query);
-            window.open(url, '_blank');
-        }
-
-        // ============================================================
-        // SEARCH (Dashboard)
-        // ============================================================
-
-        function setupSearchModal() {
-            const input = document.getElementById('dashboardSearch');
-            if (input) {
-                input.addEventListener('input', () => {
-                    const query = input.value.trim().toLowerCase();
-                    const results = document.getElementById('searchResults');
-                    if (!query) { results.innerHTML = ''; return; }
-
-                    const page = getCurrentPage();
-                    const matches = [];
-
-                    page.widgets.forEach(w => {
-                        // Search in bookmarks
-                        if (w.type === 'bookmarks' && w.data?.items) {
-                            w.data.items.forEach(b => {
-                                if (b.name.toLowerCase().includes(query) || (b.url && b.url
-                                        .toLowerCase().includes(query))) {
-                                    matches.push({ type: 'Bookmark', name: b.name, url: b.url,
-                                        widget: w.title });
-                                }
-                            });
-                        }
-                        // Search in projects
-                        if (w.type === 'projects' && w.data?.items) {
-                            w.data.items.forEach(p => {
-                                if (p.name.toLowerCase().includes(query)) {
-                                    matches.push({ type: 'Project', name: p.name, status: p.status,
-                                        widget: w.title });
-                                }
-                            });
-                        }
-                        // Search in notes
-                        if (w.type === 'notes' && w.data?.content) {
-                            if (w.data.content.toLowerCase().includes(query)) {
-                                matches.push({ type: 'Note', name: w.title, snippet: w.data.content.slice(
-                                        0, 60) + '...', widget: w.title });
-                            }
-                        }
-                        // Search in tasks
-                        if (w.type === 'tasks' && w.data?.items) {
-                            w.data.items.forEach(t => {
-                                if (t.text.toLowerCase().includes(query)) {
-                                    matches.push({ type: 'Task', name: t.text, done: t.done,
-                                        widget: w.title });
-                                }
-                            });
-                        }
-                    });
-
-                    if (matches.length === 0) {
-                        results.innerHTML =
-                            '<div style="text-align:center;color:var(--black-30);padding:20px;">No results found</div>';
-                    } else {
-                        results.innerHTML = matches.map(m => `
-                                    <div style="display:flex;gap:10px;padding:8px 12px;border-bottom:1px solid var(--black-5);font-size:13px;align-items:center;">
-                                        <span style="font-weight:600;color:var(--orange-500);font-size:11px;">${m.type}</span>
-                                        <span style="flex:1;">${m.name}</span>
-                                        <span style="color:var(--black-40);font-size:11px;">${m.widget}</span>
-                                    </div>
-                                `).join('');
-                    }
+            try {
+                await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
+                    title: widget.title,
+                    color: widget.color,
+                    size: widget.size,
+                    height: widget.height,
+                    data: widget.data,
+                    updatedAt: serverTimestamp()
                 });
+                showToast('Widget settings updated!', 'success');
+            } catch (error) {
+                console.error('Error updating widget:', error);
+                showToast('Error updating widget', 'error');
             }
         }
 
-        function openSearchModal() {
-            document.getElementById('searchModal').classList.add('open');
-            document.getElementById('dashboardSearch').value = '';
-            document.getElementById('searchResults').innerHTML = '';
-            setTimeout(() => document.getElementById('dashboardSearch').focus(), 100);
+        // ============================================================
+        // TASKS (Firebase)
+        // ============================================================
+        async function addTask(widgetId, text) {
+            if (!text || !text.trim()) return;
+
+            const widget = widgets.find(w => w.id === widgetId);
+            if (!widget) return;
+
+            if (!widget.data.items) widget.data.items = [];
+            widget.data.items.push({ text: text.trim(), done: false, priority: 'medium', due: '' });
+
+            try {
+                await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
+                    data: widget.data,
+                    updatedAt: serverTimestamp()
+                });
+                // Clear input
+                const input = document.getElementById('taskInput_' + widgetId);
+                if (input) input.value = '';
+            } catch (error) {
+                console.error('Error adding task:', error);
+                showToast('Error adding task', 'error');
+            }
+        }
+
+        async function toggleTask(widgetId, index) {
+            const widget = widgets.find(w => w.id === widgetId);
+            if (!widget || !widget.data.items || index >= widget.data.items.length) return;
+
+            widget.data.items[index].done = !widget.data.items[index].done;
+
+            try {
+                await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
+                    data: widget.data,
+                    updatedAt: serverTimestamp()
+                });
+            } catch (error) {
+                console.error('Error toggling task:', error);
+            }
         }
 
         // ============================================================
-        // AI ASSISTANT
+        // NOTES (Firebase)
         // ============================================================
+        let noteTimeout = {};
 
-        function askAI(widgetId) {
+        async function saveNoteContent(widgetId, content) {
+            // Debounce saves
+            clearTimeout(noteTimeout[widgetId]);
+            noteTimeout[widgetId] = setTimeout(async () => {
+                const widget = widgets.find(w => w.id === widgetId);
+                if (!widget) return;
+
+                widget.data.content = content;
+
+                try {
+                    await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
+                        data: widget.data,
+                        updatedAt: serverTimestamp()
+                    });
+                } catch (error) {
+                    console.error('Error saving note:', error);
+                }
+            }, 500);
+        }
+
+        // ============================================================
+        // AI ASSISTANT (Firebase - simulated)
+        // ============================================================
+        async function askAI(widgetId) {
             const input = document.getElementById('aiInput_' + widgetId);
             const response = document.getElementById('aiResponse_' + widgetId);
             if (!input || !response) return;
+
             const question = input.value.trim();
             if (!question) return;
 
             response.textContent = '🤔 Thinking...';
 
-            // Simulate AI response (in production, call an API)
-            setTimeout(() => {
+            // Simulate AI response
+            setTimeout(async () => {
                 const answers = [
                     'That\'s a great question! Let me think about that... 🤔',
                     'I\'d suggest breaking it down into smaller steps. Start with the most important part first!',
@@ -2437,38 +2679,50 @@
                     'Have you considered using DockGrid to organize your thoughts? 😄',
                     'That sounds like a fun project! I\'d love to help you build it.',
                     'Interesting! Tell me more about what you\'re trying to achieve.',
+                    'I think you\'re on the right track. Keep going! 💪',
+                    'Great question! Here\'s what I\'d recommend...'
                 ];
                 const random = answers[Math.floor(Math.random() * answers.length)];
                 response.textContent = random;
 
-                // Save to state
-                const page = getCurrentPage();
-                const widget = page.widgets.find(w => w.id === widgetId);
+                // Save to Firebase
+                const widget = widgets.find(w => w.id === widgetId);
                 if (widget) {
                     widget.data.response = random;
-                    saveState();
+                    try {
+                        await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
+                            data: widget.data,
+                            updatedAt: serverTimestamp()
+                        });
+                    } catch (error) {
+                        console.error('Error saving AI response:', error);
+                    }
                 }
             }, 800 + Math.random() * 600);
         }
 
         // ============================================================
-        // BACKGROUND
+        // BACKGROUND (Firebase)
         // ============================================================
-
         function openBackgroundModal() {
             document.getElementById('bgModal').classList.add('open');
-            // Load current settings
-            const bg = document.getElementById('dashboard').style;
-            const color = bg.backgroundColor || '#f0f0f0';
-            document.getElementById('bgColor').value = color;
-            document.getElementById('bgColorHex').value = color;
+            const bg = settings.background || '#f0f0f0';
+            document.getElementById('bgColor').value = bg;
+            document.getElementById('bgColorHex').value = bg;
+            document.getElementById('bgBlur').value = settings.blur || 0;
+            document.getElementById('bgBlurValue').textContent = (settings.blur || 0) + 'px';
+            document.getElementById('bgBrightness').value = settings.brightness || 100;
+            document.getElementById('bgBrightnessValue').textContent = (settings.brightness || 100) + '%';
+            document.getElementById('bgWallpaper').value = settings.wallpaper || '';
         }
 
-        function applyBackground() {
+        async function applyBackground() {
+            if (!currentUser) return;
+
             const color = document.getElementById('bgColor').value;
-            const blur = document.getElementById('bgBlur').value;
-            const brightness = document.getElementById('bgBrightness').value;
-            const wallpaper = document.getElementById('bgWallpaper').value;
+            const blur = parseInt(document.getElementById('bgBlur').value) || 0;
+            const brightness = parseInt(document.getElementById('bgBrightness').value) || 100;
+            const wallpaper = document.getElementById('bgWallpaper').value.trim();
 
             const dashboard = document.getElementById('dashboard');
 
@@ -2487,13 +2741,22 @@
             document.getElementById('bgBlurValue').textContent = blur + 'px';
             document.getElementById('bgBrightnessValue').textContent = brightness + '%';
 
-            // Save to localStorage
-            localStorage.setItem('dockgrid_bg', JSON.stringify({
-                color,
-                blur,
-                brightness,
-                wallpaper
-            }));
+            // Save to Firebase
+            try {
+                await updateDoc(doc(db, COLLECTIONS.SETTINGS, currentUser.uid), {
+                    background: color,
+                    blur: blur,
+                    brightness: brightness,
+                    wallpaper: wallpaper,
+                    updatedAt: serverTimestamp()
+                });
+                settings.background = color;
+                settings.blur = blur;
+                settings.brightness = brightness;
+                settings.wallpaper = wallpaper;
+            } catch (error) {
+                console.error('Error saving background:', error);
+            }
 
             closeModal('bgModal');
         }
@@ -2503,7 +2766,7 @@
             dashboard.style.backgroundImage = 'none';
             dashboard.style.backgroundColor = 'var(--black-5)';
             dashboard.style.backdropFilter = 'none';
-            localStorage.removeItem('dockgrid_bg');
+
             document.getElementById('bgColor').value = '#f0f0f0';
             document.getElementById('bgColorHex').value = '#f0f0f0';
             document.getElementById('bgBlur').value = '0';
@@ -2511,66 +2774,72 @@
             document.getElementById('bgBrightness').value = '100';
             document.getElementById('bgBrightnessValue').textContent = '100%';
             document.getElementById('bgWallpaper').value = '';
+
+            if (currentUser) {
+                updateDoc(doc(db, COLLECTIONS.SETTINGS, currentUser.uid), {
+                    background: '#f0f0f0',
+                    blur: 0,
+                    brightness: 100,
+                    wallpaper: '',
+                    updatedAt: serverTimestamp()
+                }).catch(console.error);
+            }
+
             closeModal('bgModal');
         }
 
-        // Load saved background on init
-        function loadBackground() {
-            const saved = localStorage.getItem('dockgrid_bg');
-            if (saved) {
-                try {
-                    const bg = JSON.parse(saved);
-                    if (bg.wallpaper) {
-                        document.getElementById('dashboard').style.backgroundImage = `url(${bg.wallpaper})`;
-                        document.getElementById('dashboard').style.backgroundSize = 'cover';
-                        document.getElementById('dashboard').style.backgroundPosition = 'center';
-                    } else {
-                        document.getElementById('dashboard').style.backgroundColor = bg.color || 'var(--black-5)';
-                    }
-                    document.getElementById('dashboard').style.backdropFilter =
-                        `blur(${bg.blur || 0}px) brightness(${bg.brightness || 100}%)`;
-                } catch (e) {}
+        function applyBackground() {
+            const dashboard = document.getElementById('dashboard');
+            const wallpaper = settings.wallpaper || '';
+
+            if (wallpaper) {
+                dashboard.style.backgroundImage = `url(${wallpaper})`;
+                dashboard.style.backgroundSize = 'cover';
+                dashboard.style.backgroundPosition = 'center';
+            } else {
+                dashboard.style.backgroundImage = 'none';
+                dashboard.style.backgroundColor = settings.background || 'var(--black-5)';
             }
+
+            dashboard.style.backdropFilter =
+                `blur(${settings.blur || 0}px) brightness(${settings.brightness || 100}%)`;
+            dashboard.style.backgroundBlendMode = 'overlay';
         }
 
         // ============================================================
-        // MODALS
+        // SIDEBAR TOGGLE
         // ============================================================
-
-        function openAddWidget() {
-            document.getElementById('addWidgetModal').classList.add('open');
-            renderWidgetPicker();
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('main').classList.toggle('sidebar-open');
         }
 
-        function renderWidgetPicker() {
-            const container = document.getElementById('widgetPicker');
-            container.innerHTML = WIDGET_TYPES.map(w => `
-                        <div class="widget-picker__item" onclick="addWidget('${w.id}')">
-                            <span class="icon">${w.icon}</span>
-                            <span class="name">${w.name}</span>
-                        </div>
-                    `).join('');
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('main').classList.remove('sidebar-open');
         }
 
-        function closeModal(id) {
-            document.getElementById(id).classList.remove('open');
+        // ============================================================
+        // EDIT MODE
+        // ============================================================
+        function toggleEditMode() {
+            editMode = !editMode;
+            const btn = document.getElementById('editToggle');
+            btn.innerHTML = editMode ?
+                '<span class="icon">✓</span> <span>Done</span>' :
+                '<span class="icon">✎</span> <span>Edit</span>';
+            btn.style.background = editMode ? 'var(--orange-500)' : 'transparent';
+            btn.style.color = editMode ? 'var(--white)' : '';
+            renderWidgets();
         }
 
-        // Close modals on backdrop click
-        document.querySelectorAll('.modal-overlay').forEach(el => {
-            el.addEventListener('click', (e) => {
-                if (e.target === el) el.classList.remove('open');
-            });
-        });
-
         // ============================================================
-        // DRAG & DROP (Edit Mode)
+        // DRAG & DROP
         // ============================================================
-
         let dragWidgetId = null;
 
         function onDragStart(e) {
-            if (!state.editMode) return;
+            if (!editMode) return;
             const widget = e.target.closest('.widget');
             if (!widget) return;
             dragWidgetId = widget.dataset.widgetId;
@@ -2603,7 +2872,7 @@
             if (target) target.classList.remove('drag-over');
         }
 
-        function onDrop(e) {
+        async function onDrop(e) {
             e.preventDefault();
             const target = e.target.closest('.widget');
             if (!target) return;
@@ -2613,22 +2882,31 @@
             const toId = target.dataset.widgetId;
             if (!fromId || !toId || fromId === toId) return;
 
-            const page = getCurrentPage();
-            const fromIndex = page.widgets.findIndex(w => w.id === fromId);
-            const toIndex = page.widgets.findIndex(w => w.id === toId);
+            const fromIndex = widgets.findIndex(w => w.id === fromId);
+            const toIndex = widgets.findIndex(w => w.id === toId);
             if (fromIndex === -1 || toIndex === -1) return;
 
-            // Reorder
-            const [moved] = page.widgets.splice(fromIndex, 1);
-            page.widgets.splice(toIndex, 0, moved);
-            saveState();
-            renderAll();
+            // Reorder in state
+            const [moved] = widgets.splice(fromIndex, 1);
+            widgets.splice(toIndex, 0, moved);
+
+            // Update order in Firebase
+            try {
+                const batch = writeBatch(db);
+                widgets.forEach((w, i) => {
+                    const ref = doc(db, COLLECTIONS.WIDGETS, w.id);
+                    batch.update(ref, { order: i, updatedAt: serverTimestamp() });
+                });
+                await batch.commit();
+            } catch (error) {
+                console.error('Error reordering widgets:', error);
+                showToast('Error reordering widgets', 'error');
+            }
         }
 
         // ============================================================
         // RESIZE
         // ============================================================
-
         let resizeData = null;
 
         function onResizeStart(e) {
@@ -2660,67 +2938,219 @@
             resizeData.widget.style.gridColumn = 'span ' + Math.ceil(newWidth / 240);
         }
 
-        function onResizeEnd(e) {
+        async function onResizeEnd(e) {
             if (!resizeData) return;
             const widget = resizeData.widget;
             widget.classList.remove('resizing');
-            // Save size preference
+
             const width = widget.style.width;
             const height = widget.style.height;
+
             if (width && height) {
-                const page = getCurrentPage();
-                const w = page.widgets.find(w => w.id === resizeData.widgetId);
-                if (w) {
-                    const cols = Math.ceil(parseInt(width) / 240);
-                    w.size = cols <= 1 ? 'small' : cols <= 2 ? 'medium' : cols <= 3 ? 'large' : 'full';
-                    w.height = parseInt(height) < 180 ? 'sm' : parseInt(height) < 260 ? 'md' : parseInt(height) <
-                        360 ? 'lg' : 'xl';
-                    saveState();
+                const cols = Math.ceil(parseInt(width) / 240);
+                const size = cols <= 1 ? 'small' : cols <= 2 ? 'medium' : cols <= 3 ? 'large' : 'full';
+                const h = parseInt(height);
+                const heightClass = h < 180 ? 'sm' : h < 260 ? 'md' : h < 360 ? 'lg' : 'xl';
+
+                const widgetId = resizeData.widgetId;
+                try {
+                    await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
+                        size: size,
+                        height: heightClass,
+                        updatedAt: serverTimestamp()
+                    });
+                } catch (error) {
+                    console.error('Error saving resize:', error);
                 }
             }
+
             resizeData = null;
             document.removeEventListener('mousemove', onResizeMove);
             document.removeEventListener('mouseup', onResizeEnd);
         }
 
         // ============================================================
+        // SEARCH
+        // ============================================================
+        function doSearch() {
+            const input = document.getElementById('searchInput');
+            const engine = document.getElementById('searchEngine');
+            const query = input.value.trim();
+            if (!query) return;
+            window.open(engine.value + encodeURIComponent(query), '_blank');
+        }
+
+        document.getElementById('searchInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') doSearch();
+        });
+
+        function openSearchModal() {
+            document.getElementById('searchModal').classList.add('open');
+            document.getElementById('dashboardSearch').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+            setTimeout(() => document.getElementById('dashboardSearch').focus(), 100);
+        }
+
+        document.getElementById('dashboardSearch').addEventListener('input', () => {
+            const query = document.getElementById('dashboardSearch').value.trim().toLowerCase();
+            const results = document.getElementById('searchResults');
+
+            if (!query) { results.innerHTML = ''; return; }
+
+            const matches = [];
+
+            widgets.forEach(w => {
+                if (w.type === 'bookmarks' && w.data?.items) {
+                    w.data.items.forEach(b => {
+                        if (b.name.toLowerCase().includes(query) || (b.url && b.url.toLowerCase()
+                                .includes(query))) {
+                            matches.push({ type: 'Bookmark', name: b.name, url: b.url, widget: w
+                                    .title });
+                        }
+                    });
+                }
+                if (w.type === 'projects' && w.data?.items) {
+                    w.data.items.forEach(p => {
+                        if (p.name.toLowerCase().includes(query)) {
+                            matches.push({ type: 'Project', name: p.name, status: p.status,
+                                widget: w.title });
+                        }
+                    });
+                }
+                if (w.type === 'notes' && w.data?.content) {
+                    if (w.data.content.toLowerCase().includes(query)) {
+                        matches.push({ type: 'Note', name: w.title, widget: w.title });
+                    }
+                }
+                if (w.type === 'tasks' && w.data?.items) {
+                    w.data.items.forEach(t => {
+                        if (t.text.toLowerCase().includes(query)) {
+                            matches.push({ type: 'Task', name: t.text, done: t.done, widget: w
+                                    .title });
+                        }
+                    });
+                }
+            });
+
+            if (matches.length === 0) {
+                results.innerHTML =
+                    '<div style="text-align:center;color:var(--black-30);padding:20px;">No results found</div>';
+            } else {
+                results.innerHTML = matches.map(m => `
+                            <div style="display:flex;gap:10px;padding:8px 12px;border-bottom:1px solid var(--black-5);font-size:13px;align-items:center;">
+                                <span style="font-weight:600;color:var(--orange-500);font-size:11px;">${m.type}</span>
+                                <span style="flex:1;">${m.name}</span>
+                                <span style="color:var(--black-40);font-size:11px;">${m.widget}</span>
+                            </div>
+                        `).join('');
+            }
+        });
+
+        // ============================================================
+        // MODALS
+        // ============================================================
+        function openAddWidget() {
+            document.getElementById('addWidgetModal').classList.add('open');
+            renderWidgetPicker();
+        }
+
+        function renderWidgetPicker() {
+            const container = document.getElementById('widgetPicker');
+            container.innerHTML = WIDGET_TYPES.map(w => `
+                        <div class="widget-picker__item" onclick="addWidget('${w.id}')">
+                            <span class="icon">${w.icon}</span>
+                            <span class="name">${w.name}</span>
+                        </div>
+                    `).join('');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+        }
+
+        document.querySelectorAll('.modal-overlay').forEach(el => {
+            el.addEventListener('click', (e) => {
+                if (e.target === el) el.classList.remove('open');
+            });
+        });
+
+        // ============================================================
         // PROFILE / LOGOUT
         // ============================================================
-
         function toggleProfileMenu() {
             if (confirm('Logout from DockGrid?')) {
                 logout();
             }
         }
 
-        function logout() {
-            localStorage.removeItem('dockgrid_session');
-            window.location.href = 'index.html';
+        async function logout() {
+            try {
+                await signOut(auth);
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                showToast('Error logging out', 'error');
+            }
         }
+
+        // ============================================================
+        // TOAST
+        // ============================================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'toastOut 400ms ease-out forwards';
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        }
+
+        // ============================================================
+        // CLOCK
+        // ============================================================
+        function startClock() {
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const time = now.toLocaleTimeString('en-US', { hour12: false });
+            const date = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            const timeEl = document.getElementById('clockTime');
+            const dateEl = document.getElementById('clockDate');
+
+            if (timeEl) timeEl.textContent = time;
+            if (dateEl) dateEl.textContent = date;
+        }
+
+        // Start clock
+        setInterval(updateClock, 1000);
+        updateClock();
 
         // ============================================================
         // KEYBOARD SHORTCUTS
         // ============================================================
-
         document.addEventListener('keydown', (e) => {
-            // Ctrl+Shift+E = toggle edit mode
             if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'E') {
                 e.preventDefault();
                 toggleEditMode();
             }
-            // Escape = close modals
             if (e.key === 'Escape') {
                 document.querySelectorAll('.modal-overlay.open').forEach(el => el.classList.remove('open'));
                 if (document.getElementById('sidebar').classList.contains('open')) {
                     closeSidebar();
                 }
             }
-            // Ctrl+Shift+S = toggle sidebar
             if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'S') {
                 e.preventDefault();
                 toggleSidebar();
             }
-            // / = focus search
             if (e.key === '/' && !e.ctrlKey && !e.metaKey && !e.altKey) {
                 if (!document.activeElement || document.activeElement.tagName !== 'INPUT') {
                     e.preventDefault();
@@ -2730,24 +3160,55 @@
         });
 
         // ============================================================
-        // INIT
+        // MAKE FUNCTIONS GLOBAL
         // ============================================================
+        window.toggleSidebar = toggleSidebar;
+        window.closeSidebar = closeSidebar;
+        window.switchPage = switchPage;
+        window.addPage = addPage;
+        window.addWidget = addWidget;
+        window.deleteWidget = deleteWidget;
+        window.duplicateWidget = duplicateWidget;
+        window.refreshWidget = refreshWidget;
+        window.openWidgetSettings = openWidgetSettings;
+        window.openAddWidget = openAddWidget;
+        window.openBackgroundModal = openBackgroundModal;
+        window.applyBackground = applyBackground;
+        window.resetBackground = resetBackground;
+        window.openSearchModal = openSearchModal;
+        window.toggleEditMode = toggleEditMode;
+        window.doSearch = doSearch;
+        window.closeModal = closeModal;
+        window.showToast = showToast;
+        window.logout = logout;
+        window.toggleProfileMenu = toggleProfileMenu;
+        window.addTask = addTask;
+        window.toggleTask = toggleTask;
+        window.askAI = askAI;
+        window.saveNoteContent = saveNoteContent;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            init();
-            loadBackground();
+        // ============================================================
+        // EXPOSE TO CONSOLE FOR DEBUGGING
+        // ============================================================
+        console.log('%c🚀 DockGrid Dashboard %cv1.0 (Firebase)',
+            'font-size:20px;font-weight:900;color:#ff6b35;font-family:monospace;',
+            'font-size:14px;color:#000;');
+        console.log('%c📊 ' + pages.length + ' pages · ' + widgets.length + ' widgets',
+            'color:#555;');
+        console.log('%c🔧 Press Ctrl+Shift+E to toggle edit mode', 'color:#777;font-size:11px;');
+        console.log('%c🔍 Press / to focus search', 'color:#777;font-size:11px;');
+        console.log('%c☁️ All data stored in Firebase Firestore', 'color:#777;font-size:11px;');
+        console.log('%c👤 User:', currentUser?.email || 'Not logged in', 'color:#777;font-size:11px;');
 
-            console.log('%c🚀 DockGrid Dashboard %cv1.0',
-                'font-size:24px;font-weight:900;color:#ff6b35;font-family:monospace;',
-                'font-size:14px;color:#000;');
-            console.log('%c📊 ' + state.pages.length + ' pages · ' +
-                state.pages.reduce((acc, p) => acc + (p.widgets ? p.widgets.length : 0), 0) + ' widgets',
-                'color:#555;');
-            console.log('%c🔧 Press Ctrl+Shift+E to toggle edit mode', 'color:#777;font-size:11px;');
-            console.log('%c🔍 Press / to focus search', 'color:#777;font-size:11px;');
-            console.log('%c📂 Data stored in localStorage', 'color:#777;font-size:11px;');
+        console.log('🔧 Available functions:', {
+            addWidget: window.addWidget,
+            deleteWidget: window.deleteWidget,
+            duplicateWidget: window.duplicateWidget,
+            addPage: window.addPage,
+            switchPage: window.switchPage,
+            toggleEditMode: window.toggleEditMode,
+            logout: window.logout
         });
     </script>
-
 </body>
 </html>
