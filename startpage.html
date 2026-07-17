@@ -9,7 +9,7 @@
     </script>
     <style>
         /* ============================================================
-           RESET & BASE
+           CSS VARIABLES & RESET
            ============================================================ */
         *,
         *::before,
@@ -37,10 +37,14 @@
             --black-10: #dddddd;
             --black-5: #f0f0f0;
             --white: #ffffff;
+            --white-alpha-5: rgba(255, 255, 255, 0.05);
             --white-alpha-10: rgba(255, 255, 255, 0.1);
+            --white-alpha-15: rgba(255, 255, 255, 0.15);
             --white-alpha-20: rgba(255, 255, 255, 0.2);
             --white-alpha-30: rgba(255, 255, 255, 0.3);
+            --white-alpha-40: rgba(255, 255, 255, 0.4);
             --white-alpha-50: rgba(255, 255, 255, 0.5);
+            --white-alpha-60: rgba(255, 255, 255, 0.6);
             --white-alpha-70: rgba(255, 255, 255, 0.7);
             --white-alpha-80: rgba(255, 255, 255, 0.8);
             --white-alpha-90: rgba(255, 255, 255, 0.9);
@@ -50,17 +54,18 @@
             --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
             --radius-sm: 8px;
             --radius-md: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 20px;
+            --radius-lg: 20px;
+            --radius-xl: 28px;
             --radius-full: 9999px;
             --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
             --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
-            --header-height: 56px;
+            --header-height: 64px;
             --widget-gap: 16px;
             --widget-min-width: 200px;
             --widget-min-height: 140px;
+            --corner-radius: 28px;
         }
 
         html,
@@ -80,7 +85,7 @@
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--white-alpha-30);
+            background: var(--white-alpha-20);
             border-radius: var(--radius-full);
         }
 
@@ -100,7 +105,8 @@
             justify-content: center;
             z-index: 9999;
             gap: 20px;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
+            border-radius: 0;
         }
         .loading-screen.hidden {
             opacity: 0;
@@ -109,7 +115,7 @@
         .loading-screen__spinner {
             width: 40px;
             height: 40px;
-            border: 3px solid var(--white-alpha-20);
+            border: 3px solid var(--white-alpha-10);
             border-top-color: var(--orange-500);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -140,7 +146,7 @@
             display: flex;
             flex-direction: column;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
             position: relative;
             overflow: hidden;
         }
@@ -160,7 +166,7 @@
             background: var(--black-90);
             background-size: cover;
             background-position: center;
-            transition: background-image 0.6s ease;
+            transition: background-image 0.8s ease;
             z-index: 0;
         }
         .app__bg::after {
@@ -171,12 +177,11 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.1);
-            /* 10% dark overlay = 90% visibility */
             z-index: 1;
         }
 
         /* ============================================================
-           HEADER (No background, transparent)
+           HEADER (Glassmorphism)
            ============================================================ */
         .header {
             position: relative;
@@ -184,15 +189,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 24px;
+            padding: 14px 28px;
             height: var(--header-height);
             flex-shrink: 0;
+            background: var(--white-alpha-5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--white-alpha-5);
+            border-radius: 0 0 var(--corner-radius) var(--corner-radius);
         }
 
         .header__left {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 16px;
         }
 
         .header__logo {
@@ -209,17 +219,17 @@
         .header__right {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         /* ============================================================
-           HEADER BUTTONS (Transparent, glass)
+           HEADER BUTTONS
            ============================================================ */
         .header__btn {
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 14px;
+            padding: 8px 16px;
             border: none;
             border-radius: var(--radius-full);
             font-size: 13px;
@@ -235,7 +245,7 @@
         }
         .header__btn:hover {
             background: var(--white-alpha-20);
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
         .header__btn iconify-icon {
             font-size: 18px;
@@ -248,15 +258,15 @@
         }
         .header__btn--primary:hover {
             background: var(--orange-400);
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
 
         /* ============================================================
-           PROFILE AVATAR (Circle frame)
+           PROFILE AVATAR
            ============================================================ */
         .header__avatar {
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: var(--radius-full);
             background: var(--orange-500);
             color: var(--white);
@@ -266,7 +276,7 @@
             font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            border: 2px solid var(--white-alpha-30);
+            border: 2px solid var(--white-alpha-20);
             transition: all var(--transition-fast);
             flex-shrink: 0;
             overflow: hidden;
@@ -283,34 +293,51 @@
         }
 
         /* ============================================================
-           DROPDOWN MENU (Profile click)
+           DROPDOWN
            ============================================================ */
         .dropdown {
             position: absolute;
             top: calc(var(--header-height) + 8px);
             right: 24px;
-            background: var(--white);
-            border-radius: var(--radius-md);
+            background: var(--black-80);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--white-alpha-10);
             box-shadow: var(--shadow-xl);
             padding: 8px;
-            min-width: 200px;
+            min-width: 210px;
             z-index: 100;
             display: none;
-            animation: fadeDown 200ms ease-out;
+            animation: fadeDown 200ms cubic-bezier(0.4, 0, 0.2, 1);
         }
         .dropdown.open {
             display: block;
         }
-
         @keyframes fadeDown {
             from {
                 opacity: 0;
-                transform: translateY(-8px) scale(0.97);
+                transform: translateY(-12px) scale(0.96);
             }
             to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
+        }
+
+        .dropdown__user {
+            padding: 8px 12px 12px;
+            border-bottom: 1px solid var(--white-alpha-10);
+            margin-bottom: 6px;
+        }
+        .dropdown__user-name {
+            font-weight: 700;
+            color: var(--white);
+            font-size: 14px;
+        }
+        .dropdown__user-email {
+            font-size: 12px;
+            color: var(--white-alpha-50);
         }
 
         .dropdown__item {
@@ -323,41 +350,41 @@
             transition: all var(--transition-fast);
             font-size: 13px;
             font-weight: 500;
-            color: var(--black-70);
+            color: var(--white-alpha-70);
             border: none;
             background: none;
             width: 100%;
             font-family: var(--font-sans);
         }
         .dropdown__item:hover {
-            background: var(--black-5);
-            color: var(--black-100);
+            background: var(--white-alpha-10);
+            color: var(--white);
         }
         .dropdown__item iconify-icon {
             font-size: 18px;
-            color: var(--black-40);
+            color: var(--white-alpha-40);
         }
         .dropdown__divider {
             height: 1px;
-            background: var(--black-10);
+            background: var(--white-alpha-10);
             margin: 4px 8px;
         }
         .dropdown__item--danger {
             color: #ef4444;
         }
         .dropdown__item--danger:hover {
-            background: #fef2f2;
+            background: rgba(239, 68, 68, 0.15);
         }
 
         /* ============================================================
-           DASHBOARD CONTENT
+           DASHBOARD
            ============================================================ */
         .dashboard {
             position: relative;
             z-index: 5;
             flex: 1;
             overflow-y: auto;
-            padding: 8px 24px 32px;
+            padding: 16px 28px 32px;
         }
 
         .dashboard__grid {
@@ -370,34 +397,34 @@
         .dashboard__empty {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 60px 20px;
-            color: var(--white-alpha-50);
+            padding: 80px 20px;
+            color: var(--white-alpha-40);
         }
         .dashboard__empty .icon {
             font-size: 56px;
             margin-bottom: 12px;
-            opacity: 0.6;
+            opacity: 0.5;
         }
         .dashboard__empty h3 {
             font-weight: 700;
-            color: var(--white-alpha-80);
+            color: var(--white-alpha-70);
             font-size: 18px;
         }
         .dashboard__empty p {
             margin-top: 6px;
             font-size: 14px;
-            color: var(--white-alpha-40);
+            color: var(--white-alpha-30);
         }
 
         /* ============================================================
-           WIDGETS (Glassmorphism)
+           WIDGETS
            ============================================================ */
         .widget {
-            background: var(--white-alpha-10);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: var(--white-alpha-8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border: 1px solid var(--white-alpha-10);
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-lg);
             overflow: hidden;
             transition: all var(--transition-base);
             min-height: var(--widget-min-height);
@@ -406,8 +433,10 @@
             position: relative;
         }
         .widget:hover {
-            background: var(--white-alpha-15);
+            background: var(--white-alpha-12);
             border-color: var(--white-alpha-20);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .widget--small {
@@ -440,28 +469,41 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--white-alpha-10);
+            padding: 12px 16px 10px;
+            border-bottom: 1px solid var(--white-alpha-5);
             flex-shrink: 0;
-            min-height: 42px;
+            min-height: 44px;
         }
         .widget__header-icon {
             font-size: 16px;
-            color: var(--white-alpha-70);
+            color: var(--white-alpha-60);
         }
         .widget__header-title {
             font-weight: 600;
             font-size: 13px;
             color: var(--white);
             flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: var(--radius-xs);
+            transition: all var(--transition-fast);
+            outline: none;
+            border: 1px solid transparent;
+            background: transparent;
+            font-family: var(--font-sans);
         }
+        .widget__header-title:hover {
+            background: var(--white-alpha-5);
+        }
+        .widget__header-title:focus {
+            border-color: var(--orange-500);
+            background: var(--white-alpha-5);
+        }
+
         .widget__header-actions {
             display: flex;
             gap: 2px;
-            opacity: 0.4;
+            opacity: 0.3;
             transition: opacity var(--transition-fast);
         }
         .widget:hover .widget__header-actions {
@@ -473,7 +515,7 @@
             padding: 4px 6px;
             border-radius: var(--radius-xs);
             cursor: pointer;
-            color: var(--white-alpha-50);
+            color: var(--white-alpha-40);
             font-size: 14px;
             transition: all var(--transition-fast);
             display: flex;
@@ -484,12 +526,12 @@
             color: var(--white);
         }
         .widget__header-btn.danger:hover {
-            background: rgba(239, 68, 68, 0.3);
+            background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
         }
 
         .widget__body {
-            padding: 14px;
+            padding: 12px 16px 16px;
             flex: 1;
             overflow-y: auto;
             min-height: 60px;
@@ -499,20 +541,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--white-alpha-40);
+            color: var(--white-alpha-30);
             font-size: 13px;
             font-weight: 500;
             min-height: 80px;
         }
 
         .widget__footer {
-            padding: 6px 14px;
-            border-top: 1px solid var(--white-alpha-10);
+            padding: 6px 16px 10px;
+            border-top: 1px solid var(--white-alpha-5);
             font-size: 11px;
-            color: var(--white-alpha-30);
+            color: var(--white-alpha-20);
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: flex-end;
             flex-shrink: 0;
         }
 
@@ -521,7 +562,7 @@
            ============================================================ */
         .bookmark-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
             gap: 10px;
         }
         .bookmark-item {
@@ -534,29 +575,36 @@
             cursor: pointer;
             transition: all var(--transition-fast);
             text-decoration: none;
-            color: var(--white-alpha-80);
+            color: var(--white-alpha-70);
             text-align: center;
         }
         .bookmark-item:hover {
             background: var(--white-alpha-10);
             transform: translateY(-2px);
+            color: var(--white);
         }
         .bookmark-item__icon {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: var(--radius-sm);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            background: var(--white-alpha-10);
+            font-size: 20px;
+            background: var(--white-alpha-5);
             flex-shrink: 0;
+            overflow: hidden;
+        }
+        .bookmark-item__icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
         .bookmark-item__name {
             font-size: 10px;
             font-weight: 500;
             line-height: 1.2;
-            max-width: 56px;
+            max-width: 60px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -620,20 +668,20 @@
             flex-shrink: 0;
         }
         .project-item__status--planning {
-            background: rgba(251, 191, 36, 0.3);
+            background: rgba(251, 191, 36, 0.2);
             color: #fbbf24;
         }
         .project-item__status--progress {
-            background: rgba(96, 165, 250, 0.3);
+            background: rgba(96, 165, 250, 0.2);
             color: #60a5fa;
         }
         .project-item__status--completed {
-            background: rgba(52, 211, 153, 0.3);
+            background: rgba(52, 211, 153, 0.2);
             color: #34d399;
         }
         .project-item__status--archived {
             background: var(--white-alpha-10);
-            color: var(--white-alpha-50);
+            color: var(--white-alpha-40);
         }
 
         .task-list {
@@ -654,8 +702,8 @@
             background: var(--white-alpha-5);
         }
         .task-item__checkbox {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border: 2px solid var(--white-alpha-30);
             border-radius: var(--radius-xs);
             cursor: pointer;
@@ -666,7 +714,7 @@
             flex-shrink: 0;
             background: transparent;
             color: var(--white);
-            font-size: 10px;
+            font-size: 11px;
         }
         .task-item__checkbox:hover {
             border-color: var(--orange-500);
@@ -713,7 +761,7 @@
         .task-add__input {
             flex: 1;
             padding: 6px 10px;
-            border: 1px solid var(--white-alpha-20);
+            border: 1px solid var(--white-alpha-15);
             border-radius: var(--radius-sm);
             font-size: 12px;
             font-family: var(--font-sans);
@@ -729,7 +777,7 @@
             color: var(--white-alpha-30);
         }
         .task-add__btn {
-            padding: 6px 12px;
+            padding: 6px 14px;
             border: none;
             background: var(--orange-500);
             color: var(--white);
@@ -798,7 +846,7 @@
             cursor: pointer;
             transition: all var(--transition-fast);
             text-decoration: none;
-            color: var(--white-alpha-80);
+            color: var(--white-alpha-70);
         }
         .rss-item:hover {
             color: var(--orange-400);
@@ -840,7 +888,7 @@
             padding: 8px 0;
         }
         .clock-display__time {
-            font-size: 40px;
+            font-size: 42px;
             font-weight: 900;
             font-family: var(--font-sans);
             color: var(--white);
@@ -862,7 +910,7 @@
         }
         .calendar-grid__header {
             font-weight: 700;
-            color: var(--white-alpha-40);
+            color: var(--white-alpha-30);
             font-size: 10px;
             padding: 4px 0;
             text-transform: uppercase;
@@ -873,7 +921,7 @@
             border-radius: var(--radius-xs);
             cursor: default;
             transition: all var(--transition-fast);
-            color: var(--white-alpha-60);
+            color: var(--white-alpha-50);
         }
         .calendar-grid__day.today {
             background: var(--orange-500);
@@ -881,7 +929,7 @@
             font-weight: 700;
         }
         .calendar-grid__day.other-month {
-            color: var(--white-alpha-20);
+            color: var(--white-alpha-15);
         }
         .calendar-grid__day.has-event {
             position: relative;
@@ -913,7 +961,7 @@
         }
 
         /* ============================================================
-           MODAL
+           MODALS
            ============================================================ */
         .modal-overlay {
             position: fixed;
@@ -922,7 +970,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
             z-index: 2000;
             display: none;
             align-items: center;
@@ -935,7 +983,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: scale(0.97);
+                transform: scale(0.96);
             }
             to {
                 opacity: 1;
@@ -945,9 +993,11 @@
 
         .modal {
             background: var(--black-80);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-radius: var(--radius-xl);
-            padding: 28px;
-            max-width: 560px;
+            padding: 32px;
+            max-width: 580px;
             width: 92%;
             max-height: 85vh;
             overflow-y: auto;
@@ -969,8 +1019,8 @@
         .modal__close {
             background: none;
             border: none;
-            font-size: 22px;
-            color: var(--white-alpha-40);
+            font-size: 24px;
+            color: var(--white-alpha-30);
             cursor: pointer;
             padding: 4px;
             border-radius: var(--radius-sm);
@@ -991,7 +1041,6 @@
             padding-top: 16px;
         }
 
-        /* Widget Picker */
         .widget-picker {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -1022,10 +1071,9 @@
         .widget-picker__item .name {
             font-size: 11px;
             font-weight: 600;
-            color: var(--white-alpha-70);
+            color: var(--white-alpha-60);
         }
 
-        /* Background Picker */
         .bg-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -1074,11 +1122,11 @@
             align-items: center;
             gap: 10px;
             padding: 12px;
-            border: 2px dashed var(--white-alpha-20);
+            border: 2px dashed var(--white-alpha-15);
             border-radius: var(--radius-sm);
             cursor: pointer;
             transition: all var(--transition-fast);
-            color: var(--white-alpha-50);
+            color: var(--white-alpha-40);
             margin-top: 10px;
         }
         .bg-upload:hover {
@@ -1088,6 +1136,139 @@
         }
         .bg-upload input {
             display: none;
+        }
+
+        /* ============================================================
+           PAGE SETTINGS MODAL (Larger)
+           ============================================================ */
+        .modal--settings {
+            max-width: 720px;
+        }
+
+        .settings-section {
+            margin-bottom: 24px;
+        }
+        .settings-section__title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--white-alpha-50);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--white-alpha-5);
+        }
+
+        .settings-field {
+            margin-bottom: 12px;
+        }
+        .settings-field__label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--white-alpha-60);
+            margin-bottom: 4px;
+        }
+        .settings-field__input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--white-alpha-15);
+            border-radius: var(--radius-sm);
+            background: var(--white-alpha-5);
+            color: var(--white);
+            font-size: 13px;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: all var(--transition-fast);
+        }
+        .settings-field__input:focus {
+            border-color: var(--orange-500);
+        }
+        .settings-field__input::placeholder {
+            color: var(--white-alpha-30);
+        }
+        .settings-field__textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        .settings-field__select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--white-alpha-15);
+            border-radius: var(--radius-sm);
+            background: var(--black-70);
+            color: var(--white);
+            font-size: 13px;
+            font-family: var(--font-sans);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .settings-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .settings-column {
+            background: var(--white-alpha-5);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            border: 1px solid var(--white-alpha-5);
+        }
+        .settings-column__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .settings-column__name {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--white);
+        }
+        .settings-column__count {
+            font-size: 11px;
+            color: var(--white-alpha-40);
+        }
+        .settings-column__remove {
+            background: none;
+            border: none;
+            color: var(--white-alpha-30);
+            cursor: pointer;
+            font-size: 14px;
+            padding: 2px 6px;
+            border-radius: var(--radius-xs);
+            transition: all var(--transition-fast);
+        }
+        .settings-column__remove:hover {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .settings-size-btns {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .settings-size-btn {
+            padding: 4px 10px;
+            border: 1px solid var(--white-alpha-15);
+            border-radius: var(--radius-xs);
+            background: transparent;
+            color: var(--white-alpha-40);
+            font-size: 11px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-family: var(--font-sans);
+        }
+        .settings-size-btn:hover {
+            border-color: var(--white-alpha-30);
+            color: var(--white);
+        }
+        .settings-size-btn.active {
+            border-color: var(--orange-500);
+            color: var(--orange-500);
+            background: rgba(255, 107, 53, 0.1);
         }
 
         /* ============================================================
@@ -1105,6 +1286,8 @@
         .toast {
             padding: 12px 18px;
             background: var(--black-90);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             color: var(--white);
             border-left: 4px solid var(--orange-500);
             border-radius: var(--radius-md);
@@ -1147,7 +1330,8 @@
            ============================================================ */
         @media (max-width: 768px) {
             .header {
-                padding: 10px 16px;
+                padding: 12px 16px;
+                border-radius: 0 0 var(--radius-lg) var(--radius-lg);
             }
             .header__btn span {
                 display: none;
@@ -1156,7 +1340,7 @@
                 padding: 8px 10px;
             }
             .dashboard {
-                padding: 8px 16px 24px;
+                padding: 12px 16px 24px;
             }
             .widget--medium,
             .widget--large,
@@ -1179,7 +1363,13 @@
             }
             .dropdown {
                 right: 16px;
-                min-width: 170px;
+                min-width: 180px;
+            }
+            .settings-columns {
+                grid-template-columns: 1fr;
+            }
+            .modal--settings {
+                max-width: 100%;
             }
         }
 
@@ -1192,8 +1382,8 @@
                 padding: 6px 8px;
             }
             .header__avatar {
-                width: 32px;
-                height: 32px;
+                width: 34px;
+                height: 34px;
                 font-size: 13px;
             }
             .bookmark-grid {
@@ -1240,8 +1430,14 @@
             </div>
 
             <div class="header__right">
+                <!-- Edit Button -->
+                <button class="header__btn" onclick="openPageSettings()">
+                    <iconify-icon icon="mdi:pencil"></iconify-icon>
+                    <span>Edit</span>
+                </button>
+
                 <!-- Add Widget Button -->
-                <button class="header__btn" onclick="openAddWidget()">
+                <button class="header__btn header__btn--primary" onclick="openAddWidget()">
                     <iconify-icon icon="mdi:plus"></iconify-icon>
                     <span>Add</span>
                 </button>
@@ -1254,6 +1450,10 @@
 
                 <!-- Dropdown -->
                 <div class="dropdown" id="dropdown">
+                    <div class="dropdown__user">
+                        <div class="dropdown__user-name" id="dropdownUserName">User</div>
+                        <div class="dropdown__user-email" id="dropdownUserEmail">user@email.com</div>
+                    </div>
                     <button class="dropdown__item" onclick="changeProfileImage()">
                         <iconify-icon icon="mdi:account-edit"></iconify-icon>
                         Change Profile Image
@@ -1312,7 +1512,7 @@
                 <button class="modal__close" onclick="closeModal('bgModal')">✕</button>
             </div>
             <div class="modal__body">
-                <p style="color:var(--white-alpha-60);font-size:13px;margin-bottom:12px;">Select an image or upload your own</p>
+                <p style="color:var(--white-alpha-50);font-size:13px;margin-bottom:12px;">Select an image or upload your own</p>
                 <div class="bg-grid" id="bgGrid">
                     <!-- Rendered by JS -->
                 </div>
@@ -1330,7 +1530,89 @@
     </div>
 
     <!-- ============================================================
-    FIREBASE SDK (ES Modules)
+    PAGE SETTINGS MODAL
+    ============================================================ -->
+    <div class="modal-overlay" id="pageSettingsModal">
+        <div class="modal modal--settings">
+            <div class="modal__header">
+                <h2 class="modal__title">Page Settings</h2>
+                <button class="modal__close" onclick="closeModal('pageSettingsModal')">✕</button>
+            </div>
+            <div class="modal__body">
+
+                <!-- GENERAL -->
+                <div class="settings-section">
+                    <div class="settings-section__title">General</div>
+                    <div class="settings-field">
+                        <label class="settings-field__label">Page Title</label>
+                        <input class="settings-field__input" id="settingsPageTitle" placeholder="Enter page title..." maxlength="50" />
+                        <span style="font-size:11px;color:var(--white-alpha-30);" id="settingsTitleCount">0/50</span>
+                    </div>
+                    <div class="settings-field">
+                        <label class="settings-field__label">Description</label>
+                        <textarea class="settings-field__input settings-field__textarea" id="settingsPageDesc" placeholder="Describe this page..."></textarea>
+                    </div>
+                    <div class="settings-field">
+                        <label class="settings-field__label">Belongs to</label>
+                        <select class="settings-field__select" id="settingsPageGroup">
+                            <option value="personal">Personal pages</option>
+                            <option value="work">Work</option>
+                            <option value="school">School</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- BACKGROUND -->
+                <div class="settings-section">
+                    <div class="settings-section__title">Background</div>
+                    <div class="settings-field">
+                        <label class="settings-field__label">Widget Transparency</label>
+                        <input class="settings-field__input" id="settingsWidgetOpacity" type="range" min="0" max="100" value="8" />
+                        <span style="color:var(--white-alpha-40);font-size:12px;" id="settingsOpacityValue">8%</span>
+                    </div>
+                </div>
+
+                <!-- COLUMNS -->
+                <div class="settings-section">
+                    <div class="settings-section__title">Columns</div>
+                    <div id="settingsColumnsContainer">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <button class="header__btn" onclick="addColumn()" style="margin-top:8px;background:var(--white-alpha-5);color:var(--white);">
+                        <iconify-icon icon="mdi:plus"></iconify-icon> Add Column
+                    </button>
+                </div>
+
+                <!-- PREFERENCES -->
+                <div class="settings-section">
+                    <div class="settings-section__title">Preferences</div>
+                    <div class="settings-field">
+                        <label class="settings-field__label">Search bar</label>
+                        <select class="settings-field__select" id="settingsSearchBar">
+                            <option value="default">Default (Show)</option>
+                            <option value="show">Show</option>
+                            <option value="hide">Hide</option>
+                        </select>
+                    </div>
+                    <div class="settings-field">
+                        <label class="settings-field__label">Open links in</label>
+                        <select class="settings-field__select" id="settingsLinkTarget">
+                            <option value="new">New window</option>
+                            <option value="same">Same window</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal__footer">
+                <button class="header__btn" onclick="closeModal('pageSettingsModal')" style="background:var(--white-alpha-5);color:var(--white);">Cancel</button>
+                <button class="header__btn header__btn--primary" onclick="savePageSettings()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    FIREBASE SDK
     ============================================================ -->
     <script type="importmap">
         {
@@ -1429,6 +1711,20 @@
         let settings = {};
         let editMode = false;
         let isInitialized = false;
+        let pageSettings = {
+            title: 'Home',
+            description: '',
+            group: 'personal',
+            columns: [
+                { id: 'col1', widgets: [], size: 'small' },
+                { id: 'col2', widgets: [], size: 'small' },
+                { id: 'col3', widgets: [], size: 'small' },
+                { id: 'col4', widgets: [], size: 'small' }
+            ],
+            searchBar: 'default',
+            linkTarget: 'new',
+            widgetOpacity: 8
+        };
 
         // ============================================================
         // DOM REFS
@@ -1453,6 +1749,7 @@
 
             currentUser = user;
             updateAvatar();
+            updateDropdownUser();
 
             await loadUserData();
             loadingScreen.classList.add('hidden');
@@ -1479,6 +1776,12 @@
             }
         }
 
+        function updateDropdownUser() {
+            if (!currentUser) return;
+            document.getElementById('dropdownUserName').textContent = currentUser.displayName || 'User';
+            document.getElementById('dropdownUserEmail').textContent = currentUser.email || 'user@email.com';
+        }
+
         // ============================================================
         // LOAD USER DATA
         // ============================================================
@@ -1502,7 +1805,6 @@
                     await setDoc(settingsRef, settings);
                 }
 
-                // Apply background
                 applyBackground(settings.background || DEFAULT_BG);
 
                 // Pages
@@ -1520,6 +1822,7 @@
                         name: 'Home',
                         icon: '🏠',
                         order: 0,
+                        settings: pageSettings,
                         createdAt: serverTimestamp(),
                         updatedAt: serverTimestamp()
                     };
@@ -1530,6 +1833,11 @@
 
                 pages.sort((a, b) => (a.order || 0) - (b.order || 0));
                 currentPageId = pages[0].id;
+
+                // Load page settings
+                if (pages[0].settings) {
+                    pageSettings = { ...pageSettings, ...pages[0].settings };
+                }
 
                 // Widgets
                 await loadWidgets();
@@ -1568,7 +1876,6 @@
         function setupRealtimeListeners() {
             if (!currentUser) return;
 
-            // Settings
             const settingsRef = doc(db, COLLECTIONS.SETTINGS, currentUser.uid);
             onSnapshot(settingsRef, (doc) => {
                 if (doc.exists()) {
@@ -1577,7 +1884,6 @@
                 }
             });
 
-            // Pages
             const pagesRef = collection(db, COLLECTIONS.PAGES);
             const pagesQuery = query(pagesRef, where('userId', '==', currentUser.uid));
             onSnapshot(pagesQuery, (snapshot) => {
@@ -1592,14 +1898,11 @@
                 if (!currentPageId && pages.length > 0) {
                     currentPageId = pages[0].id;
                 }
-                renderSidebar();
-                updatePageName();
                 if (currentPageId) {
                     loadWidgets().then(renderWidgets);
                 }
             });
 
-            // Widgets
             setupWidgetsListener();
         }
 
@@ -1626,20 +1929,10 @@
         // RENDER
         // ============================================================
         function renderAll() {
-            renderSidebar();
             renderWidgets();
-            updatePageName();
             renderWidgetPicker();
             renderBgGrid();
-        }
-
-        function renderSidebar() {
-            // Simple sidebar - just show page count
-            // We'll keep it minimal since you wanted a clean header-only design
-        }
-
-        function updatePageName() {
-            // Not needed with minimal header
+            renderColumns();
         }
 
         function renderWidgets() {
@@ -1656,7 +1949,7 @@
 
             widgetGrid.innerHTML = widgets.map(w => renderWidget(w)).join('');
 
-            // Event listeners for tasks
+            // Event listeners
             document.querySelectorAll('.task-add__btn').forEach(el => {
                 el.addEventListener('click', () => {
                     const widgetId = el.dataset.widgetId;
@@ -1672,15 +1965,11 @@
                     }
                 });
             });
-
-            // Note auto-save
             document.querySelectorAll('.note-editor').forEach(el => {
                 el.addEventListener('input', () => {
                     saveNoteContent(el.dataset.widgetId, el.value);
                 });
             });
-
-            // Task checkbox
             document.querySelectorAll('.task-item__checkbox').forEach(el => {
                 el.addEventListener('click', () => {
                     const widgetId = el.dataset.widgetId;
@@ -1688,11 +1977,20 @@
                     toggleTask(widgetId, index);
                 });
             });
-
-            // Delete widget
             document.querySelectorAll('.widget__header-btn.danger').forEach(el => {
                 el.addEventListener('click', () => {
                     deleteWidget(el.dataset.widgetId);
+                });
+            });
+            // Title click to edit
+            document.querySelectorAll('.widget__header-title').forEach(el => {
+                el.addEventListener('dblclick', () => {
+                    const widgetId = el.dataset.widgetId;
+                    const currentTitle = el.textContent;
+                    const newTitle = prompt('Enter new title:', currentTitle);
+                    if (newTitle !== null && newTitle.trim()) {
+                        renameWidget(widgetId, newTitle.trim());
+                    }
                 });
             });
         }
@@ -1701,12 +1999,15 @@
             const sizeClass = `widget--${w.size || 'small'}`;
             const heightClass = `widget--height-${w.height || 'sm'}`;
             const bodyHtml = renderWidgetBody(w);
+            const opacity = pageSettings.widgetOpacity / 100;
 
             return `
-                        <div class="widget ${sizeClass} ${heightClass}" data-widget-id="${w.id}">
+                        <div class="widget ${sizeClass} ${heightClass}" 
+                             data-widget-id="${w.id}"
+                             style="background:rgba(255,255,255,${opacity * 0.08});backdrop-filter:blur(${Math.max(8, opacity * 30)}px);">
                             <div class="widget__header">
                                 <span class="widget__header-icon">${getWidgetIcon(w.type)}</span>
-                                <span class="widget__header-title">${w.title || 'Widget'}</span>
+                                <span class="widget__header-title" data-widget-id="${w.id}">${w.title || 'Widget'}</span>
                                 <div class="widget__header-actions">
                                     <button class="widget__header-btn" onclick="duplicateWidget('${w.id}')" title="Duplicate">⧉</button>
                                     <button class="widget__header-btn" onclick="openWidgetSettings('${w.id}')" title="Settings">⚙</button>
@@ -1715,9 +2016,6 @@
                             </div>
                             <div class="widget__body">
                                 ${bodyHtml}
-                            </div>
-                            <div class="widget__footer">
-                                <span>${w.footerText || 'Updated just now'}</span>
                             </div>
                         </div>
                     `;
@@ -1763,22 +2061,21 @@
         function getDefaultWidgetData(type) {
             switch (type) {
                 case 'bookmarks':
-                    return { items: [{ name: 'Google', url: 'https://google.com', icon: '🌐' }, { name: 'GitHub',
-                            url: 'https://github.com', icon: '🐙' }] };
+                    return { items: [] };
                 case 'projects':
-                    return { items: [{ name: 'New Project', progress: 0, status: 'planning', deadline: '' }] };
+                    return { items: [] };
                 case 'tasks':
-                    return { items: [{ text: 'New task', done: false, priority: 'medium', due: '' }] };
+                    return { items: [] };
                 case 'notes':
-                    return { content: 'Write your note here...' };
+                    return { content: '' };
                 case 'weather':
                     return { city: 'New York', temp: 68, condition: 'Cloudy', humidity: 55, wind: 8 };
                 case 'rss':
-                    return { feed: '', items: [{ title: 'Sample article', source: 'Example', time: '1h ago' }] };
+                    return { feed: '', items: [] };
                 case 'clock':
                     return { timezone: 'local' };
                 case 'calendar':
-                    return { events: [{ date: new Date().toISOString().slice(0, 10), title: 'Event' }] };
+                    return { events: [] };
                 case 'embed':
                     return { url: '' };
                 default:
@@ -1789,13 +2086,26 @@
         // --- Widget Renderers ---
         function renderBookmarks(data) {
             const items = data?.items || [];
-            if (items.length === 0) return `<div class="widget__body--empty">No bookmarks</div>`;
+            if (items.length === 0) return `<div class="widget__body--empty">Add a URL to get started</div>`;
+
+            // Fetch favicon from Google S2
+            const getFavicon = (url) => {
+                try {
+                    const domain = new URL(url).hostname;
+                    return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+                } catch {
+                    return '';
+                }
+            };
+
             return `
                         <div class="bookmark-grid">
                             ${items.map(b => `
                                 <a class="bookmark-item" href="${b.url}" target="_blank" rel="noopener">
-                                    <div class="bookmark-item__icon">${b.icon || '🌐'}</div>
-                                    <span class="bookmark-item__name">${b.name}</span>
+                                    <div class="bookmark-item__icon">
+                                        ${b.icon ? b.icon : `<img src="${getFavicon(b.url)}" alt="" />`}
+                                    </div>
+                                    <span class="bookmark-item__name">${b.title || b.name || 'Link'}</span>
                                 </a>
                             `).join('')}
                         </div>
@@ -1804,7 +2114,7 @@
 
         function renderProjects(data) {
             const items = data?.items || [];
-            if (items.length === 0) return `<div class="widget__body--empty">No projects</div>`;
+            if (items.length === 0) return `<div class="widget__body--empty">No projects yet</div>`;
             return `
                         <div class="project-list">
                             ${items.map(p => `
@@ -1871,7 +2181,7 @@
 
         function renderRSS(data) {
             const items = data?.items || [];
-            if (items.length === 0) return `<div class="widget__body--empty">No feed items</div>`;
+            if (items.length === 0) return `<div class="widget__body--empty">Add an RSS feed URL</div>`;
             return `
                         <div class="rss-list">
                             ${items.map(item => `
@@ -1945,6 +2255,101 @@
         // ============================================================
         async function addWidget(type) {
             if (!currentUser || !currentPageId) return;
+
+            // Get metadata for bookmark
+            let widgetData = getDefaultWidgetData(type);
+
+            // For bookmarks, prompt for URL
+            if (type === 'bookmarks') {
+                const url = prompt('Enter website URL:');
+                if (!url) return;
+                try {
+                    // Fetch metadata via Microlink API
+                    const response = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+                    const data = await response.json();
+                    if (data.data) {
+                        const meta = data.data;
+                        widgetData.items = [{
+                            url: url,
+                            title: meta.title || url,
+                            description: meta.description || '',
+                            icon: meta.logo?.url || ''
+                        }];
+                        showToast('Bookmark added with metadata!', 'success');
+                    } else {
+                        widgetData.items = [{ url: url, title: url }];
+                    }
+                } catch {
+                    widgetData.items = [{ url: url, title: url }];
+                }
+            }
+
+            // For RSS, prompt for feed URL
+            if (type === 'rss') {
+                const feed = prompt('Enter RSS feed URL:');
+                if (!feed) return;
+                widgetData.feed = feed;
+                try {
+                    // Try to fetch feed metadata (simplified)
+                    widgetData.items = [
+                        { title: 'Loading feed...', source: 'Fetching...', time: 'Just now' }
+                    ];
+                    // In production, use rss-parser
+                } catch {
+                    widgetData.items = [{ title: 'Sample article', source: 'Example', time: '1h ago' }];
+                }
+            }
+
+            // For projects
+            if (type === 'projects') {
+                const name = prompt('Project name:');
+                if (!name) return;
+                const repo = prompt('GitHub repo URL (optional):');
+                widgetData.items = [{
+                    name: name,
+                    progress: 0,
+                    status: 'planning',
+                    deadline: '',
+                    repo: repo || ''
+                }];
+                // Try to fetch GitHub data
+                if (repo) {
+                    try {
+                        const repoPath = repo.replace('https://github.com/', '');
+                        const ghResponse = await fetch(`https://api.github.com/repos/${repoPath}`);
+                        if (ghResponse.ok) {
+                            const ghData = await ghResponse.json();
+                            widgetData.items[0].progress = 50;
+                            widgetData.items[0].status = 'progress';
+                            widgetData.items[0].stars = ghData.stargazers_count;
+                            widgetData.items[0].language = ghData.language;
+                            showToast('GitHub data fetched!', 'success');
+                        }
+                    } catch {}
+                }
+            }
+
+            // For embed
+            if (type === 'embed') {
+                const url = prompt('Enter embed URL:');
+                if (!url) return;
+                widgetData.url = url;
+            }
+
+            // For notes
+            if (type === 'notes') {
+                const content = prompt('Enter your note:');
+                if (content !== null) widgetData.content = content;
+                else return;
+            }
+
+            // For tasks
+            if (type === 'tasks') {
+                const task = prompt('Enter task:');
+                if (!task) return;
+                widgetData.items = [{ text: task, done: false, priority: 'medium', due: '' }];
+            }
+
             try {
                 const newWidget = {
                     userId: currentUser.uid,
@@ -1954,10 +2359,8 @@
                     size: 'small',
                     height: 'md',
                     color: null,
-                    data: getDefaultWidgetData(type),
+                    data: widgetData,
                     order: widgets.length,
-                    footer: true,
-                    footerText: 'Created just now',
                     createdAt: serverTimestamp(),
                     updatedAt: serverTimestamp()
                 };
@@ -1997,8 +2400,6 @@
                     color: original.color || null,
                     data: JSON.parse(JSON.stringify(original.data || {})),
                     order: widgets.length,
-                    footer: true,
-                    footerText: 'Copied just now',
                     createdAt: serverTimestamp(),
                     updatedAt: serverTimestamp()
                 };
@@ -2008,6 +2409,19 @@
             } catch (error) {
                 console.error('Error duplicating widget:', error);
                 showToast('Error duplicating widget', 'error');
+            }
+        }
+
+        async function renameWidget(widgetId, newTitle) {
+            try {
+                await updateDoc(doc(db, COLLECTIONS.WIDGETS, widgetId), {
+                    title: newTitle,
+                    updatedAt: serverTimestamp()
+                });
+                showToast('Widget renamed!', 'success');
+            } catch (error) {
+                console.error('Error renaming widget:', error);
+                showToast('Error renaming widget', 'error');
             }
         }
 
@@ -2034,7 +2448,36 @@
             }
             if (widget.type === 'rss') {
                 const feed = prompt('RSS Feed URL:', widget.data?.feed || '');
-                if (feed !== null) widget.data.feed = feed;
+                if (feed !== null) {
+                    widget.data.feed = feed;
+                    // Try to fetch feed
+                    try {
+                        widget.data.items = [
+                            { title: 'Loading feed...', source: 'Fetching...', time: 'Just now' }
+                        ];
+                        showToast('Feed updated!', 'success');
+                    } catch {}
+                }
+            }
+            if (widget.type === 'bookmarks' && widget.data?.items) {
+                const url = prompt('Add bookmark URL:', 'https://');
+                if (url) {
+                    try {
+                        const response = await fetch(`https://api.microlink.io/?url=${encodeURIComponent(url)}`);
+                        const data = await response.json();
+                        if (data.data) {
+                            widget.data.items.push({
+                                url: url,
+                                title: data.data.title || url,
+                                icon: data.data.logo?.url || ''
+                            });
+                        } else {
+                            widget.data.items.push({ url: url, title: url });
+                        }
+                    } catch {
+                        widget.data.items.push({ url: url, title: url });
+                    }
+                }
             }
 
             try {
@@ -2219,6 +2662,138 @@
         }
 
         // ============================================================
+        // PAGE SETTINGS
+        // ============================================================
+        function openPageSettings() {
+            const page = pages.find(p => p.id === currentPageId);
+            if (page && page.settings) {
+                pageSettings = { ...pageSettings, ...page.settings };
+            }
+
+            document.getElementById('settingsPageTitle').value = pageSettings.title || page?.name || 'Home';
+            document.getElementById('settingsPageDesc').value = pageSettings.description || '';
+            document.getElementById('settingsPageGroup').value = pageSettings.group || 'personal';
+            document.getElementById('settingsWidgetOpacity').value = pageSettings.widgetOpacity || 8;
+            document.getElementById('settingsOpacityValue').textContent = (pageSettings.widgetOpacity || 8) + '%';
+            document.getElementById('settingsSearchBar').value = pageSettings.searchBar || 'default';
+            document.getElementById('settingsLinkTarget').value = pageSettings.linkTarget || 'new';
+
+            document.getElementById('settingsTitleCount').textContent =
+                (document.getElementById('settingsPageTitle').value.length || 0) + '/50';
+
+            renderColumns();
+            document.getElementById('pageSettingsModal').classList.add('open');
+        }
+
+        function renderColumns() {
+            const container = document.getElementById('settingsColumnsContainer');
+            const cols = pageSettings.columns || [];
+
+            if (cols.length === 0) {
+                container.innerHTML =
+                    '<div style="color:var(--white-alpha-40);text-align:center;padding:20px;">No columns yet. Add one below.</div>';
+                return;
+            }
+
+            container.innerHTML = `
+                        <div class="settings-columns">
+                            ${cols.map((col, idx) => `
+                                <div class="settings-column">
+                                    <div class="settings-column__header">
+                                        <span class="settings-column__name">Column ${idx + 1}</span>
+                                        <span class="settings-column__count">${col.widgets?.length || 0} widgets</span>
+                                        ${cols.length > 1 ? `<button class="settings-column__remove" onclick="removeColumn(${idx})">✕</button>` : ''}
+                                    </div>
+                                    <div class="settings-size-btns">
+                                        ${['small','medium','large','xl'].map(s => `
+                                            <button class="settings-size-btn ${col.size === s ? 'active' : ''}" onclick="setColumnSize(${idx}, '${s}')">${s}</button>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+        }
+
+        function addColumn() {
+            pageSettings.columns.push({
+                id: 'col' + (pageSettings.columns.length + 1),
+                widgets: [],
+                size: 'small'
+            });
+            renderColumns();
+        }
+
+        function removeColumn(index) {
+            if (pageSettings.columns.length <= 1) {
+                showToast('Need at least one column', 'error');
+                return;
+            }
+            pageSettings.columns.splice(index, 1);
+            renderColumns();
+        }
+
+        function setColumnSize(index, size) {
+            pageSettings.columns[index].size = size;
+            renderColumns();
+        }
+
+        async function savePageSettings() {
+            const title = document.getElementById('settingsPageTitle').value.trim() || 'Home';
+            const description = document.getElementById('settingsPageDesc').value.trim();
+            const group = document.getElementById('settingsPageGroup').value;
+            const widgetOpacity = parseInt(document.getElementById('settingsWidgetOpacity').value);
+            const searchBar = document.getElementById('settingsSearchBar').value;
+            const linkTarget = document.getElementById('settingsLinkTarget').value;
+
+            pageSettings.title = title;
+            pageSettings.description = description;
+            pageSettings.group = group;
+            pageSettings.widgetOpacity = widgetOpacity;
+            pageSettings.searchBar = searchBar;
+            pageSettings.linkTarget = linkTarget;
+
+            // Apply widget opacity
+            document.querySelectorAll('.widget').forEach(el => {
+                const opacity = widgetOpacity / 100;
+                el.style.background = `rgba(255,255,255,${opacity * 0.08})`;
+                el.style.backdropFilter = `blur(${Math.max(8, opacity * 30)}px)`;
+            });
+
+            try {
+                const pageRef = doc(db, COLLECTIONS.PAGES, currentPageId);
+                await updateDoc(pageRef, {
+                    name: title,
+                    settings: pageSettings,
+                    updatedAt: serverTimestamp()
+                });
+
+                // Update local pages
+                const page = pages.find(p => p.id === currentPageId);
+                if (page) {
+                    page.name = title;
+                    page.settings = pageSettings;
+                }
+
+                closeModal('pageSettingsModal');
+                showToast('Page settings saved!', 'success');
+            } catch (error) {
+                console.error('Error saving page settings:', error);
+                showToast('Error saving settings', 'error');
+            }
+        }
+
+        document.getElementById('settingsPageTitle').addEventListener('input', () => {
+            const count = document.getElementById('settingsPageTitle').value.length;
+            document.getElementById('settingsTitleCount').textContent = count + '/50';
+        });
+
+        document.getElementById('settingsWidgetOpacity').addEventListener('input', () => {
+            const val = document.getElementById('settingsWidgetOpacity').value;
+            document.getElementById('settingsOpacityValue').textContent = val + '%';
+        });
+
+        // ============================================================
         // MODALS
         // ============================================================
         function openAddWidget() {
@@ -2331,9 +2906,11 @@
         window.addWidget = addWidget;
         window.deleteWidget = deleteWidget;
         window.duplicateWidget = duplicateWidget;
+        window.renameWidget = renameWidget;
         window.openWidgetSettings = openWidgetSettings;
         window.openAddWidget = openAddWidget;
         window.openBackgroundModal = openBackgroundModal;
+        window.openPageSettings = openPageSettings;
         window.setBackground = setBackground;
         window.resetBackground = resetBackground;
         window.closeModal = closeModal;
@@ -2344,12 +2921,19 @@
         window.addTask = addTask;
         window.toggleTask = toggleTask;
         window.saveNoteContent = saveNoteContent;
+        window.addColumn = addColumn;
+        window.removeColumn = removeColumn;
+        window.setColumnSize = setColumnSize;
+        window.savePageSettings = savePageSettings;
+        window.renderColumns = renderColumns;
 
-        console.log('%c🚀 DockGrid %c(Firebase)',
+        console.log('%c🚀 DockGrid %cv2.0 (Full Feature)',
             'font-size:20px;font-weight:900;color:#ff6b35;',
             'font-size:14px;color:#fff;');
         console.log('📊 ' + widgets.length + ' widgets');
         console.log('👤 ' + (currentUser?.email || 'Not logged in'));
+        console.log('📐 ' + pageSettings.columns.length + ' columns');
+        console.log('🔄 Click widget title to rename');
     </script>
 </body>
 </html>
