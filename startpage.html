@@ -9,7 +9,140 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-    <link rel="stylesheet" href="startpage.css">
+    <style>
+        :root{--orange-500:#ff6b35;--orange-600:#e85d2c;--orange-400:#ff8c5a;--black-100:#000;--black-90:#0a0a0a;--black-80:#1a1a1a;--black-70:#2a2a2a;--black-50:#555;--black-40:#777;--black-20:#ccc;--black-10:#e0e0e0;--black-5:#f5f5f5;--white:#fff;--white-a10:rgba(255,255,255,0.1);--white-a20:rgba(255,255,255,0.2);--white-a50:rgba(255,255,255,0.5);--white-a70:rgba(255,255,255,0.7);--white-a90:rgba(255,255,255,0.9);--red-500:#ef4444;--green-500:#22c55e;--font:'Inter',system-ui,sans-serif;--radius-xs:4px;--radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-xl:24px;--shadow-sm:0 1px 4px rgba(0,0,0,0.08);--shadow-md:0 4px 12px rgba(0,0,0,0.1);--shadow-lg:0 8px 24px rgba(0,0,0,0.12);--transition:150ms cubic-bezier(0.4,0,0.2,1)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        html,body{width:100%;height:100%;overflow:hidden;font-family:var(--font);-webkit-font-smoothing:antialiased;font-size:14px}
+        body{background:#1a1a1a;display:flex;flex-direction:column}
+        .bg-layer{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background-size:cover;background-position:center;opacity:0.9;transition:background-image 0.6s ease}
+        .bg-overlay{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;background:rgba(0,0,0,0.38);pointer-events:none}
+        .app{position:relative;z-index:2;display:flex;flex-direction:column;height:100%}
+        .loading-bar{position:fixed;top:0;left:0;height:3px;background:var(--orange-500);z-index:9999;width:0;transition:width 0.4s ease-out;border-radius:0 2px 2px 0}
+        .loading-bar.active{width:70%;animation:loadingPulse 1.5s ease-in-out infinite}
+        .loading-bar.done{width:100%;opacity:0;transition:width 0.3s ease-out,opacity 0.3s ease-out}
+        @keyframes loadingPulse{0%{width:30%}50%{width:80%}100%{width:30%}}
+        .header{display:flex;flex-direction:column;padding:8px 18px 0;z-index:10;flex-shrink:0;gap:6px}
+        .header-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+        .header-left{display:flex;align-items:center;gap:8px;flex-shrink:0}
+        .header-center{flex:1;display:flex;flex-direction:column;align-items:center;max-width:500px;margin:0 auto;gap:4px}
+        .header-right{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-left:auto}
+        .header-username{color:var(--white-a70);font-size:11px;font-weight:500}
+        .page-title{font-size:18px;font-weight:800;color:var(--white-a90);letter-spacing:-0.5px;cursor:text;padding:2px 8px;border-radius:var(--radius-xs);border:1px solid transparent;outline:none;font-family:var(--font);background:transparent;text-align:center;transition:all var(--transition)}
+        .page-title:hover{border-color:var(--white-a30)}.page-title:focus{border-color:var(--orange-500);background:rgba(0,0,0,0.3)}
+        .btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;font-size:11px;font-weight:600;font-family:var(--font);border:none;border-radius:var(--radius-sm);cursor:pointer;transition:all var(--transition);letter-spacing:-0.2px;white-space:nowrap}
+        .btn-dark{background:rgba(0,0,0,0.5);color:var(--white);backdrop-filter:blur(8px)}.btn-dark:hover{background:rgba(0,0,0,0.7)}
+        .btn-primary{background:var(--orange-500);color:var(--white)}.btn-primary:hover{background:var(--orange-600)}
+        .btn-sm{padding:5px 10px;font-size:10px}
+        .search-box{width:100%;max-width:400px;position:relative}
+        .search-input{width:100%;padding:8px 14px 8px 38px;font-size:12px;font-family:var(--font);background:rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.12);border-radius:var(--radius-xl);color:var(--white);outline:none;transition:all var(--transition);backdrop-filter:blur(8px)}
+        .search-input::placeholder{color:var(--white-a50)}.search-input:focus{border-color:var(--orange-500);background:rgba(0,0,0,0.55)}
+        .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--white-a50);pointer-events:none;font-size:15px}
+        .avatar{width:32px;height:32px;border-radius:50%;background:var(--orange-500);display:flex;align-items:center;justify-content:center;color:var(--white);font-weight:700;font-size:13px;cursor:pointer;border:2px solid rgba(255,255,255,0.2);transition:all var(--transition);overflow:hidden;flex-shrink:0}
+        .avatar img{width:100%;height:100%;object-fit:cover}.avatar:hover{border-color:var(--orange-500)}
+        .dropdown{position:relative}
+        .dropdown-menu{display:none;position:absolute;top:calc(100% + 6px);right:0;min-width:200px;background:rgba(18,18,18,0.98);backdrop-filter:blur(16px);border:1px solid var(--white-a10);border-radius:var(--radius-md);padding:4px;z-index:999;box-shadow:0 12px 32px rgba(0,0,0,0.5)}
+        .dropdown-menu.show{display:block;animation:dropIn 120ms ease-out}@keyframes dropIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+        .dropdown-item{display:flex;align-items:center;gap:8px;padding:8px 12px;font-size:11px;color:var(--white-a70);cursor:pointer;border-radius:var(--radius-xs);transition:all var(--transition);border:none;background:none;width:100%;text-align:left;font-family:var(--font)}
+        .dropdown-item:hover{background:var(--white-a10);color:var(--white)}.dropdown-item.danger{color:#f87171}.dropdown-item.danger:hover{background:rgba(239,68,68,0.15);color:#fca5a5}
+        .dropdown-divider{height:1px;background:var(--white-a10);margin:3px 0}
+        .main{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 18px 18px}
+        .main::-webkit-scrollbar{width:5px}.main::-webkit-scrollbar-track{background:transparent}.main::-webkit-scrollbar-thumb{background:var(--white-a20);border-radius:3px}
+        .widget-grid{display:flex;flex-wrap:wrap;gap:12px;padding-bottom:60px;align-items:flex-start}
+        .widget-grid.cols-1 .widget{width:100%}.widget-grid.cols-2 .widget{width:calc(50% - 6px)}.widget-grid.cols-3 .widget{width:calc(33.333% - 8px)}.widget-grid.cols-4 .widget{width:calc(25% - 9px)}
+        .widget.size-small{width:280px!important;min-height:140px}.widget.size-medium{width:360px!important;min-height:180px}.widget.size-large{width:480px!important;min-height:220px}.widget.size-huge{width:100%!important;min-height:280px}
+        .widget{background:rgba(255,255,255,0.96);border-radius:var(--radius-sm);box-shadow:0 1px 6px rgba(0,0,0,0.1);overflow:visible;display:flex;flex-direction:column;min-height:160px;transition:all var(--transition);position:relative;cursor:grab;flex-shrink:0}
+        .widget:active{cursor:grabbing}.widget:hover{box-shadow:0 4px 16px rgba(0,0,0,0.15);transform:translateY(-1px)}
+        .widget.sortable-ghost{opacity:0.4;background:rgba(255,107,53,0.1);border:2px dashed var(--orange-500)}
+        .widget.sortable-chosen{box-shadow:0 12px 32px rgba(0,0,0,0.25);z-index:50}
+        .widget-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#fafafa;border-bottom:1px solid #eee;min-height:40px;cursor:default;border-radius:var(--radius-sm) var(--radius-sm) 0 0}
+        .widget-title{font-size:13px;font-weight:600;color:#1a1a1a;cursor:pointer;padding:2px 5px;border-radius:3px;border:1px solid transparent;outline:none;font-family:var(--font);background:transparent;max-width:70%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none}
+        .widget-title:hover{border-color:#ddd}
+        .widget-hover-actions{display:flex;gap:2px;align-items:center}
+        .widget-action-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:transparent;color:#999;transition:all var(--transition);font-size:16px}
+        .widget-action-btn:hover{background:#e8e8e8;color:#333}
+        .widget-menu-btn{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:transparent;color:#999;transition:all var(--transition);font-size:18px;position:relative}
+        .widget-menu-btn:hover{background:#e8e8e8;color:#333}
+        .widget-body{padding:12px 14px;color:#333;font-size:12px;line-height:1.5;flex:1;overflow-y:auto;max-height:380px}
+        .widget-body::-webkit-scrollbar{width:4px}.widget-body::-webkit-scrollbar-thumb{background:#ddd;border-radius:2px}
+        .widget-context-menu{display:none;position:fixed;min-width:180px;background:rgba(18,18,18,0.98);backdrop-filter:blur(16px);border:1px solid var(--white-a10);border-radius:var(--radius-md);padding:4px;z-index:9999;box-shadow:0 16px 48px rgba(0,0,0,0.6);animation:dropIn 100ms ease-out}
+        .widget-context-menu.show{display:block}
+        .widget-empty{text-align:center;padding:20px 10px;color:#bbb}
+        .widget-empty iconify-icon{font-size:22px;opacity:0.5;display:block;margin:0 auto 6px}
+        .widget-empty p{font-size:11px;margin-bottom:8px}
+        .bookmark-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+        .bookmark-card{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px;border-radius:var(--radius-sm);text-decoration:none;color:#333;transition:all var(--transition);min-width:70px}
+        .bookmark-card:hover{background:#f5f5f5;transform:translateY(-2px)}
+        .bookmark-card-icon{width:32px;height:32px;border-radius:6px}
+        .bookmark-card-name{font-size:10px;font-weight:600;color:#555;text-align:center;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .note-content{border-radius:var(--radius-sm)}
+        .task-item{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:var(--radius-xs);cursor:pointer;transition:all var(--transition);color:#333}
+        .task-item:hover{background:#f5f5f5}
+        .task-progress{height:3px;background:#eee;border-radius:2px;margin-bottom:8px;overflow:hidden}
+        .task-progress-bar{height:100%;background:var(--orange-500);transition:width 0.3s ease-out;border-radius:2px}
+        .embed-preview{border-radius:var(--radius-xs);overflow:hidden;background:#000;min-height:180px;display:flex;align-items:center;justify-content:center}
+        .embed-preview iframe{width:100%;height:100%;min-height:180px;border:none}
+        .calc-display{text-align:right;font-size:24px;font-weight:700;padding:8px 12px;background:#f9f9f9;border-radius:var(--radius-xs);margin-bottom:6px;color:#1a1a1a;min-height:42px;word-break:break-all}
+        .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+        .calc-btn{padding:10px;font-size:13px;font-weight:600;border:1px solid #e0e0e0;border-radius:var(--radius-xs);cursor:pointer;background:#fff;color:#333;transition:all var(--transition);font-family:var(--font)}
+        .calc-btn:hover{background:#f5f5f5}.calc-btn.operator{background:#fff5f0;color:var(--orange-500);font-weight:700}.calc-btn.equals{background:var(--orange-500);color:#fff;border-color:var(--orange-500);font-weight:700}.calc-btn.equals:hover{background:var(--orange-600)}
+        .clock-display{text-align:center;padding:12px}
+        .clock-time{font-size:36px;font-weight:800;color:#1a1a1a;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+        .clock-date{font-size:11px;color:#888;margin-top:4px}
+        .gallery-scroll{max-height:300px;overflow-y:auto;overflow-x:hidden}
+        .gallery-scroll::-webkit-scrollbar{width:0}
+        .gallery-masonry{display:grid;grid-template-columns:repeat(2,1fr);gap:4px}
+        .gallery-item{border-radius:var(--radius-xs);overflow:hidden;background:#f0f0f0}
+        .gallery-item img{width:100%;display:block;object-fit:cover;transition:transform 0.3s ease}
+        .gallery-item:hover img{transform:scale(1.05)}
+        .project-card{padding:8px 0}
+        .project-name{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:4px}
+        .project-desc{font-size:11px;color:#666;margin-bottom:6px;line-height:1.4}
+        .project-links{display:flex;gap:8px;flex-wrap:wrap}
+        .project-links a{font-size:10px;color:var(--orange-500);text-decoration:none;font-weight:600}
+        .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:40vh;color:var(--white-a50);text-align:center;gap:10px}
+        .empty-state iconify-icon{font-size:48px;opacity:0.35}.empty-state h3{font-size:16px;font-weight:700;color:var(--white-a70)}
+        .footer{text-align:center;padding:12px 20px 16px;flex-shrink:0;z-index:5}
+        .footer a{color:var(--white-a70);font-size:11px;font-weight:500;text-decoration:none;transition:color var(--transition);letter-spacing:-0.2px}.footer a:hover{color:var(--orange-500)}
+        .edit-panel-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:300}.edit-panel-overlay.show{display:block}
+        .edit-panel{position:fixed;top:0;right:-420px;width:400px;height:100%;background:#1e1e1e;z-index:301;transition:right 0.3s cubic-bezier(0.4,0,0.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,0.5)}.edit-panel.open{right:0}
+        .edit-panel-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,0.08)}
+        .edit-panel-title{font-size:15px;font-weight:700;color:var(--white)}
+        .edit-panel-close{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:rgba(255,255,255,0.06);color:var(--white-a70);font-size:15px;transition:all var(--transition)}.edit-panel-close:hover{background:rgba(255,255,255,0.12);color:var(--white)}
+        .edit-panel-body{flex:1;overflow-y:auto;padding:16px 18px}.edit-panel-body::-webkit-scrollbar{width:4px}.edit-panel-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
+        .edit-panel-footer{display:flex;gap:8px;padding:14px 18px;border-top:1px solid rgba(255,255,255,0.08)}
+        .edit-list{max-height:200px;overflow-y:auto}.edit-item{display:flex;align-items:center;gap:8px;padding:6px;color:var(--white-a70);font-size:11px;border-radius:var(--radius-xs)}.edit-item:hover{background:rgba(255,255,255,0.05)}
+        .btn-x{margin-left:auto;background:none;border:none;color:#f87171;cursor:pointer;font-size:12px}
+        .pages-sidebar{position:fixed;left:0;top:0;bottom:0;width:260px;background:rgba(16,16,16,0.98);backdrop-filter:blur(16px);z-index:150;transform:translateX(-100%);transition:transform 220ms ease-out;display:flex;flex-direction:column;border-right:1px solid var(--white-a10)}.pages-sidebar.open{transform:translateX(0)}
+        .pages-sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--white-a10)}
+        .pages-sidebar-title{font-size:14px;font-weight:700;color:var(--white)}
+        .pages-sidebar-close{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:var(--white-a10);color:var(--white-a70);font-size:15px;transition:all var(--transition)}.pages-sidebar-close:hover{background:var(--white-a20);color:var(--white)}
+        .pages-sidebar-body{flex:1;overflow-y:auto;padding:10px}.pages-sidebar-body::-webkit-scrollbar{width:4px}.pages-sidebar-body::-webkit-scrollbar-thumb{background:var(--white-a10);border-radius:2px}
+        .page-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--radius-xs);cursor:pointer;transition:all var(--transition);color:var(--white-a70);font-size:12px;font-weight:500;margin-bottom:1px}.page-item:hover{background:var(--white-a10);color:var(--white)}.page-item.active{background:rgba(255,107,53,0.2);color:var(--orange-500);font-weight:600}
+        .pages-empty{color:var(--white-a50);text-align:center;padding:16px;font-size:11px}
+        .pages-sidebar-footer{padding:12px 18px;border-top:1px solid var(--white-a10)}
+        .pages-sidebar-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:149}.pages-sidebar-overlay.show{display:block}
+        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:200;align-items:center;justify-content:center}.modal-overlay.show{display:flex;animation:fadeIn 120ms ease-out}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        .modal{background:#1e1e1e;border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);max-width:580px;width:92%;max-height:80vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 48px rgba(0,0,0,0.45);animation:modalIn 200ms ease-out}@keyframes modalIn{from{opacity:0;transform:scale(0.96) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+        .modal-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+        .modal-title{font-size:15px;font-weight:700;color:var(--white);letter-spacing:-0.3px}
+        .modal-close{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;border:none;background:rgba(255,255,255,0.06);color:var(--white-a70);font-size:15px;transition:all var(--transition)}.modal-close:hover{background:rgba(255,255,255,0.12);color:var(--white)}
+        .modal-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+        .modal-tab{flex:1;padding:11px 14px;font-size:11px;font-weight:600;font-family:var(--font);cursor:pointer;border:none;background:transparent;color:var(--white-a50);transition:all var(--transition);text-align:center;border-bottom:2px solid transparent}.modal-tab:hover{color:var(--white-a70);background:rgba(255,255,255,0.02)}.modal-tab.active{color:var(--orange-500);border-bottom-color:var(--orange-500)}
+        .modal-body{flex:1;overflow-y:auto;padding:16px 18px}.modal-body::-webkit-scrollbar{width:4px}.modal-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
+        .tab-content{display:none}.tab-content.active{display:block;animation:fadeIn 150ms ease-out}
+        .form-group{margin-bottom:10px}.form-label{display:block;font-size:10px;font-weight:600;color:var(--white-a50);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.4px}
+        .form-input{width:100%;padding:9px 10px;font-size:12px;font-family:var(--font);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-xs);color:var(--white);outline:none;transition:all var(--transition)}.form-input:focus{border-color:var(--orange-500)}.form-input::placeholder{color:rgba(255,255,255,0.25)}
+        .form-textarea{min-height:50px;resize:vertical}
+        .form-select{width:100%;padding:9px 10px;font-size:12px;font-family:var(--font);background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-xs);color:var(--white);outline:none;cursor:pointer}.form-select option{background:#1e1e1e;color:#fff}
+        .form-range{width:100%;-webkit-appearance:none;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;outline:none;cursor:pointer}.form-range::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--orange-500);cursor:pointer}
+        .image-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+        .image-option{aspect-ratio:16/10;border-radius:var(--radius-xs);cursor:pointer;border:2px solid transparent;transition:all var(--transition);overflow:hidden;background-size:cover;background-position:center}.image-option:hover{border-color:var(--orange-500)}.image-option.selected{border-color:var(--orange-500)}
+        .widget-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+        .widget-type-btn{padding:12px 8px;border-radius:var(--radius-xs);border:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:all var(--transition);display:flex;flex-direction:column;align-items:center;gap:5px;background:transparent;color:var(--white-a70);font-family:var(--font);text-align:center;font-size:10px;width:100%}.widget-type-btn:hover{background:rgba(255,255,255,0.04);border-color:var(--orange-500);color:var(--white)}.widget-type-btn iconify-icon{font-size:22px;color:var(--orange-500)}
+        .toast-container{position:fixed;top:14px;right:14px;z-index:9999;display:flex;flex-direction:column;gap:5px}
+        .toast{padding:9px 14px;background:#1e1e1e;color:var(--white);border-left:3px solid var(--orange-500);border-radius:var(--radius-xs);font-size:11px;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,0.25);animation:slideIn 200ms ease-out;max-width:300px}.toast.error{border-left-color:var(--red-500)}.toast.success{border-left-color:var(--green-500)}@keyframes slideIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:translateX(0)}}
+        @media(max-width:768px){.widget-grid.cols-3 .widget,.widget-grid.cols-4 .widget{width:100%!important}.widget-grid.cols-2 .widget{width:100%!important}.header-center{max-width:300px}.header{padding:6px 10px 0}.widget-type-grid{grid-template-columns:repeat(2,1fr)}.page-title{font-size:15px}.widget.size-small,.widget.size-medium,.widget.size-large{width:100%!important}}
+    </style>
 </head>
 <body>
 
@@ -18,138 +151,38 @@
 <div class="bg-overlay"></div>
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- Pages Sidebar -->
 <div class="pages-sidebar-overlay" id="pagesOverlay" onclick="DG.closePagesSidebar()"></div>
 <div class="pages-sidebar" id="pagesSidebar">
-    <div class="pages-sidebar-header">
-        <span class="pages-sidebar-title">Your Pages</span>
-        <button class="pages-sidebar-close" onclick="DG.closePagesSidebar()"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button>
-    </div>
+    <div class="pages-sidebar-header"><span class="pages-sidebar-title">Your Pages</span><button class="pages-sidebar-close" onclick="DG.closePagesSidebar()"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div>
     <div class="pages-sidebar-body" id="pagesList"></div>
-    <div class="pages-sidebar-footer">
-        <button class="btn btn-primary" style="width:100%;justify-content:center;padding:10px" onclick="DG.createNewPage()" id="newPageBtn">
-            <iconify-icon icon="mdi:plus" width="14" height="14"></iconify-icon> New Page
-        </button>
-        <small style="color:var(--white-a50);display:block;text-align:center;margin-top:4px;font-size:10px" id="pageLimit"></small>
-    </div>
+    <div class="pages-sidebar-footer"><button class="btn btn-primary" style="width:100%;justify-content:center;padding:10px" onclick="DG.createNewPage()" id="newPageBtn"><iconify-icon icon="mdi:plus" width="14" height="14"></iconify-icon> New Page</button><small style="color:var(--white-a50);display:block;text-align:center;margin-top:4px;font-size:10px" id="pageLimit"></small></div>
 </div>
 
-<!-- Edit Panel (Right Side) -->
 <div class="edit-panel-overlay" id="editPanelOverlay" onclick="DG.closeEditPanel()"></div>
 <div class="edit-panel" id="editPanel">
-    <div class="edit-panel-header">
-        <span class="edit-panel-title" id="editPanelTitle">Edit Widget</span>
-        <button class="edit-panel-close" onclick="DG.closeEditPanel()"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button>
-    </div>
+    <div class="edit-panel-header"><span class="edit-panel-title" id="editPanelTitle">Edit Widget</span><button class="edit-panel-close" onclick="DG.closeEditPanel()"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div>
     <div class="edit-panel-body" id="editPanelBody"></div>
-    <div class="edit-panel-footer">
-        <button class="btn btn-dark" onclick="DG.closeEditPanel()" style="flex:1;justify-content:center">Cancel</button>
-        <button class="btn btn-primary" onclick="DG.saveEditPanel()" style="flex:1;justify-content:center">Save</button>
-    </div>
+    <div class="edit-panel-footer"><button class="btn btn-dark" onclick="DG.closeEditPanel()" style="flex:1;justify-content:center">Cancel</button><button class="btn btn-primary" onclick="DG.saveEditPanel()" style="flex:1;justify-content:center">Save</button></div>
 </div>
 
 <div class="app">
-    <!-- Header -->
     <header class="header">
         <div class="header-top">
-            <div class="header-left">
-                <button class="btn btn-dark" onclick="DG.openPagesSidebar()"><iconify-icon icon="mdi:file-document-multiple-outline" width="14" height="14"></iconify-icon> Pages</button>
-                <span class="header-username" id="usernameDisplay">@user</span>
-            </div>
-            <div class="header-center">
-                <span class="page-title" id="pageTitleDisplay" contenteditable="true" spellcheck="false" onblur="DG.savePageTitle(this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">DockGrid Page</span>
-                <div class="search-box">
-                    <span class="search-icon"><iconify-icon icon="mdi:magnify" width="16" height="16"></iconify-icon></span>
-                    <input type="text" class="search-input" placeholder="Search Google or type a URL..." onkeydown="if(event.key==='Enter')DG.searchGoogle(this.value)">
-                </div>
-            </div>
-            <div class="header-right">
-                <button class="btn btn-dark" onclick="DG.openAddWidgetModal()"><iconify-icon icon="mdi:plus" width="14" height="14"></iconify-icon> Add</button>
-                <button class="btn btn-dark" onclick="DG.openPageSettingsModal()"><iconify-icon icon="mdi:pencil-outline" width="14" height="14"></iconify-icon> Edit</button>
-                <div class="dropdown" id="avatarDropdown">
-                    <div class="avatar" id="avatarBtn" onclick="DG.toggleDropdown('avatarMenu')"><span id="avatarInitial">U</span></div>
-                    <div class="dropdown-menu" id="avatarMenu">
-                        <div class="dropdown-item" onclick="DG.openProfileModal()"><iconify-icon icon="mdi:camera-plus-outline" width="15" height="15"></iconify-icon> Change profile image</div>
-                        <div class="dropdown-item" onclick="DG.openBackgroundModal()"><iconify-icon icon="mdi:image-outline" width="15" height="15"></iconify-icon> Change background</div>
-                        <div class="dropdown-divider"></div>
-                        <div class="dropdown-item danger" onclick="DG.handleSignOut()"><iconify-icon icon="mdi:logout" width="15" height="15"></iconify-icon> Sign out</div>
-                    </div>
-                </div>
-            </div>
+            <div class="header-left"><button class="btn btn-dark" onclick="DG.openPagesSidebar()"><iconify-icon icon="mdi:file-document-multiple-outline" width="14" height="14"></iconify-icon> Pages</button><span class="header-username" id="usernameDisplay">@user</span></div>
+            <div class="header-center"><span class="page-title" id="pageTitleDisplay" contenteditable="true" spellcheck="false" onblur="DG.savePageTitle(this.textContent)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">DockGrid Page</span><div class="search-box"><span class="search-icon"><iconify-icon icon="mdi:magnify" width="16" height="16"></iconify-icon></span><input type="text" class="search-input" placeholder="Search Google or type a URL..." onkeydown="if(event.key==='Enter')DG.searchGoogle(this.value)"></div></div>
+            <div class="header-right"><button class="btn btn-dark" onclick="DG.openAddWidgetModal()"><iconify-icon icon="mdi:plus" width="14" height="14"></iconify-icon> Add</button><button class="btn btn-dark" onclick="DG.openPageSettingsModal()"><iconify-icon icon="mdi:pencil-outline" width="14" height="14"></iconify-icon> Edit</button><div class="dropdown" id="avatarDropdown"><div class="avatar" id="avatarBtn" onclick="DG.toggleDropdown('avatarMenu')"><span id="avatarInitial">U</span></div><div class="dropdown-menu" id="avatarMenu"><div class="dropdown-item" onclick="DG.openProfileModal()"><iconify-icon icon="mdi:camera-plus-outline" width="15" height="15"></iconify-icon> Change profile image</div><div class="dropdown-item" onclick="DG.openBackgroundModal()"><iconify-icon icon="mdi:image-outline" width="15" height="15"></iconify-icon> Change background</div><div class="dropdown-divider"></div><div class="dropdown-item danger" onclick="DG.handleSignOut()"><iconify-icon icon="mdi:logout" width="15" height="15"></iconify-icon> Sign out</div></div></div></div>
         </div>
     </header>
-
-    <!-- Main -->
-    <main class="main" id="mainContent">
-        <div class="widget-grid cols-3" id="widgetGrid"></div>
-        <div class="empty-state" id="emptyState">
-            <iconify-icon icon="mdi:view-dashboard-outline"></iconify-icon>
-            <h3>Your dashboard is empty</h3>
-            <p>Click <strong style="color:var(--orange-500)">Add</strong> to start building your dashboard</p>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <div class="footer">
-        <a href="https://pireactive.vercel.app/" target="_blank" rel="noopener">DockGrid © 2026 By PIReactive</a>
-    </div>
+    <main class="main" id="mainContent"><div class="widget-grid cols-3" id="widgetGrid"></div><div class="empty-state" id="emptyState"><iconify-icon icon="mdi:view-dashboard-outline"></iconify-icon><h3>Your dashboard is empty</h3><p>Click <strong style="color:var(--orange-500)">Add</strong> to start building</p></div></main>
+    <div class="footer"><a href="https://pireactive.vercel.app/" target="_blank" rel="noopener">DockGrid © 2026 By PIReactive</a></div>
 </div>
 
-<!-- Add Widget Modal -->
-<div class="modal-overlay" id="addWidgetModal">
-    <div class="modal">
-        <div class="modal-header"><span class="modal-title">Add Widget</span><button class="modal-close" onclick="DG.closeModal('addWidgetModal')"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div>
-        <div class="modal-body"><div class="widget-type-grid" id="widgetTypeGrid"></div></div>
-    </div>
-</div>
-
-<!-- Page Settings Modal -->
-<div class="modal-overlay" id="pageSettingsModal">
-    <div class="modal">
-        <div class="modal-header"><span class="modal-title">Page Settings</span><button class="modal-close" onclick="DG.closeModal('pageSettingsModal')"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div>
-        <div class="modal-tabs">
-            <button class="modal-tab active" data-tab="tab-general" onclick="DG.switchSettingsTab('tab-general',this)">General</button>
-            <button class="modal-tab" data-tab="tab-background" onclick="DG.switchSettingsTab('tab-background',this)">Background</button>
-            <button class="modal-tab" data-tab="tab-columns" onclick="DG.switchSettingsTab('tab-columns',this)">Columns</button>
-            <button class="modal-tab" data-tab="tab-preferences" onclick="DG.switchSettingsTab('tab-preferences',this)">Preferences</button>
-        </div>
-        <div class="modal-body">
-            <div class="tab-content active" id="tab-general">
-                <div class="form-group"><label class="form-label">Page Title <small id="titleCount">0/50</small></label><input type="text" class="form-input" id="pageTitle" placeholder="Enter title" maxlength="50" oninput="document.getElementById('titleCount').textContent=this.value.length+'/50'"></div>
-                <div class="form-group"><label class="form-label">Description</label><textarea class="form-input form-textarea" id="pageDescription" placeholder="Auto-generate"></textarea></div>
-            </div>
-            <div class="tab-content" id="tab-background">
-                <div class="form-group"><label class="form-label">Select image</label><div class="image-grid" id="bgImageGrid"></div></div>
-                <div class="form-group"><label class="form-label">Upload image</label><input type="file" class="form-input" id="bgUpload" accept="image/*" onchange="DG.uploadBg(event)" style="padding:7px"></div>
-                <button class="btn btn-dark" style="width:100%;justify-content:center;margin-bottom:10px" onclick="DG.resetBg()">Reset background</button>
-                <div class="form-group"><label class="form-label">Widget transparency: <span id="opLabel">96%</span></label><input type="range" class="form-range" min="80" max="100" value="96" id="widgetOpacity" oninput="DG.updateOpacity(this.value)"></div>
-            </div>
-            <div class="tab-content" id="tab-columns">
-                <div class="form-group"><label class="form-label">Layout Columns</label><select class="form-select" id="columnCountSelect" onchange="DG.updateCols(this.value)"><option value="1">1 Column</option><option value="2">2 Columns</option><option value="3" selected>3 Columns</option><option value="4">4 Columns</option></select></div>
-            </div>
-            <div class="tab-content" id="tab-preferences">
-                <p style="color:var(--white-a50);font-size:10px;margin-bottom:12px">These settings apply only to this page.</p>
-                <div class="form-group"><label class="form-label">Open links in</label><select class="form-select" id="linkTarget"><option value="_blank">New window</option><option value="_self">Same window</option></select></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Profile Modal -->
-<div class="modal-overlay" id="profileModal">
-    <div class="modal" style="max-width:360px">
-        <div class="modal-header"><span class="modal-title">Profile Image</span><button class="modal-close" onclick="DG.closeModal('profileModal')"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div>
-        <div class="modal-body" style="text-align:center">
-            <div class="avatar" style="width:64px;height:64px;margin:0 auto 12px;font-size:22px" id="profileAvatar"><span id="profileInitial">U</span></div>
-            <input type="file" class="form-input" id="profileUpload" accept="image/*" onchange="DG.uploadProfile(event)" style="padding:7px">
-        </div>
-    </div>
-</div>
-
-<!-- Widget Menu (Global, outside widgets for proper z-index) -->
+<div class="modal-overlay" id="addWidgetModal"><div class="modal"><div class="modal-header"><span class="modal-title">Add Widget</span><button class="modal-close" onclick="DG.closeModal('addWidgetModal')"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div><div class="modal-body"><div class="widget-type-grid" id="widgetTypeGrid"></div></div></div></div>
+<div class="modal-overlay" id="pageSettingsModal"><div class="modal"><div class="modal-header"><span class="modal-title">Page Settings</span><button class="modal-close" onclick="DG.closeModal('pageSettingsModal')"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div><div class="modal-tabs"><button class="modal-tab active" data-tab="tab-general" onclick="DG.switchSettingsTab('tab-general',this)">General</button><button class="modal-tab" data-tab="tab-background" onclick="DG.switchSettingsTab('tab-background',this)">Background</button><button class="modal-tab" data-tab="tab-columns" onclick="DG.switchSettingsTab('tab-columns',this)">Columns</button><button class="modal-tab" data-tab="tab-preferences" onclick="DG.switchSettingsTab('tab-preferences',this)">Preferences</button></div><div class="modal-body"><div class="tab-content active" id="tab-general"><div class="form-group"><label class="form-label">Page Title <small id="titleCount">0/50</small></label><input type="text" class="form-input" id="pageTitle" placeholder="Enter title" maxlength="50" oninput="document.getElementById('titleCount').textContent=this.value.length+'/50'"></div><div class="form-group"><label class="form-label">Description</label><textarea class="form-input form-textarea" id="pageDescription" placeholder="Auto-generate"></textarea></div></div><div class="tab-content" id="tab-background"><div class="form-group"><label class="form-label">Select image</label><div class="image-grid" id="bgImageGrid"></div></div><div class="form-group"><label class="form-label">Upload image</label><input type="file" class="form-input" id="bgUpload" accept="image/*" onchange="DG.uploadBg(event)" style="padding:7px"></div><button class="btn btn-dark" style="width:100%;justify-content:center;margin-bottom:10px" onclick="DG.resetBg()">Reset background</button><div class="form-group"><label class="form-label">Widget transparency: <span id="opLabel">96%</span></label><input type="range" class="form-range" min="80" max="100" value="96" id="widgetOpacity" oninput="DG.updateOpacity(this.value)"></div></div><div class="tab-content" id="tab-columns"><div class="form-group"><label class="form-label">Layout Columns</label><select class="form-select" id="columnCountSelect" onchange="DG.updateCols(this.value)"><option value="1">1 Column</option><option value="2">2 Columns</option><option value="3" selected>3 Columns</option><option value="4">4 Columns</option></select></div></div><div class="tab-content" id="tab-preferences"><p style="color:var(--white-a50);font-size:10px;margin-bottom:12px">These settings apply only to this page.</p><div class="form-group"><label class="form-label">Open links in</label><select class="form-select" id="linkTarget"><option value="_blank">New window</option><option value="_self">Same window</option></select></div></div></div></div></div>
+<div class="modal-overlay" id="profileModal"><div class="modal" style="max-width:360px"><div class="modal-header"><span class="modal-title">Profile Image</span><button class="modal-close" onclick="DG.closeModal('profileModal')"><iconify-icon icon="mdi:close" width="16" height="16"></iconify-icon></button></div><div class="modal-body" style="text-align:center"><div class="avatar" style="width:64px;height:64px;margin:0 auto 12px;font-size:22px" id="profileAvatar"><span id="profileInitial">U</span></div><input type="file" class="form-input" id="profileUpload" accept="image/*" onchange="DG.uploadProfile(event)" style="padding:7px"></div></div></div>
 <div class="widget-context-menu" id="widgetContextMenu"></div>
 
-<script type="module" src="startpage-firebase.js"></script>
-<script src="startpage-app.js"></script>
+<script type="module" src="jssrc/firebase-core.js"></script>
+<script src="jssrc/dockgrid-app.js"></script>
 </body>
 </html>
