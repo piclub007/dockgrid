@@ -1,4 +1,3 @@
-// ===== DOCKGRID FIREBASE CORE =====
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
@@ -16,7 +15,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const COL = {USERS:'DockGrid_Users',PAGES:'DockGrid_Pages',WIDGETS:'DockGrid_Widgets',SETTINGS:'DockGrid_Settings',PROJECTS:'DockGrid_Projects'};
+const COL = {USERS:'DockGrid_Users',PAGES:'DockGrid_Pages',WIDGETS:'DockGrid_Widgets',SETTINGS:'DockGrid_Settings'};
 const IMGBB_KEY = 'ba8023ca74166460c442e8e703d2a1b0';
 const DEFAULT_BGS = [
     'https://cdn.pixabay.com/photo/2020/07/25/14/23/cliff-5436923_1280.jpg',
@@ -28,12 +27,10 @@ const DEFAULT_BGS = [
     'https://cdn.pixabay.com/photo/2020/06/20/11/09/cat-5320572_1280.jpg'
 ];
 
-// Initialize DG namespace BEFORE app script loads
 window.DG = window.DG || {};
 window.DG.FB = { COL, db, auth, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where, IMGBB_KEY, DEFAULT_BGS, app };
-window.DG.STATE = { currentBg:DEFAULT_BGS[0], colCount:3, widgetOpacity:96, widgetsData:[], currentUser:null, currentPageId:'default', currentPageTitle:'DockGrid Page', editingWidgetId:null, projectWidgets:{}, settings:{}, pageStats:{} };
+window.DG.STATE = { currentBg:DEFAULT_BGS[0], colCount:3, widgetOpacity:96, widgetsData:[], currentUser:null, currentPageId:'default', currentPageTitle:'DockGrid Page', editingWidgetId:null, settings:{}, pageStats:{}, lightboxImg:null };
 
-// Auth
 onAuthStateChanged(auth, async (user) => {
     if (!user) { window.location.href = 'sign.html'; return; }
     window.DG.STATE.currentUser = user;
@@ -44,4 +41,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.DG.STATE.currentUser && typeof window.DG.initApp === 'function') window.DG.initApp(window.DG.STATE.currentUser);
 });
 
-console.log('%c🔥 DockGrid Firebase %cReady %cby PIReactive','font-size:16px;font-weight:900;color:#ff6b35;font-family:monospace;','font-size:12px;color:#888;','font-size:11px;color:#555;');
+console.log('%c🔥 DockGrid Firebase Ready %cby PIReactive','font-size:14px;font-weight:900;color:#ff6b35;font-family:monospace;','font-size:10px;color:#888;');
