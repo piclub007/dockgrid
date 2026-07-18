@@ -1,3 +1,4 @@
+// jssrc/firebase-core.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
@@ -28,10 +29,10 @@ const DEFAULT_BGS = [
 ];
 
 window.DG = window.DG || {};
-window.DG.FB = { COL, db, auth, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where, IMGBB_KEY, DEFAULT_BGS, app };
-window.DG.STATE = { currentBg:DEFAULT_BGS[0], colCount:3, widgetOpacity:96, widgetsData:[], currentUser:null, currentPageId:'default', currentPageTitle:'DockGrid Page', editingWidgetId:null, settings:{}, pageStats:{}, lightboxImg:null };
+window.DG.FB = { COL, db, auth, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where, IMGBB_KEY, DEFAULT_BGS };
+window.DG.STATE = { currentBg:DEFAULT_BGS[0], colCount:3, widgetOpacity:96, widgetsData:[], currentUser:null, currentPageId:'default', pageTitle:'DockGrid Page', editingWidgetId:null, settings:{}, pageStats:{}, lightboxImg:null };
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, user => {
     if (!user) { window.location.href = 'sign.html'; return; }
     window.DG.STATE.currentUser = user;
     if (typeof window.DG.initApp === 'function') window.DG.initApp(user);
@@ -40,5 +41,3 @@ onAuthStateChanged(auth, async (user) => {
 document.addEventListener('DOMContentLoaded', () => {
     if (window.DG.STATE.currentUser && typeof window.DG.initApp === 'function') window.DG.initApp(window.DG.STATE.currentUser);
 });
-
-console.log('%c🔥 DockGrid Firebase Ready %cby PIReactive','font-size:14px;font-weight:900;color:#ff6b35;font-family:monospace;','font-size:10px;color:#888;');
