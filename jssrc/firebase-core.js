@@ -1,7 +1,6 @@
-// jssrc/firebase-core.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import { getFirestore, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBbrRHlakmOdKwuDGwYAx5qf-e6DOHW7s0",
@@ -16,8 +15,17 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-const COL = {USERS:'DockGrid_Users',PAGES:'DockGrid_Pages',WIDGETS:'DockGrid_Widgets',SETTINGS:'DockGrid_Settings'};
+const COL = {
+    USERS: 'DockGrid_Users',
+    PAGES: 'DockGrid_Pages',
+    WIDGETS: 'DockGrid_Widgets',
+    SETTINGS: 'DockGrid_Settings',
+    TEMPLATES: 'DockGrid_Templates',
+    BACKGROUNDS: 'DockGrid_Backgrounds'
+};
+
 const IMGBB_KEY = 'ba8023ca74166460c442e8e703d2a1b0';
+
 const DEFAULT_BGS = [
     'https://cdn.pixabay.com/photo/2020/07/25/14/23/cliff-5436923_1280.jpg',
     'https://cdn.pixabay.com/photo/2021/03/23/06/27/cliff-6116449_1280.jpg',
@@ -28,16 +36,50 @@ const DEFAULT_BGS = [
     'https://cdn.pixabay.com/photo/2020/06/20/11/09/cat-5320572_1280.jpg'
 ];
 
+// Initialize global namespace
 window.DG = window.DG || {};
-window.DG.FB = { COL, db, auth, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where, IMGBB_KEY, DEFAULT_BGS };
-window.DG.STATE = { currentBg:DEFAULT_BGS[0], colCount:3, widgetOpacity:96, widgetsData:[], currentUser:null, currentPageId:'default', pageTitle:'DockGrid Page', editingWidgetId:null, settings:{}, pageStats:{}, lightboxImg:null };
+window.DG.FB = { COL, db, auth, doc, setDoc, getDoc, getDocs, serverTimestamp, collection, onSnapshot, deleteDoc, query, where, addDoc, updateDoc, IMGBB_KEY, DEFAULT_BGS };
+window.DG.STATE = {
+    currentBg: DEFAULT_BGS[0],
+    colCount: 3,
+    widgetOpacity: 96,
+    widgetsData: [],
+    currentUser: null,
+    currentPageId: 'default',
+    pageTitle: 'DockGrid Page',
+    editingWidgetId: null,
+    settings: {},
+    pageStats: {},
+    lightboxImg: null
+};
 
-onAuthStateChanged(auth, user => {
-    if (!user) { window.location.href = 'sign.html'; return; }
+// Auth listener
+onAuthStateChanged(auth, (user) => {
     window.DG.STATE.currentUser = user;
-    if (typeof window.DG.initApp === 'function') window.DG.initApp(user);
+    if (!user && window.location.pathname !== '/sign.html') {
+        window.location.href = 'sign.html';
+    }
+    if (user && typeof window.DG.initApp === 'function') {
+        window.DG.initApp(user);
+    }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.DG.STATE.currentUser && typeof window.DG.initApp === 'function') window.DG.initApp(window.DG.STATE.currentUser);
-});
+// Helper: Load backgrounds (custom + defaults)
+window.DG.loadBackgrounds = async () => {
+    const bgRef = collection(db, COL.BACKGROUNDS);
+    const snap = await getDocs(bgRef);
+    const urls = [];
+    snap.forEach(doc => urls.push(doc.data().url));
+    return urls.length ? urls : DEFAULT_BGS;
+};
+
+// Helper: Load templates
+window.DG.loadTemplates = async () => {
+    const tRef = collection(db, COL.TEMPLATES);
+    const snap = await getDocs(tRef);
+    const temps = [];
+    snap.forEach(doc => temps.push({ id: doc.id, ...doc.data() }));
+    return temps;
+};
+
+console.log('🔥 DockGrid Firebase Ready');
